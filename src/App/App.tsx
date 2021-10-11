@@ -1,11 +1,17 @@
 import './App.css';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import logo from '../img/logo.svg';
 
 function App() {
   const [count, setCount] = useState(0);
+
+  // 网页 meta 钩子，无退出事件，无绑定
+  useEffect(() => {
+    document.title = 'Genshin Impact';
+    return () => {};
+  }, []);
 
   return (
     <div className="App">
