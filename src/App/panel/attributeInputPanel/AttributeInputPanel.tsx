@@ -25,6 +25,7 @@ function AttributeInputPanel(props: AttributeInputPanelProps) {
     <InputNumberForm
       key={element.title}
       title={element.title}
+      width={100}
       min={0}
       max={100}
       defaultValue={0}></InputNumberForm>

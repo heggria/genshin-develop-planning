@@ -17,7 +17,7 @@ import logo from '../img/logo.svg';
 import store from '../store';
 import MainLayout from './layout/mainLayout/MainLayout';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 const { SubMenu } = Menu;
 
 function App() {

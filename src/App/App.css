@@ -1,6 +1,6 @@
 :root {
-  --primay: black;
-  --bg-primay: white;
+  --primary: black;
+  --bg-primary: white;
 
   --link: #2a0b0b;
 }
@@ -53,8 +53,8 @@ button {
   justify-content: center;
   font-size: calc(10px + 2vmin);
 
-  background: var(--bg-primay);
-  color: var(--primay);
+  background: var(--bg-primary);
+  color: var(--primary);
 }
 
 .App-link {

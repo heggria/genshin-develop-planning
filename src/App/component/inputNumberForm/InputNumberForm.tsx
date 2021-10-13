@@ -9,6 +9,7 @@ interface InputNumberFormProps {
   title: string;
   min: number;
   max: number;
+  width: number;
   defaultValue: number;
 }
 
@@ -17,6 +18,7 @@ function InputNumberForm(props: InputNumberFormProps) {
   const title = props.title;
   const min = props.min;
   const max = props.max;
+  const width = props.width;
   const defaultValue = props.defaultValue;
   const onChange = (value: number) => {
     console.log('changed', value);
@@ -24,7 +26,13 @@ function InputNumberForm(props: InputNumberFormProps) {
   return (
     <div className="inputNumberForm">
       <div className="input__title">{title}</div>
-      <InputNumber min={min} max={max} defaultValue={defaultValue} onChange={onChange} />
+      <InputNumber
+        style={{ width: width }}
+        min={min}
+        max={max}
+        defaultValue={defaultValue}
+        onChange={onChange}
+      />
     </div>
   );
 }
