@@ -13,7 +13,7 @@ import InputNumberForm from '../../component/inputNumberForm/InputNumberForm';
 //   title: string;
 // }
 
-enum BuffTypeCode {
+export enum BuffTypeCode {
   // 攻击区
   ATK_PLUS,
   ATK_PERCENT,
@@ -60,22 +60,32 @@ enum BuffTypeCode {
   CASE_DAMAGE, // 直接加成
 }
 
-interface BuffType {
+export interface BuffType {
   code: BuffTypeCode;
   name: string;
 }
 
-interface Buff {
+export interface Buff {
   type: BuffType;
   value: number;
+  productivity: number;
 }
 
-function BuffConfigPanel() {
+export interface BuffGroup {
+  title: string;
+  allProductivity: number;
+  buffs: Array<Buff>;
+}
+
+export interface BuffConfigPanelProps {
+  buffGroup: BuffGroup;
+  buffConfigChange: Function;
+  index: number;
+}
+
+function BuffConfigPanel(props: BuffConfigPanelProps) {
   const [active, setActive] = useState(-1);
-  const [buffs, setBuffs] = useState([
-    { type: { code: BuffTypeCode.FIRE_DAMAGE, name: '火伤加成%' }, value: 10000 },
-    { type: { code: BuffTypeCode.ATK_PERCENT, name: '攻击力%' }, value: 0 },
-  ] as Array<Buff>);
+  const [buffGroupCache, setBuffGroupCache] = useState(props.buffGroup as BuffGroup);
   const [itemCss, setItemCss] = useState({
     height: 135,
     cursor: 'default',
@@ -91,17 +101,27 @@ function BuffConfigPanel() {
   //     defaultValue={0}></InputNumberForm>
   // ));
   const addNewBuff = () => {
-    setBuffs([
-      ...buffs,
-      { type: { code: BuffTypeCode.ATK_PERCENT, name: '攻击力%' }, value: 0 },
-    ]);
-    setActive(buffs.length);
+    let buffsCache = buffGroupCache.buffs;
+    buffsCache.push({ type: buffListBased[0], value: 0, productivity: 1 });
+    setBuffGroupCache({
+      buffs: buffsCache,
+      title: buffGroupCache.title,
+      allProductivity: buffGroupCache.allProductivity,
+    });
+    setActive(buffGroupCache.buffs.length);
   };
   const delItem = (index: number) => {
-    setBuffs(buffs.filter((item, index2) => index !== index2));
+    // setBuffs(buffs.filter((item, index2) => index !== index2));
   };
-  const resetActive = (n: number = -1) => {
-    setActive(n);
+  const itemSubmit = (index: number, updateItem: Buff) => {
+    let buffsCache = buffGroupCache.buffs;
+    buffsCache[index] = updateItem;
+    setBuffGroupCache({
+      buffs: buffsCache,
+      title: buffGroupCache.title,
+      allProductivity: buffGroupCache.allProductivity,
+    });
+    setActive(-1);
   };
   const saveBuffs = () => {};
   const delBuffGroup = () => {};
@@ -126,7 +146,17 @@ function BuffConfigPanel() {
         placeholder="请输入 buff 名称"
         maxLength={20}
         bordered={false}
-      />{' '}
+        value={buffGroupCache.title}
+        onChange={(e) => {
+          let { value } = e.target;
+          setBuffGroupCache({
+            buffs: buffGroupCache.buffs,
+            allProductivity: buffGroupCache.allProductivity,
+            title: value,
+          });
+          props.buffConfigChange(buffGroupCache, props.index);
+        }}
+      />
       <div style={{ display: 'flex', margin: '8px 16px' }}>
         <div style={{ width: 68, textAlign: 'center' }}>{'总生效率'}</div>
         <InputNumber
@@ -134,7 +164,16 @@ function BuffConfigPanel() {
           size="small"
           min={0}
           max={1}
+          step={0.01}
           defaultValue={1}
+          onChange={(value: number) => {
+            setBuffGroupCache({
+              buffs: buffGroupCache.buffs,
+              allProductivity: value,
+              title: buffGroupCache.title,
+            });
+            props.buffConfigChange(buffGroupCache, props.index);
+          }}
         />
       </div>
       <Button
@@ -152,7 +191,7 @@ function BuffConfigPanel() {
         }}
         size="small"
         bordered
-        dataSource={buffs}
+        dataSource={buffGroupCache.buffs}
         renderItem={(item, index) => (
           <List.Item
             className="buff-box__item"
@@ -164,7 +203,7 @@ function BuffConfigPanel() {
               index={index}
               active={active}
               item={item}
-              resetActive={resetActive}
+              itemSubmit={itemSubmit}
               delItem={delItem}></BuffListItem>
           </List.Item>
         )}
@@ -180,46 +219,56 @@ function BuffConfigPanel() {
   );
 }
 
-function BuffListItem(props: any) {
-  const buffListBased: Array<BuffType> = [
-    {
-      code: BuffTypeCode.ATK_PERCENT,
-      name: '攻击力/%',
-    },
-    {
-      code: BuffTypeCode.ATK_PLUS,
-      name: '攻击力/+',
-    },
-    {
-      code: BuffTypeCode.DEF_PERCENT,
-      name: '防御力/%',
-    },
-    {
-      code: BuffTypeCode.DEF_PLUS,
-      name: '防御力/+',
-    },
-    {
-      code: BuffTypeCode.BLOOD_PERCENT,
-      name: '最大生命值/%',
-    },
-    {
-      code: BuffTypeCode.BLOOD_PLUS,
-      name: '最大生命值/+',
-    },
-    {
-      code: BuffTypeCode.FIRE_DAMAGE,
-      name: '火伤加成/%',
-    },
-    {
-      code: BuffTypeCode.GRASS_DAMAGE,
-      name: '草伤加成/+',
-    },
-    {
-      code: BuffTypeCode.FALL_ATK_DAMAGE,
-      name: '下落攻击加成/%',
-    },
-  ];
+interface BuffListItemProps {
+  item: Buff;
+  index: number;
+  active: number;
+  delItem: Function;
+  itemSubmit: Function;
+}
+
+const buffListBased: Array<BuffType> = [
+  {
+    code: BuffTypeCode.ATK_PERCENT,
+    name: '攻击力/%',
+  },
+  {
+    code: BuffTypeCode.ATK_PLUS,
+    name: '攻击力/+',
+  },
+  {
+    code: BuffTypeCode.DEF_PERCENT,
+    name: '防御力/%',
+  },
+  {
+    code: BuffTypeCode.DEF_PLUS,
+    name: '防御力/+',
+  },
+  {
+    code: BuffTypeCode.BLOOD_PERCENT,
+    name: '最大生命值/%',
+  },
+  {
+    code: BuffTypeCode.BLOOD_PLUS,
+    name: '最大生命值/+',
+  },
+  {
+    code: BuffTypeCode.FIRE_DAMAGE,
+    name: '火伤加成/%',
+  },
+  {
+    code: BuffTypeCode.GRASS_DAMAGE,
+    name: '草伤加成/+',
+  },
+  {
+    code: BuffTypeCode.FALL_ATK_DAMAGE,
+    name: '下落攻击加成/%',
+  },
+];
+
+function BuffListItem(props: BuffListItemProps) {
   const [buffList] = useState(buffListBased);
+  const [buffCache, setBuffCache] = useState(props.item);
 
   if (props.index !== props.active) {
     return (
@@ -236,6 +285,17 @@ function BuffListItem(props: any) {
           size={'small'}
           placeholder="请选择词条类型"
           optionFilterProp="children"
+          value={buffCache.type.code}
+          onChange={(value: number) => {
+            setBuffCache({
+              type: ((): BuffType => {
+                for (let x of buffList) if (x.code === value) return x;
+                return buffList[0];
+              })(),
+              value: buffCache.value,
+              productivity: buffCache.productivity,
+            });
+          }}
           filterOption={(input: string, option: any) =>
             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           }>
@@ -252,7 +312,16 @@ function BuffListItem(props: any) {
             size="small"
             min={0}
             max={100000}
+            step={0.01}
             defaultValue={0}
+            value={buffCache.value}
+            onChange={(value: number) => {
+              setBuffCache({
+                type: buffCache.type,
+                value: value,
+                productivity: buffCache.productivity,
+              });
+            }}
           />
         </div>
         <div style={{ display: 'flex', marginBottom: 5 }}>
@@ -262,7 +331,16 @@ function BuffListItem(props: any) {
             size="small"
             min={0}
             max={1}
+            step={0.01}
             defaultValue={1}
+            value={buffCache.productivity}
+            onChange={(value: number) => {
+              setBuffCache({
+                type: buffCache.type,
+                value: buffCache.value,
+                productivity: value,
+              });
+            }}
           />
         </div>
         <Button
@@ -273,14 +351,14 @@ function BuffListItem(props: any) {
           onClick={() => {
             props.delItem(props.index);
           }}>
-          删除
+          {'删除'}
         </Button>
         <Button
           type="primary"
           style={{ width: 60 }}
           size="small"
-          onClick={() => props.resetActive()}>
-          完成
+          onClick={() => props.itemSubmit(props.index, buffCache)}>
+          {'完成'}
         </Button>
       </div>
     );

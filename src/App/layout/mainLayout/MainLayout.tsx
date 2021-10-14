@@ -6,19 +6,20 @@ import { Observer, useLocalStore } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
 import store from '../../../store';
+import BuffGroupStore from '../../../store/buffGroup';
 import AttributeInputPanel from '../../panel/attributeInputPanel/AttributeInputPanel';
-import BuffConfigPanel from '../../panel/buffConfigPanel/BuffConfigPanel';
+import BuffConfigPanel, {
+  BuffGroup,
+  BuffTypeCode,
+} from '../../panel/buffConfigPanel/BuffConfigPanel';
 
 function MainLayout() {
-  const [count, setCount] = useState(0);
-  const { todoListStore } = useLocalStore(() => store);
-  useEffect(() => {
-    const inputChange = () => {
-      setCount(45464);
-    };
-    inputChange();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { buffGroupStore } = useLocalStore(() => store);
+  const buffConfigChange = (buffGroup: BuffGroup, index: number) => {
+    let { buffGroupsData } = buffGroupStore;
+    buffGroupsData[index] = buffGroup;
+    buffGroupStore.changeBuffGroups(buffGroupsData);
+  };
   return (
     <div className="site-layout-background">
       <div className="mainLayout">
@@ -78,7 +79,13 @@ function MainLayout() {
           ]}></AttributeInputPanel> */}
       </div>
       <div className="mainLayout">
-        <BuffConfigPanel></BuffConfigPanel>
+        {buffGroupStore.buffGroupsData.map((item, index) => (
+          <BuffConfigPanel
+            key={index}
+            buffGroup={item}
+            index={0}
+            buffConfigChange={buffConfigChange}></BuffConfigPanel>
+        ))}
       </div>
     </div>
   );

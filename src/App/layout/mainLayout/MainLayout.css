@@ -3,3 +3,7 @@
   padding: 20px;
   min-height: 380px;
 }
+.mainLayout {
+  display: flex;
+  flex-flow: row wrap;
+}

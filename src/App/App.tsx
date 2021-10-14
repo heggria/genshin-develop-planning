@@ -22,20 +22,11 @@ const { SubMenu } = Menu;
 
 function App() {
   const [collapsed, setCollapsed] = useState(false);
-  const { todoListStore } = useLocalStore(() => store);
 
   const onCollapse = (collapsed: boolean) => {
     console.log(collapsed);
     setCollapsed(collapsed);
   };
-
-  useEffect(() => {
-    const inputChange = () => {
-      todoListStore.changeInput('88888');
-    };
-    inputChange();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <HelmetProvider>

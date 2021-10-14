@@ -1,9 +1,9 @@
-import TodoListStore from './todoList';
+import BuffGroupStore from './buffGroup';
 
-let todoListStore = new TodoListStore();
+let buffGroupStore = new BuffGroupStore();
 
 const stores = {
-  todoListStore,
+  buffGroupStore,
 };
 
 export default stores;
