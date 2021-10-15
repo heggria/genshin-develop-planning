@@ -1,17 +1,11 @@
 /* eslint-disable no-unused-vars */
 import './MainLayout.css';
 
-import { PlusOutlined } from '@ant-design/icons';
-import { InputNumber } from 'antd';
-import { inject, observer, Provider, useLocalStore } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 
 import AttributeInputPanel from '../../panel/attributeInputPanel/AttributeInputPanel';
-import BuffConfigPanel, {
-  BuffGroup,
-  BuffTypeCode,
-} from '../../panel/buffConfigPanel/BuffConfigPanel';
 import BuffGroupLayout from '../buffGroupLayout/BuffGroupLayout';
 
 const MainLayout = inject('buffGroupStore')(

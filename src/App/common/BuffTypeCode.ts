@@ -1,0 +1,47 @@
+/* eslint-disable no-unused-vars */
+export enum BuffTypeCode {
+  // 攻击区
+  ATK_PERCENT,
+  ATK_PLUS,
+  DEF_PERCENT,
+  DEF_PLUS,
+  BLOOD_PERCENT,
+  BLOOD_PLUS,
+  // 元素反应区
+  RECHARGE_PERCENT, // 元素充能效率
+  PROFICIENT_PLUS, // 元素精通
+  OVERLOAD, // 超载增强
+  COMBUSTION, // 燃烧增强
+  INDUCTION, // 感电增强
+  SUPERCONDUCT, // 超导增强
+  DIFFUSION_THUNDER, // 扩散（雷）增强
+  DIFFUSION_FIRE, // 扩散（火）增强
+  DIFFUSION_WATER, // 扩散（水）增强
+  DIFFUSION_ICE, // 扩散（冰）增强
+  DIFFUSION, // 扩散增强
+  EVAPORATION, // 蒸发增强
+  MELT, // 融化增强
+  // 双暴区
+  CRIT_RATE,
+  CRIT_DAMAGE,
+  NORMAL_ATK_CRIT_DAMAGE, // 普通攻击
+  THUMP_CRIT_DAMAGE, // 下落攻击
+  FALL_ATK_CRIT_DAMAGE, // 重击
+  ELEMENTAL_WARFARE_CRIT_DAMAGE, // 元素战技
+  ELEMENTAL_EXPLOSION_CRIT_DAMAGE, // 元素爆发
+  // 倍率区
+  FIRE_DAMAGE,
+  WATER_DAMAGE,
+  ROCK_DAMAGE,
+  WIND_DAMAGE,
+  ICE_DAMAGE,
+  THUNDER_DAMAGE,
+  GRASS_DAMAGE,
+  PHYSICS_DAMAGE,
+  NORMAL_ATK_DAMAGE, // 普通攻击
+  THUMP_DAMAGE, // 下落攻击
+  FALL_ATK_DAMAGE, // 重击
+  ELEMENTAL_WARFARE_DAMAGE, // 元素战技
+  ELEMENTAL_EXPLOSION_DAMAGE, // 元素爆发
+  CASE_DAMAGE, // 直接加成
+}

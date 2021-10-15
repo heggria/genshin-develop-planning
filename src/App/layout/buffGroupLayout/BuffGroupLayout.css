@@ -1,3 +1,10 @@
+.buff-group-box {
+  /* border: 1px #ddd solid; */
+  padding: 15px 20px;
+  margin: 30px 0;
+  box-shadow: 0px 4px 12px #ddd;
+  min-width: 420px;
+}
 .buff-group-layout {
   display: flex;
   flex-flow: row wrap;
@@ -16,7 +23,7 @@
 }
 .add-div {
   height: 307px;
-  width: 170px;
+  width: 168px;
   margin: 11px;
   border: 2px #aaa dashed;
   display: flex;

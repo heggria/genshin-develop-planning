@@ -24,11 +24,12 @@
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(201, 201, 201, 0.5);
+  background-color: rgba(223, 223, 223, 0.4);
 }
 .buff-box__item {
   /* transition: all 0.3s ease-out; */
   user-select: none;
+  font-size: 0.8rem;
 }
 ::-webkit-scrollbar {
   background-color: transparent;

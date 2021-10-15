@@ -10,7 +10,7 @@ import BuffConfigPanel from '../../panel/buffConfigPanel/BuffConfigPanel';
 
 const BuffGroupLayout = ({ buffGroupStore }: { buffGroupStore: BuffGroupStore }) => {
   return (
-    <div>
+    <div className="buff-group-box">
       <div>
         <h2 className="layout-header__title">{'Buff 配置'}</h2>
       </div>
@@ -32,10 +32,22 @@ const BuffGroupLayout = ({ buffGroupStore }: { buffGroupStore: BuffGroupStore })
           tabIndex={0}
           className="add-div"
           onClick={() =>
-            buffGroupStore.addBuffGroup({ title: '', buffs: [], allProductivity: 1 })
+            buffGroupStore.addBuffGroup({
+              collected: false,
+              available: true,
+              title: '',
+              buffs: [],
+              allProductivity: 1,
+            })
           }
           onKeyDown={() =>
-            buffGroupStore.addBuffGroup({ title: '', buffs: [], allProductivity: 1 })
+            buffGroupStore.addBuffGroup({
+              collected: false,
+              available: true,
+              title: '',
+              buffs: [],
+              allProductivity: 1,
+            })
           }>
           <PlusOutlined />
         </div>
