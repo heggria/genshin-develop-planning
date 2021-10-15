@@ -1,9 +1,5 @@
-import BuffGroupStore from './buffGroup';
+import { BUFF_GROUPS, BuffGroupStore } from './buffGroup';
 
-let buffGroupStore = new BuffGroupStore();
-
-const stores = {
-  buffGroupStore,
+export default {
+  [BUFF_GROUPS]: new BuffGroupStore(),
 };
-
-export default stores;

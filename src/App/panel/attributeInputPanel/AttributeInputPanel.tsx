@@ -4,7 +4,6 @@ import './AttributeInputPanel.css';
 import { Observer, useLocalStore } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
-import store from '../../../store';
 import InputNumberForm from '../../component/inputNumberForm/InputNumberForm';
 
 interface AttributeInputPanelProps {

@@ -1,43 +1,41 @@
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
-import { BuffGroup, BuffTypeCode } from '../app/panel/buffConfigPanel/BuffConfigPanel';
+import { BuffGroup } from '../app/panel/buffConfigPanel/BuffConfigPanel';
 
-class BuffGroupStore {
-  @observable buffGroupsData: Array<BuffGroup> = [
+export class BuffGroupStore {
+  constructor() {
+    makeObservable(this, {
+      buffGroupsData: observable,
+      buffGroupsLen: computed,
+      changeBuffGroups: action,
+      addBuffGroup: action,
+      delBuffGroup: action,
+    });
+  }
+
+  buffGroupsData: Array<BuffGroup> = [
     {
-      title: '1111',
-      allProductivity: 0.1,
-      buffs: [
-        {
-          type: { code: BuffTypeCode.FIRE_DAMAGE, name: '火伤加成%' },
-          value: 10000,
-          productivity: 1,
-        },
-      ],
-    },
-    {
-      title: '1111',
-      allProductivity: 0.1,
-      buffs: [
-        {
-          type: { code: BuffTypeCode.FIRE_DAMAGE, name: '火伤加成%' },
-          value: 10000,
-          productivity: 1,
-        },
-      ],
+      title: '',
+      allProductivity: 1,
+      buffs: [],
     },
   ];
 
-  @action
-  changeBuffGroups(buffGroup: Array<BuffGroup>) {
-    this.buffGroupsData = buffGroup;
-    //  console.log(value)
+  changeBuffGroups(buffGroup: BuffGroup, index: number) {
+    this.buffGroupsData[index] = buffGroup;
   }
 
-  @computed
+  addBuffGroup(buffGroup: BuffGroup) {
+    this.buffGroupsData.push(buffGroup);
+  }
+
+  delBuffGroup(index: number) {
+    this.buffGroupsData = this.buffGroupsData.filter((item, i) => index !== i);
+  }
+
   get buffGroupsLen() {
     return this.buffGroupsData.length;
   }
 }
 
-export default BuffGroupStore;
+export const BUFF_GROUPS = 'buffGroupStore';

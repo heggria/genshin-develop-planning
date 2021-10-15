@@ -1,0 +1,31 @@
+.buff-group-layout {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 5px 0;
+  user-select: none;
+}
+.layout-header__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.layout-header__des {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #aaa;
+  padding-bottom: 10px;
+}
+.add-div {
+  height: 307px;
+  width: 170px;
+  margin: 11px;
+  border: 2px #aaa dashed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+}
+.add-div:hover {
+  cursor: pointer;
+  /* border: 2px #ccc dashed; */
+  background-color: rgba(238, 238, 238, 0.75);
+}

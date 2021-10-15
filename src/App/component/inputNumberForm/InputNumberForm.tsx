@@ -20,9 +20,7 @@ function InputNumberForm(props: InputNumberFormProps) {
   const max = props.max;
   const width = props.width;
   const defaultValue = props.defaultValue;
-  const onChange = (value: number) => {
-    console.log('changed', value);
-  };
+  const onChange = (value: number) => {};
   return (
     <div className="inputNumberForm">
       <div className="input__title">{title}</div>

@@ -1,29 +1,25 @@
 /* eslint-disable no-unused-vars */
 import './MainLayout.css';
 
+import { PlusOutlined } from '@ant-design/icons';
 import { InputNumber } from 'antd';
-import { Observer, useLocalStore } from 'mobx-react';
+import { inject, observer, Provider, useLocalStore } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
+import { Route } from 'react-router-dom';
 
-import store from '../../../store';
-import BuffGroupStore from '../../../store/buffGroup';
 import AttributeInputPanel from '../../panel/attributeInputPanel/AttributeInputPanel';
 import BuffConfigPanel, {
   BuffGroup,
   BuffTypeCode,
 } from '../../panel/buffConfigPanel/BuffConfigPanel';
+import BuffGroupLayout from '../buffGroupLayout/BuffGroupLayout';
 
-function MainLayout() {
-  const { buffGroupStore } = useLocalStore(() => store);
-  const buffConfigChange = (buffGroup: BuffGroup, index: number) => {
-    let { buffGroupsData } = buffGroupStore;
-    buffGroupsData[index] = buffGroup;
-    buffGroupStore.changeBuffGroups(buffGroupsData);
-  };
-  return (
-    <div className="site-layout-background">
-      <div className="mainLayout">
-        {/* <AttributeInputPanel
+const MainLayout = inject('buffGroupStore')(
+  observer(() => {
+    return (
+      <div className="site-layout-background">
+        <div className="mainLayout">
+          {/* <AttributeInputPanel
           title={'人物基础面板'}
           formLiteral={[
             { title: '基础攻击力' },
@@ -77,18 +73,11 @@ function MainLayout() {
             { title: '风元素伤害加成/%' },
             { title: '物理伤害加成/%' },
           ]}></AttributeInputPanel> */}
+        </div>
+        <Route path={`/`} exact component={BuffGroupLayout} />
       </div>
-      <div className="mainLayout">
-        {buffGroupStore.buffGroupsData.map((item, index) => (
-          <BuffConfigPanel
-            key={index}
-            buffGroup={item}
-            index={0}
-            buffConfigChange={buffConfigChange}></BuffConfigPanel>
-        ))}
-      </div>
-    </div>
-  );
-}
+    );
+  }),
+);
 
 export default MainLayout;

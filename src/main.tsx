@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import { Provider } from 'mobx-react';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter } from 'react-router-dom';
 
 import App from './app/App';
 import stores from './store';
@@ -11,7 +12,9 @@ import stores from './store';
 ReactDOM.render(
   <React.StrictMode>
     <Provider {...stores}>
-      <App />
+      <HashRouter>
+        <App />
+      </HashRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'),

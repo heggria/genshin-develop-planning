@@ -10,7 +10,6 @@
   position: absolute;
   top: -11px;
   left: 157px;
-  z-index: 1;
 }
 .buff-box__title {
   font-size: 2rem;
@@ -18,9 +17,28 @@
 .buff-box__button {
   width: 100%;
 }
+.item-productivity {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(201, 201, 201, 0.5);
+}
 .buff-box__item {
-  transition: all 0.3s ease-out;
+  /* transition: all 0.3s ease-out; */
   user-select: none;
+}
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #1890ff;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #188fffcb;
 }
 .buff-box__item:hover {
   background-color: rgb(235, 245, 255);

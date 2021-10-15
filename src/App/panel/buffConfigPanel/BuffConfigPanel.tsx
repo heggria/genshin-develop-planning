@@ -3,10 +3,10 @@ import './BuffConfigPanel.css';
 
 import { CloseOutlined } from '@ant-design/icons';
 import { Button, Input, InputNumber, List, Popconfirm, Select, Space } from 'antd';
-import { Observer, useLocalStore } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import { inject, observer } from 'mobx-react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 
-import store from '../../../store';
+import { BuffGroupStore } from '../../../store/buffGroup';
 import InputNumberForm from '../../component/inputNumberForm/InputNumberForm';
 
 // interface FormLiteral {
@@ -79,58 +79,53 @@ export interface BuffGroup {
 
 export interface BuffConfigPanelProps {
   buffGroup: BuffGroup;
-  buffConfigChange: Function;
   index: number;
+  delBuffConfig: Function;
+  buffConfigChange: Function;
+  buffGroupStore: BuffGroupStore;
 }
 
-function BuffConfigPanel(props: BuffConfigPanelProps) {
+const BuffConfigPanel = (props: BuffConfigPanelProps) => {
   const [active, setActive] = useState(-1);
-  const [buffGroupCache, setBuffGroupCache] = useState(props.buffGroup as BuffGroup);
   const [itemCss, setItemCss] = useState({
     height: 135,
     cursor: 'default',
-  });
-  // const [title] = useState(props.title);
-  // const [formLiteral] = useState(props.formLiteral);
-  // const listItems = formLiteral.map((element) => (
-  //   <InputNumberForm
-  //     key={element.title}
-  //     title={element.title}
-  //     min={0}
-  //     max={100}
-  //     defaultValue={0}></InputNumberForm>
-  // ));
+  } as CSSProperties);
+  const titleChange = (title: string) => {
+    props.buffGroup.title = title;
+  };
   const addNewBuff = () => {
-    let buffsCache = buffGroupCache.buffs;
-    buffsCache.push({ type: buffListBased[0], value: 0, productivity: 1 });
-    setBuffGroupCache({
-      buffs: buffsCache,
-      title: buffGroupCache.title,
-      allProductivity: buffGroupCache.allProductivity,
-    });
-    setActive(buffGroupCache.buffs.length);
+    props.buffGroup.buffs.push({ type: buffListBased[0], value: 0, productivity: 1 });
+    setActive(props.buffGroup.buffs.length);
   };
   const delItem = (index: number) => {
-    // setBuffs(buffs.filter((item, index2) => index !== index2));
+    props.buffGroup.buffs = props.buffGroup.buffs.filter(
+      (item, index2) => index !== index2,
+    );
+    setActive(-1);
   };
   const itemSubmit = (index: number, updateItem: Buff) => {
-    let buffsCache = buffGroupCache.buffs;
-    buffsCache[index] = updateItem;
-    setBuffGroupCache({
-      buffs: buffsCache,
-      title: buffGroupCache.title,
-      allProductivity: buffGroupCache.allProductivity,
-    });
+    props.buffGroup.buffs[index] = updateItem;
     setActive(-1);
   };
   const saveBuffs = () => {};
-  const delBuffGroup = () => {};
+  const delBuffGroup = () => {
+    props.buffGroupStore.delBuffGroup(props.index);
+  };
   return (
     <div className="buff-box">
+      <Input
+        style={{ fontSize: '1.1rem', fontWeight: 700 }}
+        placeholder="请输入 buff 名称"
+        maxLength={20}
+        bordered={false}
+        value={props.buffGroup.title}
+        onChange={(e) => titleChange(e.target.value)}
+      />
       <Popconfirm
         placement="top"
         title={'未收藏的buff组将会丢失，确认删除？'}
-        onConfirm={() => delBuffGroup()}
+        onConfirm={delBuffGroup}
         okText="是"
         cancelText="否">
         <Button
@@ -141,22 +136,6 @@ function BuffConfigPanel(props: BuffConfigPanelProps) {
           danger
           icon={<CloseOutlined />}></Button>
       </Popconfirm>
-      <Input
-        style={{ fontSize: '1.1rem', fontWeight: 700 }}
-        placeholder="请输入 buff 名称"
-        maxLength={20}
-        bordered={false}
-        value={buffGroupCache.title}
-        onChange={(e) => {
-          let { value } = e.target;
-          setBuffGroupCache({
-            buffs: buffGroupCache.buffs,
-            allProductivity: buffGroupCache.allProductivity,
-            title: value,
-          });
-          props.buffConfigChange(buffGroupCache, props.index);
-        }}
-      />
       <div style={{ display: 'flex', margin: '8px 16px' }}>
         <div style={{ width: 68, textAlign: 'center' }}>{'总生效率'}</div>
         <InputNumber
@@ -167,12 +146,8 @@ function BuffConfigPanel(props: BuffConfigPanelProps) {
           step={0.01}
           defaultValue={1}
           onChange={(value: number) => {
-            setBuffGroupCache({
-              buffs: buffGroupCache.buffs,
-              allProductivity: value,
-              title: buffGroupCache.title,
-            });
-            props.buffConfigChange(buffGroupCache, props.index);
+            props.buffGroup.allProductivity = value;
+            // props.buffConfigChange(props.buffGroup, props.index);
           }}
         />
       </div>
@@ -184,6 +159,7 @@ function BuffConfigPanel(props: BuffConfigPanelProps) {
         {'添加生效词条'}
       </Button>
       <List
+        className={'buff-list'}
         style={{
           height: 168,
           overflow: 'auto',
@@ -191,14 +167,20 @@ function BuffConfigPanel(props: BuffConfigPanelProps) {
         }}
         size="small"
         bordered
-        dataSource={buffGroupCache.buffs}
+        dataSource={props.buffGroup.buffs}
         renderItem={(item, index) => (
           <List.Item
             className="buff-box__item"
             onClick={() => {
               if (index !== active) setActive(index);
             }}
-            style={index === active ? itemCss : {}}>
+            style={
+              index === active
+                ? itemCss
+                : {
+                    position: 'relative',
+                  }
+            }>
             <BuffListItem
               index={index}
               active={active}
@@ -211,13 +193,15 @@ function BuffConfigPanel(props: BuffConfigPanelProps) {
       <Button
         type="primary"
         block
+        style={{ border: 'none', borderRadius: '0' }}
         className="buff-box__bottomButton"
+        disabled={true}
         onClick={() => saveBuffs()}>
         {'保存至收藏夹'}
       </Button>
     </div>
   );
-}
+};
 
 interface BuffListItemProps {
   item: Buff;
@@ -272,9 +256,14 @@ function BuffListItem(props: BuffListItemProps) {
 
   if (props.index !== props.active) {
     return (
-      <div style={{ fontWeight: 700 }}>
-        {props.item.type.name + '：' + props.item.value}
-      </div>
+      <>
+        <div
+          className="item-productivity"
+          style={{ width: buffCache.productivity * 100 + '%' }}></div>
+        <div style={{ fontWeight: 700, zIndex: 1 }}>
+          {props.item.type.name + '：' + props.item.value}
+        </div>
+      </>
     );
   } else {
     return (
@@ -365,4 +354,4 @@ function BuffListItem(props: BuffListItemProps) {
   }
 }
 
-export default BuffConfigPanel;
+export default inject((stores) => stores)(observer(BuffConfigPanel));

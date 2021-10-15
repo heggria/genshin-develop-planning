@@ -1,33 +1,16 @@
 /* eslint-disable no-unused-vars */
 import './App.css';
 
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu } from 'antd';
-import { Observer, useLocalStore } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import { Layout, Menu } from 'antd';
+import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import logo from '../img/logo.svg';
-import store from '../store';
 import MainLayout from './layout/mainLayout/MainLayout';
 
 const { Header, Content, Footer } = Layout;
-const { SubMenu } = Menu;
 
 function App() {
-  const [collapsed, setCollapsed] = useState(false);
-
-  const onCollapse = (collapsed: boolean) => {
-    console.log(collapsed);
-    setCollapsed(collapsed);
-  };
-
   return (
     <HelmetProvider>
       <Helmet>
