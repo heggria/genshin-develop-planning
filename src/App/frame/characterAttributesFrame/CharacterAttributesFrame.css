@@ -2,11 +2,9 @@
   margin: 5px;
 }
 .input-box-title {
-  background-color: darksalmon;
   font: 1.5rem sans-serif;
 }
 .input-box-detail {
   display: flex;
   flex-flow: row wrap;
-  background-color: darksalmon;
 }

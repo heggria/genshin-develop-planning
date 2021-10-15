@@ -11,6 +11,8 @@ interface InputNumberFormProps {
   max: number;
   width: number;
   defaultValue: number;
+  step: number;
+  disabled: boolean;
 }
 
 // 数字输入 flex div
@@ -28,6 +30,8 @@ function InputNumberForm(props: InputNumberFormProps) {
         style={{ width: width }}
         min={min}
         max={max}
+        step={props.step}
+        disabled={props.disabled}
         defaultValue={defaultValue}
         onChange={onChange}
       />
