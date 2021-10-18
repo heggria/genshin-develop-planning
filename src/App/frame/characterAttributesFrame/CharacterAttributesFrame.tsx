@@ -5,12 +5,12 @@ import { inject, observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
 import { BuffGroupStore } from '../../../store/buffGroup';
-import { AttributesType } from '../../common/Attribute';
+import { AttributesTypeCode } from '../../common/Attribute';
 import InputNumberForm from '../../component/inputNumberForm/InputNumberForm';
 import NormalFrame from '../normalFrame/normalFrame';
 
 export interface BaseAttributes {
-  type: AttributesType;
+  type: AttributesTypeCode;
   name: string;
   value: number;
   editable: boolean;

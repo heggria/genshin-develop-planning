@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-export enum AttributesType {
+export enum AttributesTypeCode {
   ATK,
   DEF,
   BLOOD,
@@ -12,7 +12,8 @@ export enum AttributesType {
   SKILL_MULTIPLIER, // 技能倍率
 }
 
-export enum ReactionType {
+export enum ReactionTypeCode {
+  NONE,
   OVERLOAD, // 超载
   COMBUSTION, // 燃烧
   INDUCTION, // 感电
@@ -26,7 +27,7 @@ export enum ReactionType {
   MELT, // 融化
 }
 
-export enum ElementType {
+export enum ElementClassCode {
   NONE,
   THUNDER,
   FIRE,
@@ -38,7 +39,7 @@ export enum ElementType {
   PHYSICS,
 }
 
-export enum AtkType {
+export enum AtkTypeCode {
   ALL,
   NORMAL_ATK,
   THUMP,
