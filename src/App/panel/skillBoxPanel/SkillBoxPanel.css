@@ -1,21 +1,22 @@
 .skill-box {
   height: 75px;
   width: 170px;
-  border: 1px #ccc solid;
+  /* border: 1px #ccc solid; */
   margin: 10px;
   padding: 2px 8px;
   transition: all 0.2s;
+  position: relative;
+  box-shadow: 0px 0px 15px #ccc;
 }
-.skill-box:hover {
+/* .skill-box:hover {
   cursor: pointer;
-  /* background-color: rgba(245, 245, 245, 0.5); */
   border: 1px #f0f0f0 solid;
   box-shadow: 0px 0px 15px #ccc;
 }
 .skill-box:active {
   cursor: pointer;
   background-color: rgba(235, 235, 235, 0.5);
-}
+} */
 
 .skill-box__title {
   font-size: 1.2rem;
@@ -31,4 +32,23 @@
 .skill-box__buff {
   font-size: 0.8rem;
   font-weight: 700;
+}
+
+.skill-box-bottom {
+  display: flex;
+}
+.skill-box__multiplier,
+.skill-box__buff,
+.skill-box__time {
+  height: 16px;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 500;
+}
+.skill-box__time {
+  flex: 2;
+}
+.skill-box__multiplier,
+.skill-box__buff {
+  flex: 2;
 }

@@ -17,32 +17,9 @@ import { AtkType, SingleAttack } from '../../panel/skillBoxPanel/SkillBoxPanel';
 import BuffGroupLayout from '../buffGroupLayout/BuffGroupLayout';
 
 export default observer(function MainLayout() {
-  const [attacks, setAttack] = useState([
-    {
-      title: 'Q-一段伤害',
-      damageMultiplier: 100,
-      atkType: { name: '元素爆发', code: AtkTypeCode.ELEMENTAL_EXPLOSION },
-      hitRate: 1,
-      elementClass: {
-        name: '雷',
-        code: ElementClassCode.THUNDER,
-      },
-      reactionType: {
-        name: '无反应',
-        code: ReactionTypeCode.NONE,
-      },
-      costTime: 1,
-      effectiveBuff: [],
-    },
-  ] as Array<SingleAttack>);
-  const changeAttack = (attack: SingleAttack, index: number) => {
-    let cache = [...attacks];
-    cache[index] = attack;
-    setAttack(cache);
-  };
   return (
     <div className="site-layout-background">
-      <BuffConfigFrame attacks={attacks} changeAttack={changeAttack}></BuffConfigFrame>
+      <BuffConfigFrame></BuffConfigFrame>
       {/* <CharacterAttributesFrame
         attributes={[
           {

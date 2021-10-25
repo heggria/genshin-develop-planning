@@ -1,49 +1,48 @@
 /* eslint-disable no-unused-vars */
 import './SkillDetailPanel.css';
 
-import { Button, Drawer, Input, message, Space } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
+import { Button, Drawer, Input, message, Popconfirm, Space } from 'antd';
 import { DrawerProps } from 'antd/es/drawer';
 import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
+import { useStores } from '../../../hooks/useStores';
 import { SingleAttack } from '../../panel/skillBoxPanel/SkillBoxPanel';
 
 interface SkillDetailPanelProps {
-  initData: Array<SingleAttack>;
-  changeAttack: Function;
   dataIndex: number;
   visible: boolean;
   setVisible: Function;
 }
 
 export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) {
-  const [atkData, setAtkData] = useState<SingleAttack>(props.initData[props.dataIndex]);
+  const { buffGroupStore } = useStores();
   const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
+  const [atkData, setAtkData] = useState<SingleAttack>(
+    buffGroupStore.skillList[props.dataIndex],
+  );
 
   // use ref to set data cache
   // .current is init data
   // const propsRef = useRef(props.initData);
 
-  // useEffect(() => {
-  //   setAtkData(props.initData[props.dataIndex]);
-  //   console.log(props.initData);
-  // }, [props.initData[props.dataIndex].title]);
-
-  const showDrawer = () => {
-    // notification.open({
-    //   message: '操作提示',
-    //   description: '您打开了一个即时保存的抽屉，请随意编辑。',
-    //   placement: 'bottomRight',
-    // });
-    props.setVisible(true);
-  };
+  useEffect(() => {
+    if (props.dataIndex !== -1) setAtkData(buffGroupStore.skillList[props.dataIndex]);
+    else setAtkData({} as SingleAttack);
+  }, [buffGroupStore.skillList, props.dataIndex]);
   const onClose = () => {
     props.setVisible(false);
   };
   const onSave = () => {
     props.setVisible(false);
-    props.changeAttack(atkData, 0);
-    message.success('保存成功！', 1);
+    if (atkData.title !== '') {
+      message.success('保存成功！', 1);
+    } else {
+      setAtkData({ ...atkData, title: '未命名' });
+      message.success('保存成功！您未填写技能名称，已自动设置为“未命名”。', 1);
+    }
+    buffGroupStore.changeSkillList(atkData, props.dataIndex);
   };
   const inputChange = (e: any) => {
     setAtkData({ ...atkData, title: e.target.value });
@@ -57,7 +56,7 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
             style={{ fontWeight: 700, fontSize: '1.2rem' }}
             placeholder="未命名"
             bordered={false}
-            value={atkData.title}
+            value={atkData?.title}
             onChange={inputChange}
           />
         }
@@ -67,7 +66,17 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
         visible={props.visible}
         extra={
           <Space>
-            {/* <Button onClick={onClose}>{'取消'}</Button> */}
+            <Popconfirm
+              placement="bottom"
+              title={'未收藏的技能将会丢失，确认删除？'}
+              onConfirm={() => {
+                onClose();
+                buffGroupStore.delSkillList(props.dataIndex);
+              }}
+              okText="是"
+              cancelText="否">
+              <Button danger>{'删除'}</Button>
+            </Popconfirm>
             <Button type="primary" onClick={onSave}>
               {'保存'}
             </Button>
@@ -75,7 +84,6 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
         }>
         {'xxxxxxxx'}
       </Drawer>
-      <p>技能连招预设，生效 Buff，攻击类型，命中率，伤害类型，反应类型，所花时间</p>
     </>
   );
 });

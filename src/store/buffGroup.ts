@@ -1,19 +1,42 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
+import { AtkTypeCode, ElementClassCode, ReactionTypeCode } from '../app/common/Attribute';
 import { BuffTypeCode } from '../app/common/BuffTypeCode';
 import { BuffGroup, BuffType } from '../app/panel/buffConfigPanel/BuffConfigPanel';
+import { SingleAttack } from '../app/panel/skillBoxPanel/SkillBoxPanel';
 
 export class BuffGroupStore {
   constructor() {
     makeObservable(this, {
       buffGroupsData: observable,
       buffListBased: observable,
+      skillList: observable,
       buffGroupsLen: computed,
       changeBuffGroups: action,
       addBuffGroup: action,
       delBuffGroup: action,
     });
   }
+
+  skillList: Array<SingleAttack> = [
+    {
+      title: 'Q-一段伤害',
+      damageMultiplier: 100,
+      atkType: { name: '元素爆发', code: AtkTypeCode.ELEMENTAL_EXPLOSION },
+      hitRate: 1,
+      elementClass: {
+        name: '雷',
+        code: ElementClassCode.THUNDER,
+      },
+      reactionType: {
+        name: '无反应',
+        code: ReactionTypeCode.NONE,
+      },
+      costTime: 1,
+      effectiveBuff: [],
+      collected: false,
+    },
+  ];
 
   buffListBased: Array<BuffType> = [
     {
@@ -188,15 +211,44 @@ export class BuffGroupStore {
     },
   ];
 
-  changeBuffGroups: Function = (buffGroup: BuffGroup, index: number) => {
-    this.buffGroupsData[index] = buffGroup;
+  addSkillList = (/*attack: SingleAttack*/) => {
+    this.skillList.push({
+      title: '未命名',
+      damageMultiplier: 100,
+      atkType: { name: '普通攻击', code: AtkTypeCode.NORMAL_ATK },
+      hitRate: 1,
+      elementClass: {
+        name: '无属性',
+        code: ElementClassCode.NONE,
+      },
+      reactionType: {
+        name: '无反应',
+        code: ReactionTypeCode.NONE,
+      },
+      costTime: 1,
+      effectiveBuff: [],
+      collected: false,
+    });
+    // this.skillList.push(attack);
   };
 
-  addBuffGroup: Function = (buffGroup: BuffGroup) => {
+  changeSkillList = (attack: SingleAttack, index: number) => {
+    this.skillList[index] = attack;
+  };
+
+  delSkillList = (index: number) => {
+    this.skillList = this.skillList.filter((item, i) => index !== i);
+  };
+
+  addBuffGroup = (buffGroup: BuffGroup) => {
     this.buffGroupsData.push(buffGroup);
   };
 
-  delBuffGroup: Function = (index: number) => {
+  changeBuffGroups = (buffGroup: BuffGroup, index: number) => {
+    this.buffGroupsData[index] = buffGroup;
+  };
+
+  delBuffGroup = (index: number) => {
     this.buffGroupsData = this.buffGroupsData.filter((item, i) => index !== i);
   };
 
