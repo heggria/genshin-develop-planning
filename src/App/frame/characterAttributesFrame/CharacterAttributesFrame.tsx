@@ -21,7 +21,9 @@ export interface CharacterAttributesFrameProps {
   // buffGroupStore: BuffGroupStore;
 }
 
-const CharacterAttributesFrame = (props: CharacterAttributesFrameProps) => {
+export default observer(function CharacterAttributesFrame(
+  props: CharacterAttributesFrameProps,
+) {
   const listItems = props.attributes.map((element) => (
     <InputNumberForm
       key={element.type}
@@ -39,6 +41,4 @@ const CharacterAttributesFrame = (props: CharacterAttributesFrameProps) => {
       describe="人物的基础面板，注意是无任何加成的"
       content={listItems}></NormalFrame>
   );
-};
-
-export default inject((stores) => stores)(observer(CharacterAttributesFrame));
+});

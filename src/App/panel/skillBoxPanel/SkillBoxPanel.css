@@ -20,6 +20,9 @@
 .skill-box__title {
   font-size: 1.2rem;
   font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .skill-box__type {
   font-size: 0.8rem;

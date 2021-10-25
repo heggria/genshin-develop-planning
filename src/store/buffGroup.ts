@@ -188,21 +188,23 @@ export class BuffGroupStore {
     },
   ];
 
-  changeBuffGroups(buffGroup: BuffGroup, index: number) {
+  changeBuffGroups: Function = (buffGroup: BuffGroup, index: number) => {
     this.buffGroupsData[index] = buffGroup;
-  }
+  };
 
-  addBuffGroup(buffGroup: BuffGroup) {
+  addBuffGroup: Function = (buffGroup: BuffGroup) => {
     this.buffGroupsData.push(buffGroup);
-  }
+  };
 
-  delBuffGroup(index: number) {
+  delBuffGroup: Function = (index: number) => {
     this.buffGroupsData = this.buffGroupsData.filter((item, i) => index !== i);
-  }
+  };
+
+  clearBuffGroups = () => {
+    this.buffGroupsData = [];
+  };
 
   get buffGroupsLen() {
     return this.buffGroupsData.length;
   }
 }
-
-export const BUFF_GROUPS = 'buffGroupStore';

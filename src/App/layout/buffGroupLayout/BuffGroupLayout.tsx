@@ -2,14 +2,15 @@
 import './BuffGroupLayout.css';
 
 import { PlusOutlined } from '@ant-design/icons';
-import { inject, observer } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react';
+import React from 'react';
 
-import { BuffGroupStore } from '../../../store/buffGroup';
+import { useStores } from '../../../hooks/useStores';
 import NormalFrame from '../../frame/normalFrame/normalFrame';
 import BuffConfigPanel from '../../panel/buffConfigPanel/BuffConfigPanel';
 
-const BuffGroupFrame = ({ buffGroupStore }: { buffGroupStore: BuffGroupStore }) => {
+export default observer(function BuffGroupFrame() {
+  const { buffGroupStore } = useStores();
   const addClick = () =>
     buffGroupStore.addBuffGroup({
       collected: false,
@@ -25,13 +26,7 @@ const BuffGroupFrame = ({ buffGroupStore }: { buffGroupStore: BuffGroupStore }) 
       content={
         <>
           {buffGroupStore.buffGroupsData.map((item: any, index: any) => (
-            <BuffConfigPanel
-              key={index}
-              buffGroup={item}
-              index={index}
-              buffConfigChange={buffGroupStore.changeBuffGroups}
-              delBuffConfig={buffGroupStore.delBuffGroup}
-              buffGroupStore={buffGroupStore}></BuffConfigPanel>
+            <BuffConfigPanel key={index} buffGroup={item} index={index}></BuffConfigPanel>
           ))}
           <div
             role="button"
@@ -44,6 +39,4 @@ const BuffGroupFrame = ({ buffGroupStore }: { buffGroupStore: BuffGroupStore }) 
         </>
       }></NormalFrame>
   );
-};
-
-export default inject((stores) => stores)(observer(BuffGroupFrame));
+});

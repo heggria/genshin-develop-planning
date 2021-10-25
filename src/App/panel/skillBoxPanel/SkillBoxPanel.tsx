@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-vars */
 import './SkillBoxPanel.css';
 
-import { PlusOutlined } from '@ant-design/icons';
 import { inject, observer } from 'mobx-react';
-import React, { ElementType, useEffect, useState } from 'react';
+import React from 'react';
 
-import { BuffGroupStore } from '../../../store/buffGroup';
 import { AtkTypeCode, ElementClassCode, ReactionTypeCode } from '../../common/Attribute';
-import BuffConfigPanel, { BuffGroup } from '../../panel/buffConfigPanel/BuffConfigPanel';
+import { BuffGroup } from '../../panel/buffConfigPanel/BuffConfigPanel';
 
 export interface SingleAttack {
   title: string;
@@ -40,7 +38,7 @@ export interface SkillBoxPanelProps {
   showDrawer: Function;
 }
 
-const SkillBoxPanel = (props: SkillBoxPanelProps) => {
+export default observer(function SkillBoxPanel(props: SkillBoxPanelProps) {
   const openDrawer = () => {};
   const addToStream = () => {};
   const starSkill = () => {};
@@ -65,6 +63,4 @@ const SkillBoxPanel = (props: SkillBoxPanelProps) => {
       </div>
     </>
   );
-};
-
-export default inject((stores) => stores)(observer(SkillBoxPanel));
+});

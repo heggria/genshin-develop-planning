@@ -1,15 +1,10 @@
 /* eslint-disable no-unused-vars */
-import './BuffConfigFrame.css';
+import './SkillConfigFrame.css';
 
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Drawer, Input, message, notification, Space } from 'antd';
 import { DrawerProps } from 'antd/es/drawer';
 import { inject, observer } from 'mobx-react';
-import React, { ElementType, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { BuffGroupStore } from '../../../store/buffGroup';
-import { AtkTypeCode, ElementClassCode, ReactionTypeCode } from '../../common/Attribute';
-import BuffConfigPanel, { BuffGroup } from '../../panel/buffConfigPanel/BuffConfigPanel';
 import SkillBoxPanel, { SingleAttack } from '../../panel/skillBoxPanel/SkillBoxPanel';
 import SkillDetailPanel from '../../panel/skillDetailPanel/SkillDetailPanel';
 import NormalFrame from '../normalFrame/normalFrame';
@@ -19,14 +14,14 @@ interface BuffConfigFrameProps {
   changeAttack: Function;
 }
 
-const BuffConfigFrame = (props: BuffConfigFrameProps) => {
+export default observer(function SkillConfigFrame(props: BuffConfigFrameProps) {
   const [skillDetailPanelVisible, setSkillDetailPanelVisible] = useState(false);
   const [placement, setPlacement] = useState<DrawerProps['placement']>('right');
   const inputChange = (e: any) => {
     let cache = { ...props.attacks[0] };
     console.log(cache);
     cache.title = e.target.value;
-    props.changeAttack([cache]);
+    props.changeAttack(cache, 0);
   };
 
   return (
@@ -51,6 +46,4 @@ const BuffConfigFrame = (props: BuffConfigFrameProps) => {
         }></NormalFrame>
     </>
   );
-};
-
-export default inject((stores) => stores)(observer(BuffConfigFrame));
+});

@@ -1,5 +1,9 @@
-import { BUFF_GROUPS, BuffGroupStore } from './buffGroup';
+import React from 'react';
 
-export default {
-  [BUFF_GROUPS]: new BuffGroupStore(),
-};
+import { BuffGroupStore } from './buffGroup';
+
+const StoresContext = React.createContext({
+  buffGroupStore: new BuffGroupStore(),
+});
+
+export default StoresContext;
