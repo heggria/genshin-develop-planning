@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
 import { useStores } from '../../../hooks/useStores';
-import { SingleAttack } from '../../panel/skillBoxPanel/SkillBoxPanel';
+import { SingleAttack } from '../skillBoxPanel/SkillBoxPanel';
 
 interface SkillDetailPanelProps {
   dataIndex: number;

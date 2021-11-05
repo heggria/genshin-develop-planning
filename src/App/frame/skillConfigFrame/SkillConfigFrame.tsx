@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { useStores } from '../../../hooks/useStores';
 import SkillBoxPanel from '../../panel/skillBoxPanel/SkillBoxPanel';
 import SkillDetailPanel from '../../panel/skillDetailPanel/SkillDetailPanel';
+import SkillGroupPanel from '../../panel/skillGroupPanel/SkillGroupPanel';
 import NormalFrame from '../normalFrame/normalFrame';
 
 export default observer(function SkillConfigFrame() {
@@ -19,6 +20,17 @@ export default observer(function SkillConfigFrame() {
   const addClick = () => {
     buffGroupStore.addSkillList();
   };
+  const skillGroup = buffGroupStore.skillList.map((item, index) => (
+    <SkillBoxPanel
+      key={index}
+      singleAttack={item}
+      showDrawer={() => {
+        setSkillDetailPanelVisible(true);
+        setDrawIndex(index);
+      }}
+      id={index}
+      delSkill={() => buffGroupStore.delSkillList(index)}></SkillBoxPanel>
+  ));
   return (
     <>
       <NormalFrame
@@ -27,16 +39,7 @@ export default observer(function SkillConfigFrame() {
         content={
           <>
             <Divider style={{ fontSize: '1rem', fontWeight: 700 }}>技能预设</Divider>
-            {buffGroupStore.skillList.map((item, index) => (
-              <SkillBoxPanel
-                key={index}
-                singleAttack={item}
-                showDrawer={() => {
-                  setSkillDetailPanelVisible(true);
-                  setDrawIndex(index);
-                }}
-                delSkill={() => buffGroupStore.delSkillList(index)}></SkillBoxPanel>
-            ))}
+            {skillGroup}
             <div
               role="button"
               tabIndex={0}
@@ -46,6 +49,7 @@ export default observer(function SkillConfigFrame() {
               <PlusOutlined />
             </div>
             <Divider style={{ fontSize: '1rem', fontWeight: 700 }}>技能组编辑</Divider>
+            <SkillGroupPanel></SkillGroupPanel>
             <SkillDetailPanel
               visible={skillDetailPanelVisible}
               setVisible={setSkillDetailPanelVisible}

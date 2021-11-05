@@ -1,0 +1,28 @@
+.dropped-item {
+  height: 61px;
+  margin: 5px;
+  min-width: 84px;
+  width: calc((100% - 100px) / 10);
+  box-shadow: 0 0px 10px 0 #ddd;
+  box-sizing: content-box;
+}
+.dropped-item__title {
+  height: 43px;
+  background: #adc6ff;
+  text-align: center;
+  /* border: 1px solid #ccc; */
+  font-size: 10px;
+  padding: 2px 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* autoprefixer: ignore next */
+  -webkit-box-orient: vertical;
+}
+
+.dropped-item__time {
+  font-size: 10px;
+  text-align: center;
+  background-color: #d6e4ff;
+}

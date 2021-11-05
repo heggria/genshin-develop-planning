@@ -1,0 +1,44 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #efefef;
+}
+.App {
+  padding: 30px;
+  font-family: sans-serif;
+}
+
+.drop-area {
+  display: flex;
+  flex-flow: row wrap;
+  border: 1px dashed orange;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  width: 100%;
+  min-height: 100px;
+}
+.drop-area-hovered {
+  background-color: #ccc;
+}
+
+.draggable-container {
+  padding: 20 16px;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 8px;
+}
+.draggable {
+  padding: 8px;
+  display: inline-block;
+  background: #cefdea;
+  border-radius: 4px;
+  cursor: grab;
+}
+.skill-edit-button {
+  width: 100%;
+  margin: 7px;
+  float: right;
+  display: flex;
+  justify-content: right;
+}

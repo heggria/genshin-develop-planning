@@ -19,7 +19,8 @@ function App() {
         <meta name="description" content="Help you planning easier!" />
       </Helmet>
       <Layout>
-        <Header style={{ position: 'fixed', zIndex: 1, width: '100%', display: 'flex' }}>
+        <Header
+          style={{ position: 'fixed', zIndex: 100, width: '100%', display: 'flex' }}>
           <div className="logo">
             <img src={logo} className="App-logo" alt="logo" />
           </div>
