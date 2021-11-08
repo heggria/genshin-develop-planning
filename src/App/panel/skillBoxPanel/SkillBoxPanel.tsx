@@ -1,19 +1,13 @@
 /* eslint-disable no-unused-vars */
 import './SkillBoxPanel.css';
 
-import {
-  CloseOutlined,
-  MinusOutlined,
-  MoreOutlined,
-  SettingOutlined,
-  StarFilled,
-  StarOutlined,
-} from '@ant-design/icons';
-import { Button, Popconfirm, Tooltip } from 'antd';
+import { SettingOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
+import { Button, Tooltip } from 'antd';
 import { observer } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDrag } from 'react-dnd';
 
+import { useStores } from '../../../hooks/useStores';
 import { AtkTypeCode, ElementClassCode, ReactionTypeCode } from '../../common/Attribute';
 import { BuffGroup } from '../buffConfigPanel/BuffConfigPanel';
 
@@ -52,40 +46,27 @@ export interface SkillBoxPanelProps {
   delSkill: Function;
 }
 
-export default function SkillBoxPanel(props: SkillBoxPanelProps) {
+export default observer(function SkillBoxPanel(props: SkillBoxPanelProps) {
   const openDrawer = () => {};
   const addToStream = () => {};
   const starSkill = () => {};
   const delSkill = () => {};
-  const [top, setTop] = useState(0);
-  const [left, setLeft] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
 
-  const [topOffset, setTopOffset] = useState(0);
-  const [leftOffset, setLeftOffset] = useState(0);
-  const [moveable, setMoveable] = useState(false);
+  const { skillConfigStore } = useStores();
 
-  // const mousemoveEvent = (e: any) => {
-  //   console.log(moveable);
-  //   if (moveable) {
-  //     setTop((x) => (x = e.clientY - topOffset));
-  //     setLeft((x) => (x = e.clientX - leftOffset));
-  //   }
-  //   e.stopPropagation();
-  // };
-
-  const mouseDownEvent = (e: any) => {
-    setMoveable(true);
-    console.log(moveable);
-  };
-
-  useEffect(() => {}, []);
-  const [collectedProps, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: 'SkillConfigBox',
+    canDrag: !skillConfigStore.skillGroupEditable,
     item: { skill: props.singleAttack },
+    collect: (monitor: any) => ({
+      isDragging: monitor.isDragging(),
+    }),
   });
+  drag(ref);
   return (
     <div style={{ position: 'relative' }}>
-      <div ref={drag} className="skill-box" style={{ top: top, left: left }}>
+      <div ref={ref} className="skill-box">
         <Button
           className="skill-box-closeButton"
           type="primary"
@@ -164,4 +145,4 @@ export default function SkillBoxPanel(props: SkillBoxPanelProps) {
       </div>
     </div>
   );
-}
+});

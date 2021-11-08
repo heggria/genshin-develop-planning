@@ -26,6 +26,7 @@ const SkillLiteBox: FC<SkillLiteBoxProps> = ({ skill, id, index, moveCard }) => 
   const { skillConfigStore } = useStores();
   const [{ isDragging }, drag] = useDrag({
     type: 'item',
+    canDrag: !skillConfigStore.skillGroupEditable,
     item: () => {
       return { id, index };
     },
@@ -89,7 +90,7 @@ const SkillLiteBox: FC<SkillLiteBoxProps> = ({ skill, id, index, moveCard }) => 
       item.index = hoverIndex;
     },
   });
-  if (skillConfigStore.skillGroupEditable) drag(drop(ref));
+  drag(drop(ref));
   return (
     <>
       <div
@@ -97,7 +98,7 @@ const SkillLiteBox: FC<SkillLiteBoxProps> = ({ skill, id, index, moveCard }) => 
         style={
           isDragging ? { opacity: 0.5, border: '1px #f00 solid', margin: '4px' } : {}
         }
-        ref={skillConfigStore.skillGroupEditable ? ref : null}
+        ref={ref}
         data-handler-id={handlerId}>
         <div className="dropped-item__title">{skill.title}</div>
         <div className="dropped-item__time">{skill.costTime + 's'}</div>

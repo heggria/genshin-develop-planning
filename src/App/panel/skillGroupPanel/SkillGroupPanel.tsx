@@ -59,28 +59,18 @@ export default observer(function SkillGroupPanel() {
         skill={card.skill}></SkillLiteBox>
     );
   };
+  const onToggleForbidDrag = useCallback(() => {
+    skillConfigStore.setSkillGroupEditable(!skillConfigStore.skillGroupEditable);
+  }, [skillConfigStore]);
   return (
     <>
       <div className={'skill-edit-button'}>
         {skillConfigStore.skillGroupEditable ? (
-          <Button
-            icon={<EditOutlined />}
-            onClick={() => {
-              skillConfigStore.setSkillGroupEditable(
-                !skillConfigStore.skillGroupEditable,
-              );
-            }}>
+          <Button icon={<EditOutlined />} onClick={onToggleForbidDrag}>
             {'编辑'}
           </Button>
         ) : (
-          <Button
-            type={'primary'}
-            icon={<SaveOutlined />}
-            onClick={() => {
-              skillConfigStore.setSkillGroupEditable(
-                !skillConfigStore.skillGroupEditable,
-              );
-            }}>
+          <Button type={'primary'} icon={<SaveOutlined />} onClick={onToggleForbidDrag}>
             {'保存'}
           </Button>
         )}
