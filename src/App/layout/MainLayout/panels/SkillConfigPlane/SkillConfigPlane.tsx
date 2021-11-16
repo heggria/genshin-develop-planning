@@ -1,26 +1,24 @@
-/* eslint-disable no-unused-vars */
-import './SkillConfigFrame.css';
-
 import { PlusOutlined } from '@ant-design/icons';
 import { Divider } from 'antd';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
-import { useStores } from '../../../hooks/useStores';
-import SkillBoxPanel from '../../panel/skillBoxPanel/SkillBoxPanel';
-import SkillDetailPanel from '../../panel/skillDetailPanel/SkillDetailPanel';
-import SkillGroupPanel from '../../panel/skillGroupPanel/SkillGroupPanel';
-import NormalFrame from '../normalFrame/normalFrame';
+import { useStores } from '../../../../../hooks/useStores';
+import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
+import { AddButton } from '../../style/index.style';
+import SkillBoxPanel from '../SkillBoxPanel/SkillBoxPanel';
+import SkillDetailPanel from '../SkillDetailPanel/SkillDetailPanel';
+import SkillGroupPanel from '../SkillGroupPanel/SkillGroupPanel';
 
 export default observer(function SkillConfigFrame() {
   const [skillDetailPanelVisible, setSkillDetailPanelVisible] = useState(false);
   const [drawIndex, setDrawIndex] = useState(-1);
 
-  const { buffGroupStore } = useStores();
+  const { skillConfigStore } = useStores();
   const addClick = () => {
-    buffGroupStore.addSkillList();
+    skillConfigStore.addSkillList();
   };
-  const skillGroup = buffGroupStore.skillList.map((item, index) => (
+  const skillGroup = skillConfigStore.skillList.map((item, index) => (
     <SkillBoxPanel
       key={index}
       singleAttack={item}
@@ -29,7 +27,7 @@ export default observer(function SkillConfigFrame() {
         setDrawIndex(index);
       }}
       id={index}
-      delSkill={() => buffGroupStore.delSkillList(index)}></SkillBoxPanel>
+      delSkill={() => skillConfigStore.delSkillList(index)}></SkillBoxPanel>
   ));
   return (
     <>
@@ -40,14 +38,14 @@ export default observer(function SkillConfigFrame() {
           <>
             <Divider style={{ fontSize: '1rem', fontWeight: 700 }}>技能预设</Divider>
             {skillGroup}
-            <div
+            <AddButton
               role="button"
               tabIndex={0}
-              className="add-div add-skill"
+              style={{ height: 73, width: 168 }}
               onClick={addClick}
               onKeyDown={addClick}>
               <PlusOutlined />
-            </div>
+            </AddButton>
             <Divider style={{ fontSize: '1rem', fontWeight: 700 }}>技能组编辑</Divider>
             <SkillGroupPanel></SkillGroupPanel>
             <SkillDetailPanel

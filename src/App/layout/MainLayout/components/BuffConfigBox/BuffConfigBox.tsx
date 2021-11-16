@@ -1,37 +1,14 @@
 /* eslint-disable no-unused-vars */
-import './BuffConfigPanel.css';
+import './BuffConfigBox.css';
 
 import { CloseOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
 import { Button, Input, InputNumber, List, Popconfirm, Select, Tooltip } from 'antd';
 import { inject, observer } from 'mobx-react';
 import React, { CSSProperties, useState } from 'react';
 
-import { useStores } from '../../../hooks/useStores';
-import { BuffGroupStore } from '../../../store/buffGroup';
-import { BuffTypeCode } from '../../common/BuffTypeCode';
-
-// interface FormLiteral {
-//   title: string;
-// }
-
-export interface BuffType {
-  code: BuffTypeCode;
-  name: string;
-}
-
-export interface Buff {
-  type: BuffType;
-  value: number;
-  productivity: number;
-}
-
-export interface BuffGroup {
-  collected: boolean;
-  available: boolean;
-  title: string;
-  allProductivity: number;
-  buffs: Array<Buff>;
-}
+import { useStores } from '../../../../../hooks/useStores';
+import { BuffGroupStore } from '../../../../../store/buffGroup';
+import { Buff, BuffGroup, BuffType } from '../../../../common/interface';
 
 interface BuffListItemProps {
   item: Buff;

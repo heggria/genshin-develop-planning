@@ -6,7 +6,7 @@ import React from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import logo from '../img/logo.svg';
-import MainLayout from './layout/mainLayout/MainLayout';
+import MainLayout from './layout/MainLayout';
 
 const { Header, Content, Footer } = Layout;
 

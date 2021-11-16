@@ -7,36 +7,8 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDrag } from 'react-dnd';
 
-import { useStores } from '../../../hooks/useStores';
-import { AtkTypeCode, ElementClassCode, ReactionTypeCode } from '../../common/Attribute';
-import { BuffGroup } from '../buffConfigPanel/BuffConfigPanel';
-
-export interface SingleAttack {
-  title: string;
-  damageMultiplier: number; // 倍率/%
-  atkType: AtkType; // 攻击类型
-  hitRate: number; // 命中率
-  elementClass: ElementClass; // 伤害元素类型
-  reactionType: ReactionType; // 目前只计算增幅反应
-  costTime: number; // 时间
-  effectiveBuff: Array<BuffGroup>; // 生效 buff
-  collected: boolean;
-}
-
-export interface AtkType {
-  name: string;
-  code: AtkTypeCode;
-}
-
-export interface ElementClass {
-  name: string;
-  code: ElementClassCode;
-}
-
-export interface ReactionType {
-  name: string;
-  code: ReactionTypeCode;
-}
+import { useStores } from '../../../../../hooks/useStores';
+import { SingleAttack } from '../../../../common/interface';
 
 export interface SkillBoxPanelProps {
   id: number;
@@ -54,11 +26,12 @@ export default observer(function SkillBoxPanel(props: SkillBoxPanelProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const { skillConfigStore } = useStores();
+  const { skillGroupEditable } = skillConfigStore;
 
   const [{ isDragging }, drag] = useDrag({
     type: 'SkillConfigBox',
-    canDrag: !skillConfigStore.skillGroupEditable,
-    item: { skill: props.singleAttack },
+    canDrag: !skillGroupEditable,
+    item: { skillId: props.singleAttack.id },
     collect: (monitor: any) => ({
       isDragging: monitor.isDragging(),
     }),

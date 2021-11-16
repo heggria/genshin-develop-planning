@@ -4,10 +4,10 @@ import './CharacterAttributesFrame.css';
 import { inject, observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
-import { BuffGroupStore } from '../../../store/buffGroup';
-import { AttributesTypeCode } from '../../common/Attribute';
-import InputNumberForm from '../../component/inputNumberForm/InputNumberForm';
-import NormalFrame from '../normalFrame/normalFrame';
+import { BuffGroupStore } from '../../../../../store/buffGroup';
+import { AttributesTypeCode } from '../../../../common/type-code';
+import InputNumberForm from '../../../../components/InputNumberForm/InputNumberForm';
+import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 
 export interface BaseAttributes {
   type: AttributesTypeCode;

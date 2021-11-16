@@ -1,13 +1,11 @@
-/* eslint-disable no-unused-vars */
-import './BuffGroupLayout.css';
-
 import { PlusOutlined } from '@ant-design/icons';
 import { observer } from 'mobx-react';
 import React from 'react';
 
-import { useStores } from '../../../hooks/useStores';
-import NormalFrame from '../../frame/normalFrame/normalFrame';
-import BuffConfigPanel from '../../panel/buffConfigPanel/BuffConfigPanel';
+import { useStores } from '../../../../../hooks/useStores';
+import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
+import BuffConfigPanel from '../../components/BuffConfigBox/BuffConfigBox';
+import { AddButton } from '../../style/index.style';
 
 export default observer(function BuffGroupFrame() {
   const { buffGroupStore } = useStores();
@@ -28,14 +26,9 @@ export default observer(function BuffGroupFrame() {
           {buffGroupStore.buffGroupsData.map((item: any, index: any) => (
             <BuffConfigPanel key={index} buffGroup={item} index={index}></BuffConfigPanel>
           ))}
-          <div
-            role="button"
-            tabIndex={0}
-            className="add-div"
-            onClick={addClick}
-            onKeyDown={addClick}>
+          <AddButton role="button" tabIndex={0} onClick={addClick} onKeyDown={addClick}>
             <PlusOutlined />
-          </div>
+          </AddButton>
         </>
       }></NormalFrame>
   );
