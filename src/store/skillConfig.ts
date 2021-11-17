@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 import { AttackSubModule, SingleAttack } from '../app/common/interface';
 import { AtkTypeCode, ElementTypeCode, ReactionTypeCode } from '../app/common/type-code';
@@ -35,26 +35,24 @@ export class SkillConfigStore {
 
   addSkillList = (/*attack: SingleAttack*/) => {
     const timestamp = new Date().getTime().toString();
-    this.skillList.push(
-      observable({
-        id: timestamp,
-        title: '未命名',
-        damageMultiplier: 100,
-        atkType: { name: '普通攻击', code: AtkTypeCode.NORMAL_ATK },
-        hitRate: 1,
-        elementClass: {
-          name: '无属性',
-          code: ElementTypeCode.NONE,
-        },
-        reactionType: {
-          name: '无反应',
-          code: ReactionTypeCode.NONE,
-        },
-        costTime: 1,
-        effectiveBuff: [],
-        collected: false,
-      }),
-    );
+    this.skillList.push({
+      id: timestamp,
+      title: '未命名',
+      damageMultiplier: 100,
+      atkType: { name: '普通攻击', code: AtkTypeCode.NORMAL_ATK },
+      hitRate: 100,
+      elementType: {
+        name: '无属性',
+        code: ElementTypeCode.NONE,
+      },
+      reactionType: {
+        name: '无反应',
+        code: ReactionTypeCode.NONE,
+      },
+      costTime: 1,
+      effectiveBuff: [],
+      collected: false,
+    } as SingleAttack);
     // this.skillList.push(attack);
   };
 

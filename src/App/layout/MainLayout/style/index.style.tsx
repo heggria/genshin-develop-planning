@@ -14,6 +14,7 @@ export const AddButton = styled.div.attrs((props: any) => ({
   justify-content: center;
   align-items: center;
   user-select: none;
+  text-align: center;
   :hover {
     cursor: pointer;
     background-color: ${gray3};

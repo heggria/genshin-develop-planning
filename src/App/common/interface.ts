@@ -30,7 +30,7 @@ export interface SingleAttack {
   damageMultiplier: number; // 倍率/%
   atkType: AtkType; // 攻击类型
   hitRate: number; // 命中率
-  elementClass: ElementClass; // 伤害元素类型
+  elementType: ElementType; // 伤害元素类型
   reactionType: ReactionType; // 目前只计算增幅反应
   costTime: number; // 时间
   effectiveBuff: Array<BuffGroup>; // 生效 buff
@@ -42,7 +42,7 @@ export interface AtkType {
   code: AtkTypeCode;
 }
 
-export interface ElementClass {
+export interface ElementType {
   name: string;
   code: ElementTypeCode;
 }

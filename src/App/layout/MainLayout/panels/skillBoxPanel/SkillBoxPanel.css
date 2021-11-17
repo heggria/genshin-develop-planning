@@ -48,19 +48,19 @@
   display: flex;
 }
 .skill-box__multiplier,
-.skill-box__buff,
 .skill-box__time {
   height: 16px;
-  text-align: center;
-  font-size: 10px;
-  font-weight: 500;
-}
-.skill-box__time {
-  flex: 2;
-}
-.skill-box__multiplier,
-.skill-box__buff {
-  flex: 2;
+  text-align: left;
+  font-size: 12px;
+  line-height: 12px;
+  font-weight: 300;
+  width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
 }
 
 .skill-box-closeButton {

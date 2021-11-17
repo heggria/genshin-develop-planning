@@ -1,7 +1,13 @@
 /* eslint-disable no-unused-vars */
 import './SkillBoxPanel.css';
 
-import { SettingOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
+import {
+  FieldTimeOutlined,
+  SettingOutlined,
+  StarFilled,
+  StarOutlined,
+  ThunderboltOutlined,
+} from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef, useState } from 'react';
@@ -88,30 +94,22 @@ export default observer(function SkillBoxPanel(props: SkillBoxPanelProps) {
           <div className="skill-box__type">
             {props.singleAttack.atkType.name +
               '-' +
-              props.singleAttack.elementClass.name +
+              props.singleAttack.elementType.name +
               '-' +
               props.singleAttack.reactionType.name}
           </div>
           <div className="skill-box-bottom">
-            <div className="skill-box__buff">
-              <Tooltip
-                title={props.singleAttack.effectiveBuff}
-                placement="bottom"
-                mouseEnterDelay={1}>
-                {'BUFF'}
-              </Tooltip>
-            </div>
             <div className="skill-box__multiplier">
-              <Tooltip title="伤害倍率" placement="bottom" mouseEnterDelay={1}>
+              <ThunderboltOutlined style={{ flex: 1 }} />
+              <div style={{ marginLeft: '5px', flex: 4 }}>
                 {props.singleAttack.damageMultiplier + '%'}
-              </Tooltip>
+              </div>
             </div>
             <div className="skill-box__time">
-              {
-                <Tooltip title="持续时间" placement="bottom" mouseEnterDelay={1}>
-                  {props.singleAttack.costTime + 's'}
-                </Tooltip>
-              }
+              <FieldTimeOutlined />
+              <div style={{ marginLeft: '5px', flex: 4 }}>
+                {props.singleAttack.costTime + 's'}
+              </div>
             </div>
           </div>
         </div>
