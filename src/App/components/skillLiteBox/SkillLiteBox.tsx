@@ -2,14 +2,14 @@
 import './SkillLiteBox.css';
 
 import { observer } from 'mobx-react';
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
-import { DropTargetMonitor, useDrag, useDrop, XYCoord } from 'react-dnd';
+import React, { useRef, useState } from 'react';
+import { useDrag } from 'react-dnd';
 
 import { useStores } from '../../../hooks/useStores';
 import { SingleAttack } from '../../common/interface';
 
 interface SkillLiteBoxProps {
-  skillId: string;
+  skill: SingleAttack;
   index: number;
   id: any;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
@@ -23,9 +23,10 @@ export interface DragItem {
 }
 
 export default observer(function SkillLiteBox(skillLiteBoxProps: SkillLiteBoxProps) {
-  const { skillId, id, index, moveCard } = skillLiteBoxProps;
+  const { skill, id, index, moveCard } = skillLiteBoxProps;
   const ref = useRef<HTMLDivElement>(null);
   const { skillConfigStore } = useStores();
+
   const [{ isDragging }, drag] = useDrag({
     type: 'item',
     canDrag: !skillConfigStore.skillGroupEditable,
@@ -93,15 +94,6 @@ export default observer(function SkillLiteBox(skillLiteBoxProps: SkillLiteBoxPro
   //   },
   // });
   // drag(drop(ref));
-  const [skill, setSkill] = useState({} as SingleAttack);
-  useEffect(() => {
-    let c = {} as any;
-    skillConfigStore.skillList.map((item) => {
-      if (item.id === skillId) c = item;
-    });
-    setSkill(c);
-  }, [skillConfigStore, skillId]);
-  console.log(11111);
   return (
     <>
       <div

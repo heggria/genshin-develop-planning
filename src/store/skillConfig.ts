@@ -1,8 +1,7 @@
 import { makeAutoObservable, observable } from 'mobx';
 
-import { SingleAttack } from '../app/common/interface';
+import { AttackSubModule, SingleAttack } from '../app/common/interface';
 import { AtkTypeCode, ElementTypeCode, ReactionTypeCode } from '../app/common/type-code';
-import { AttackSubModule } from '../app/layout/MainLayout/panels/SkillGroupPanel/SkillGroupPanel';
 
 export class SkillConfigStore {
   constructor() {
@@ -59,12 +58,33 @@ export class SkillConfigStore {
     // this.skillList.push(attack);
   };
 
+  asyncSkillListChange = () => {
+    let c = new Array<AttackSubModule>();
+    this.skillGroup.map((item) => {
+      let index = this.findIndex(this.skillList, item.skill.id) as number;
+      console.log(index);
+      if (index >= 0) {
+        c.push({ skill: this.skillList[index], arrangementId: item.arrangementId });
+      }
+    });
+    this.skillGroup = c;
+  };
+
+  findIndex = (array: Array<any>, id: string) => {
+    for (let index in array) {
+      if (array[index].id === id) return index;
+    }
+    return -1;
+  };
+
   changeSkillList = (attack: SingleAttack, index: number) => {
     this.skillList[index] = attack;
+    this.asyncSkillListChange();
   };
 
   delSkillList = (index: number) => {
     this.skillList = this.skillList.filter((item, i) => index !== i);
+    this.asyncSkillListChange();
   };
 
   setSkillGroupEditable = (skillGroupEditable: boolean) => {

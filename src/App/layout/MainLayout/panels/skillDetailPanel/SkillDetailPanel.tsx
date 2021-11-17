@@ -1,7 +1,4 @@
 /* eslint-disable no-unused-vars */
-import './SkillDetailPanel.css';
-
-import { CloseOutlined } from '@ant-design/icons';
 import { Button, Drawer, Input, message, Popconfirm, Space } from 'antd';
 import { DrawerProps } from 'antd/es/drawer';
 import { observer } from 'mobx-react';
@@ -13,7 +10,7 @@ import { SingleAttack } from '../../../../common/interface';
 interface SkillDetailPanelProps {
   dataIndex: number;
   visible: boolean;
-  setVisible: Function;
+  closeDrawer: Function;
 }
 
 export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) {
@@ -32,10 +29,10 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
     else setAtkData({} as SingleAttack);
   }, [skillConfigStore.skillList, props.dataIndex]);
   const onClose = () => {
-    props.setVisible(false);
+    props.closeDrawer();
   };
   const onSave = () => {
-    props.setVisible(false);
+    onClose();
     if (atkData.title !== '') {
       message.success('保存成功！', 1);
     } else {

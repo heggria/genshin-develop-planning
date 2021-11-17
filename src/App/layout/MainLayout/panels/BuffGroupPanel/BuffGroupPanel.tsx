@@ -26,7 +26,13 @@ export default observer(function BuffGroupFrame() {
           {buffGroupStore.buffGroupsData.map((item: any, index: any) => (
             <BuffConfigPanel key={index} buffGroup={item} index={index}></BuffConfigPanel>
           ))}
-          <AddButton role="button" tabIndex={0} onClick={addClick} onKeyDown={addClick}>
+          <AddButton
+            role="button"
+            tabIndex={0}
+            onClick={addClick}
+            height={'307px'}
+            width={'168px'}
+            onKeyDown={addClick}>
             <PlusOutlined />
           </AddButton>
         </>

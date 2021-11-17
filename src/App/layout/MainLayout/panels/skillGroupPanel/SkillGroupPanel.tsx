@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-import './SkillGroupPanel.css';
-
 import { EditOutlined, SaveOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { observer } from 'mobx-react';
@@ -8,30 +5,35 @@ import React, { useCallback } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { useStores } from '../../../../../hooks/useStores';
+import { AttackSubModule } from '../../../../common/interface';
 import SkillLiteBox from '../../../../components/SkillLiteBox/SkillLiteBox';
-
-export interface AttackSubModule {
-  skillId: string;
-  arrangementId: string;
-}
+import { SkillDropArea, SkillEditableButton } from '../../style/index.style';
 
 export default observer(function SkillGroupPanel() {
   const {
     skillGroup,
+    skillList,
     addSkillGroup,
     setSkillGroup,
     skillGroupEditable,
     setSkillGroupEditable,
   } = useStores().skillConfigStore;
+
   const appendItem = useCallback(
     ({ skillId }) => {
-      addSkillGroup({
-        skillId: skillId,
-        arrangementId: new Date().getTime().toString(),
-      } as AttackSubModule);
+      for (let skill of skillList) {
+        if (skill.id === skillId) {
+          addSkillGroup({
+            skill,
+            arrangementId: new Date().getTime().toString(),
+          } as AttackSubModule);
+          break;
+        }
+      }
     },
-    [addSkillGroup],
+    [addSkillGroup, skillList],
   );
+
   console.log(skillGroup);
   // 第一个参数是 collect 方法返回的对象，第二个参数是一个 ref 值，赋值给 drop 元素
   const [collectProps, drop] = useDrop({
@@ -51,22 +53,27 @@ export default observer(function SkillGroupPanel() {
     },
     [setSkillGroup, skillGroup],
   );
-  const renderCard = skillGroup.map((item, index) => {
-    return (
-      <SkillLiteBox
-        key={item.arrangementId}
-        index={index}
-        id={item.arrangementId}
-        moveCard={moveCard}
-        skillId={item.skillId}></SkillLiteBox>
-    );
-  });
+  const renderCard =
+    skillGroup.length > 0 &&
+    skillGroup.map((item, index) => {
+      console.log(item.skill);
+      return (
+        <SkillLiteBox
+          key={item.arrangementId}
+          index={index}
+          id={item.arrangementId}
+          moveCard={moveCard}
+          skill={item.skill}></SkillLiteBox>
+      );
+    });
   const onToggleForbidDrag = useCallback(() => {
     setSkillGroupEditable(!skillGroupEditable);
   }, [setSkillGroupEditable, skillGroupEditable]);
+
+  console.log(1111);
   return (
     <>
-      <div className={'skill-edit-button'}>
+      <SkillEditableButton>
         {skillGroupEditable ? (
           <Button icon={<EditOutlined />} onClick={onToggleForbidDrag}>
             {'编辑'}
@@ -76,13 +83,13 @@ export default observer(function SkillGroupPanel() {
             {'保存'}
           </Button>
         )}
-      </div>
-      <div
-        ref={!skillGroupEditable ? drop : null}
-        className={`drop-area ${collectProps.hovered ? 'drop-area-hovered' : ''}`}
-        style={skillGroupEditable ? { border: '1px #fff dashed' } : {}}>
+      </SkillEditableButton>
+      <SkillDropArea
+        isHover={collectProps.hovered}
+        editable={skillGroupEditable}
+        ref={drop}>
         {renderCard}
-      </div>
+      </SkillDropArea>
     </>
   );
 });

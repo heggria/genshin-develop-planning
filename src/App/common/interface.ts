@@ -51,3 +51,8 @@ export interface ReactionType {
   name: string;
   code: ReactionTypeCode;
 }
+
+export interface AttackSubModule {
+  skill: SingleAttack;
+  arrangementId: string;
+}

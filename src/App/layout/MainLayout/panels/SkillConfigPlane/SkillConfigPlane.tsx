@@ -18,7 +18,7 @@ export default observer(function SkillConfigFrame() {
   const addClick = () => {
     skillConfigStore.addSkillList();
   };
-  const skillGroup = skillConfigStore.skillList.map((item, index) => (
+  const skillList = skillConfigStore.skillList.map((item, index) => (
     <SkillBoxPanel
       key={index}
       singleAttack={item}
@@ -37,21 +37,27 @@ export default observer(function SkillConfigFrame() {
         content={
           <>
             <Divider style={{ fontSize: '1rem', fontWeight: 700 }}>技能预设</Divider>
-            {skillGroup}
+            {skillList}
             <AddButton
               role="button"
               tabIndex={0}
-              style={{ height: 73, width: 168 }}
+              height={'73px'}
+              width={'168px'}
               onClick={addClick}
               onKeyDown={addClick}>
               <PlusOutlined />
             </AddButton>
             <Divider style={{ fontSize: '1rem', fontWeight: 700 }}>技能组编辑</Divider>
             <SkillGroupPanel></SkillGroupPanel>
-            <SkillDetailPanel
-              visible={skillDetailPanelVisible}
-              setVisible={setSkillDetailPanelVisible}
-              dataIndex={drawIndex}></SkillDetailPanel>
+            {drawIndex >= 0 ? (
+              <SkillDetailPanel
+                visible={skillDetailPanelVisible}
+                closeDrawer={() => {
+                  setSkillDetailPanelVisible(false);
+                  setDrawIndex(-1);
+                }}
+                dataIndex={drawIndex}></SkillDetailPanel>
+            ) : null}
           </>
         }></NormalFrame>
     </>
