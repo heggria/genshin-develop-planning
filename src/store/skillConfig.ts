@@ -80,6 +80,12 @@ export class SkillConfigStore {
     this.asyncSkillListChange();
   };
 
+  moveSkill = (hoverIndex: number, dragIndex: number) => {
+    const dragCard = this.skillGroup[dragIndex];
+    this.skillGroup.splice(dragIndex, 1);
+    this.skillGroup.splice(hoverIndex, 0, dragCard);
+  };
+
   delSkillList = (index: number) => {
     this.skillList = this.skillList.filter((item, i) => index !== i);
     this.asyncSkillListChange();

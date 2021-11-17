@@ -14,9 +14,9 @@ export default observer(function SkillGroupPanel() {
     skillGroup,
     skillList,
     addSkillGroup,
-    setSkillGroup,
     skillGroupEditable,
     setSkillGroupEditable,
+    moveSkill,
   } = useStores().skillConfigStore;
 
   const appendItem = useCallback(
@@ -47,11 +47,10 @@ export default observer(function SkillGroupPanel() {
   });
   const moveCard = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      const dragCard = skillGroup[dragIndex];
-      setSkillGroup(skillGroup.splice(dragIndex, 1));
-      setSkillGroup(skillGroup.splice(hoverIndex, 0, dragCard));
+      console.log('moveCard');
+      moveSkill(hoverIndex, dragIndex);
     },
-    [setSkillGroup, skillGroup],
+    [moveSkill],
   );
   const renderCard =
     skillGroup.length > 0 &&
