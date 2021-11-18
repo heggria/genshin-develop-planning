@@ -4,17 +4,9 @@ import './CharacterAttributesFrame.css';
 import { inject, observer } from 'mobx-react';
 import React, { useEffect, useState } from 'react';
 
-import { BuffGroupStore } from '../../../../../store/buffGroup';
-import { AttributesTypeCode } from '../../../../common/type-code';
+import { BaseAttributes } from '../../../../common/interface';
 import InputNumberForm from '../../../../components/InputNumberForm/InputNumberForm';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
-
-export interface BaseAttributes {
-  type: AttributesTypeCode;
-  name: string;
-  value: number;
-  editable: boolean;
-}
 
 export interface CharacterAttributesFrameProps {
   attributes: Array<BaseAttributes>;
@@ -31,7 +23,6 @@ export default observer(function CharacterAttributesFrame(
       width={100}
       min={0}
       step={0.01}
-      disabled={!element.editable}
       max={99999}
       defaultValue={element.value}></InputNumberForm>
   ));

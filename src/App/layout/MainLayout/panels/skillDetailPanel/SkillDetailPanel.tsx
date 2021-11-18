@@ -28,8 +28,8 @@ import {
   ElementTypeCode,
   ReactionTypeCode,
 } from '../../../../common/type-code';
-import { boldFont, smallFont } from '../../style/common.style';
-import { AddButton } from '../../style/index.style';
+import { boldFont, fontSize1 } from '../../style/common.style';
+import { AddButton, InputBox, InputTitle } from '../../style/index.style';
 
 interface SkillDetailPanelProps {
   dataIndex: number;
@@ -231,15 +231,4 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
 const SkillDetailContainer = styled.div`
   display: flex;
   flex-flow: row wrap;
-`;
-
-const InputBox = styled.div`
-  width: 44%;
-  margin: 0 3% 15px 3%;
-`;
-
-const InputTitle = styled.div`
-  font-size: ${smallFont};
-  font-weight: ${boldFont};
-  line-height: ${2};
 `;

@@ -28,9 +28,5 @@ export const reactionTypeCodeOptions = [
   { label: '燃烧', value: ReactionTypeCode.COMBUSTION },
   { label: '感电', value: ReactionTypeCode.INDUCTION },
   { label: '超导', value: ReactionTypeCode.SUPERCONDUCT },
-  { label: '扩散（雷）', value: ReactionTypeCode.DIFFUSION_THUNDER },
-  { label: '扩散（火）', value: ReactionTypeCode.DIFFUSION_FIRE },
-  { label: '扩散（水）', value: ReactionTypeCode.DIFFUSION_WATER },
-  { label: '扩散（冰）', value: ReactionTypeCode.DIFFUSION_ICE },
   { label: '扩散', value: ReactionTypeCode.DIFFUSION },
 ];

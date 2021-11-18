@@ -12,7 +12,7 @@ interface InputNumberFormProps {
   width: number;
   defaultValue: number;
   step: number;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 // 数字输入 flex div

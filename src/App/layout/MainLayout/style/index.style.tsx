@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { gray0, gray3, gray6 } from './common.style';
+import { boldFont, fontSize1, gray0, gray3, gray6 } from './common.style';
 
 export const AddButton = styled.div.attrs((props: any) => ({
   height: props.height as string,
@@ -41,4 +41,20 @@ export const SkillDropArea = styled.div.attrs((props: any) => ({
   min-height: 73px;
   ${(props: any) => props.editable && `border: 1px ${gray0} dashed`}
   ${(props: any) => props.isHover && `background-color: ${gray3};`}
+`;
+
+export const InputBox = styled.div.attrs((props: any) => ({
+  width: props.width as string,
+  height: props.height as string,
+}))`
+  /* width: ${(props) => props.width}; */
+  margin: 0 10px 0 10px;
+  flex: 1 1 100px;
+  height: ${(props) => props.height};
+`;
+
+export const InputTitle = styled.div`
+  font-size: ${fontSize1};
+  font-weight: ${boldFont};
+  line-height: ${2};
 `;

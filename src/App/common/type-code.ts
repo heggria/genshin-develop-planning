@@ -94,3 +94,13 @@ export enum BuffTypeCode {
   ELEMENTAL_EXPLOSION_DAMAGE, // 元素爆发
   CASE_DAMAGE, // 直接加成
 }
+
+// 计算值类型描述
+export enum ValueTypeCode {
+  // 默认
+  DEFAULT,
+  // 百分比
+  PERCENT,
+  // 普通数值
+  NUMBER,
+}

@@ -21,6 +21,11 @@ export const accent1 = '#9b8dab';
 export const fontFamily = "'Segoe UI', 'Helvetica Neue',sansserif";
 export const fontSize = '15px';
 
-export const smallFont = '12px';
+export const fontSize0 = '10px';
+export const fontSize1 = '12px';
+export const fontSize2 = '14px';
+export const fontSize3 = '16px';
+export const fontSize4 = '18px';
+export const fontSize5 = '20px';
 
 export const boldFont = '700';

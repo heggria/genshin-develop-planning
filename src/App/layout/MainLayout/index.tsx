@@ -1,13 +1,15 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
 import BuffGroupLayout from './panels/BuffGroupPanel/BuffGroupPanel';
+import HolyRelicConfigPanel from './panels/HolyRelicConfigPanel/HolyRelicConfigPanel';
 import BuffConfigFrame from './panels/SkillConfigPlane/SkillConfigPlane';
 
 const MainLayoutContainer = styled.div`
   background: #fff;
-  min-height: 380px;
+  max-width: 902px;
 `;
 // 组件层级
 // 独立：public-component 公用组件，多个 layout 用到同一个 component
@@ -19,8 +21,16 @@ export default function MainLayout() {
   return (
     <MainLayoutContainer>
       <Routes>
-        <Route path={`/`} element={<BuffConfigFrame />} />
-        <Route path={`/buff`} element={<BuffGroupLayout />} />
+        <Route
+          path={`/`}
+          element={
+            <>
+              <HolyRelicConfigPanel />
+              {/* <BuffConfigFrame />
+              <BuffGroupLayout /> */}
+            </>
+          }
+        />
       </Routes>
     </MainLayoutContainer>
   );

@@ -34,10 +34,14 @@ Yarn + Vite + Typescript + React Hooks + Mobx + Antd + Eslint + Prettier
 
 styled-components + react-router-dom + react-helmet-async
 
+## 随笔
+
+- 211118 做数据结构太痛苦了……
+
 ## 目前学习情况
 
-- 了解上面一系列的工具链的作用与其具体的应用形式
-- 了解函数式编程与 JSX 的魅力
+- 熟悉上面一系列的工具链的作用与其具体的应用形式
+- get 前端整体架构铺设经验
 - 正在熟悉各种 hook
 
 ## 感想
