@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
 import { BuffGroup, BuffType } from '../app/common/interface';
-import { BuffTypeCode } from '../app/common/type-code';
+import { AttributesCode } from '../app/common/type-code';
 
 export class BuffGroupStore {
   constructor() {
@@ -17,163 +17,163 @@ export class BuffGroupStore {
 
   buffListBased: Array<BuffType> = [
     {
-      code: BuffTypeCode.ATK_PERCENT,
+      code: AttributesCode.ATK_PERCENT,
       name: '攻击力加成/%',
     },
     {
-      code: BuffTypeCode.ATK_PLUS,
+      code: AttributesCode.ATK_PLUS,
       name: '攻击力加成/+',
     },
     {
-      code: BuffTypeCode.DEF_PERCENT,
+      code: AttributesCode.DEF_PERCENT,
       name: '防御力加成/%',
     },
     {
-      code: BuffTypeCode.DEF_PLUS,
+      code: AttributesCode.DEF_PLUS,
       name: '防御力加成/+',
     },
     {
-      code: BuffTypeCode.BLOOD_PERCENT,
+      code: AttributesCode.BLOOD_PERCENT,
       name: '生命值加成/%',
     },
     {
-      code: BuffTypeCode.BLOOD_PLUS,
+      code: AttributesCode.BLOOD_PLUS,
       name: '生命值加成/+',
     },
     {
-      code: BuffTypeCode.RECHARGE_PERCENT,
+      code: AttributesCode.RECHARGE_PERCENT,
       name: '元素充能效率加成/%',
     },
     {
-      code: BuffTypeCode.PROFICIENT_PLUS,
+      code: AttributesCode.PROFICIENT_PLUS,
       name: '元素精通加成/+',
     },
     {
-      code: BuffTypeCode.OVERLOAD,
+      code: AttributesCode.OVERLOAD,
       name: '超载增强/%',
     },
     {
-      code: BuffTypeCode.COMBUSTION,
+      code: AttributesCode.COMBUSTION,
       name: '燃烧增强/%',
     },
     {
-      code: BuffTypeCode.INDUCTION,
+      code: AttributesCode.INDUCTION,
       name: '感电增强/%',
     },
     {
-      code: BuffTypeCode.SUPERCONDUCT,
+      code: AttributesCode.SUPERCONDUCT,
       name: '超导增强/%',
     },
     {
-      code: BuffTypeCode.DIFFUSION_THUNDER,
+      code: AttributesCode.DIFFUSION_THUNDER,
       name: '扩散（雷）增强/%',
     },
     {
-      code: BuffTypeCode.DIFFUSION_FIRE,
+      code: AttributesCode.DIFFUSION_FIRE,
       name: '扩散（火）增强/%',
     },
     {
-      code: BuffTypeCode.DIFFUSION_WATER,
+      code: AttributesCode.DIFFUSION_WATER,
       name: '扩散（水）增强/%',
     },
     {
-      code: BuffTypeCode.DIFFUSION_ICE,
+      code: AttributesCode.DIFFUSION_ICE,
       name: '扩散（冰）增强/%',
     },
     {
-      code: BuffTypeCode.DIFFUSION,
+      code: AttributesCode.DIFFUSION,
       name: '扩散增强/%',
     },
     {
-      code: BuffTypeCode.EVAPORATION,
+      code: AttributesCode.EVAPORATION,
       name: '蒸发增强/%',
     },
     {
-      code: BuffTypeCode.MELT,
+      code: AttributesCode.MELT,
       name: '融化增强/%',
     },
     {
-      code: BuffTypeCode.CRIT_RATE,
+      code: AttributesCode.CRIT_RATE,
       name: '暴击率加成/%',
     },
     {
-      code: BuffTypeCode.CRIT_DAMAGE,
+      code: AttributesCode.CRIT_DAMAGE,
       name: '暴击伤害加成/%',
     },
     {
-      code: BuffTypeCode.NORMAL_ATK_CRIT_DAMAGE,
+      code: AttributesCode.NORMAL_ATK_CRIT_DAMAGE,
       name: '普通攻击暴击率加成/%',
     },
     {
-      code: BuffTypeCode.THUMP_CRIT_DAMAGE,
+      code: AttributesCode.THUMP_CRIT_DAMAGE,
       name: '重击暴击率加成/%',
     },
     {
-      code: BuffTypeCode.FALL_ATK_CRIT_DAMAGE,
+      code: AttributesCode.FALL_ATK_CRIT_DAMAGE,
       name: '下落攻击暴击率加成/%',
     },
     {
-      code: BuffTypeCode.ELEMENTAL_WARFARE_CRIT_DAMAGE,
+      code: AttributesCode.ELEMENTAL_WARFARE_CRIT_DAMAGE,
       name: '元素战技暴击率加成/%',
     },
     {
-      code: BuffTypeCode.ELEMENTAL_EXPLOSION_CRIT_DAMAGE,
+      code: AttributesCode.ELEMENTAL_EXPLOSION_CRIT_DAMAGE,
       name: '元素爆发暴击率加成/%',
     },
     {
-      code: BuffTypeCode.FIRE_DAMAGE,
+      code: AttributesCode.FIRE_DAMAGE,
       name: '火元素增伤/%',
     },
     {
-      code: BuffTypeCode.WATER_DAMAGE,
+      code: AttributesCode.WATER_DAMAGE,
       name: '水元素增伤/%',
     },
     {
-      code: BuffTypeCode.ROCK_DAMAGE,
+      code: AttributesCode.ROCK_DAMAGE,
       name: '岩元素增伤/%',
     },
     {
-      code: BuffTypeCode.WIND_DAMAGE,
+      code: AttributesCode.WIND_DAMAGE,
       name: '风元素增伤/%',
     },
     {
-      code: BuffTypeCode.ICE_DAMAGE,
+      code: AttributesCode.ICE_DAMAGE,
       name: '冰元素增伤/%',
     },
     {
-      code: BuffTypeCode.THUNDER_DAMAGE,
+      code: AttributesCode.THUNDER_DAMAGE,
       name: '雷元素增伤/%',
     },
     {
-      code: BuffTypeCode.GRASS_DAMAGE,
+      code: AttributesCode.GRASS_DAMAGE,
       name: '草元素增伤/%',
     },
     {
-      code: BuffTypeCode.PHYSICS_DAMAGE,
+      code: AttributesCode.PHYSICS_DAMAGE,
       name: '物理增伤/%',
     },
     {
-      code: BuffTypeCode.NORMAL_ATK_DAMAGE,
+      code: AttributesCode.NORMAL_ATK_DAMAGE,
       name: '普通攻击增伤/%',
     },
     {
-      code: BuffTypeCode.THUMP_DAMAGE,
+      code: AttributesCode.THUMP_DAMAGE,
       name: '重击增伤/%',
     },
     {
-      code: BuffTypeCode.FALL_ATK_DAMAGE,
+      code: AttributesCode.FALL_ATK_DAMAGE,
       name: '下落攻击增伤/%',
     },
     {
-      code: BuffTypeCode.ELEMENTAL_WARFARE_DAMAGE,
+      code: AttributesCode.ELEMENTAL_WARFARE_DAMAGE,
       name: '元素战技增伤/%',
     },
     {
-      code: BuffTypeCode.ELEMENTAL_EXPLOSION_DAMAGE,
+      code: AttributesCode.ELEMENTAL_EXPLOSION_DAMAGE,
       name: '元素爆发增伤/%',
     },
     {
-      code: BuffTypeCode.CASE_DAMAGE,
+      code: AttributesCode.CASE_DAMAGE,
       name: '直接增伤/%',
     },
   ];

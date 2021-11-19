@@ -48,12 +48,15 @@ export enum AtkTypeCode {
   ELEMENTAL_EXPLOSION,
 }
 
-export enum BuffTypeCode {
+export enum AttributesCode {
   // 攻击区
+  ATK_BASE,
   ATK_PERCENT,
   ATK_PLUS,
+  DEF_BASE,
   DEF_PERCENT,
   DEF_PLUS,
+  BLOOD_BASE,
   BLOOD_PERCENT,
   BLOOD_PLUS,
   // 元素反应区
@@ -93,6 +96,8 @@ export enum BuffTypeCode {
   ELEMENTAL_WARFARE_DAMAGE, // 元素战技
   ELEMENTAL_EXPLOSION_DAMAGE, // 元素爆发
   CASE_DAMAGE, // 直接加成
+
+  SKILL_MULTIPLIER,
 }
 
 // 计算值类型描述

@@ -10,7 +10,7 @@ interface InputNumberFormProps {
   min: number;
   max: number;
   width: number;
-  defaultValue: number;
+  defaultValue?: number;
   step: number;
   disabled?: boolean;
 }

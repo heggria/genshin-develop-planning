@@ -46,11 +46,13 @@ export const SkillDropArea = styled.div.attrs((props: any) => ({
 export const InputBox = styled.div.attrs((props: any) => ({
   width: props.width as string,
   height: props.height as string,
+  hidden: props.hidden as boolean,
 }))`
   /* width: ${(props) => props.width}; */
-  margin: 0 10px 0 10px;
-  flex: 1 1 100px;
+  /* margin: 0 10px 0 10px; */
+  /* flex: 1 1 100px; */
   height: ${(props) => props.height};
+  display: ${(props) => (props.hidden ? 'none' : '')};
 `;
 
 export const InputTitle = styled.div`

@@ -14,6 +14,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDrag } from 'react-dnd';
 
 import { useStores } from '../../../../../hooks/useStores';
+import {
+  atkTypeMap,
+  elementTypeMap,
+  reactionTypeMap,
+} from '../../../../common/attributes-list';
 import { SingleAttack } from '../../../../common/interface';
 
 export interface SkillBoxPanelProps {
@@ -92,11 +97,11 @@ export default observer(function SkillBoxPanel(props: SkillBoxPanelProps) {
         <div className="skill-box-left">
           <div className="skill-box__title">{props.singleAttack.title}</div>
           <div className="skill-box__type">
-            {props.singleAttack.atkType.name +
+            {atkTypeMap.get(props.singleAttack.atkType) +
               '-' +
-              props.singleAttack.elementType.name +
+              elementTypeMap.get(props.singleAttack.elementType) +
               '-' +
-              props.singleAttack.reactionType.name}
+              reactionTypeMap.get(props.singleAttack.reactionType)}
           </div>
           <div className="skill-box-bottom">
             <div className="skill-box__multiplier">

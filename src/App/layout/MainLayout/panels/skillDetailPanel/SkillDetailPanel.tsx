@@ -71,21 +71,21 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
   const atkTypeChange = (value: AtkTypeCode) => {
     for (let item of atkTypeOptions) {
       if (value === item.value) {
-        setAtkData({ ...atkData, atkType: { name: item.label, code: item.value } });
+        setAtkData({ ...atkData, atkType: item.value });
       }
     }
   };
   const elementTypeChange = (value: ElementTypeCode) => {
     for (let item of elementTypeOptions) {
       if (value === item.value) {
-        setAtkData({ ...atkData, elementType: { name: item.label, code: item.value } });
+        setAtkData({ ...atkData, elementType: item.value });
       }
     }
   };
   const reactionTypeChange = (value: ReactionTypeCode) => {
     for (let item of reactionTypeCodeOptions) {
       if (value === item.value) {
-        setAtkData({ ...atkData, reactionType: { name: item.label, code: item.value } });
+        setAtkData({ ...atkData, reactionType: item.value });
       }
     }
   };
@@ -131,7 +131,7 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
             <Select
               options={atkTypeOptions}
               style={{ width: '100%' }}
-              value={atkData?.atkType.code}
+              value={atkData?.atkType}
               onChange={atkTypeChange}
             />
           </InputBox>
@@ -140,7 +140,7 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
             <Select
               options={elementTypeOptions}
               style={{ width: '100%' }}
-              value={atkData?.elementType.code}
+              value={atkData?.elementType}
               onChange={elementTypeChange}
             />
           </InputBox>
@@ -149,7 +149,7 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
             <Select
               options={reactionTypeCodeOptions}
               style={{ width: '100%' }}
-              value={atkData?.reactionType.code}
+              value={atkData?.reactionType}
               onChange={reactionTypeChange}
             />
           </InputBox>

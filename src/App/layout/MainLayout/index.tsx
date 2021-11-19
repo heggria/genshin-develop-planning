@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
 import BuffGroupLayout from './panels/BuffGroupPanel/BuffGroupPanel';
+import CharacterBasePanel from './panels/CharacterBasePanel/CharacterBasePanel';
 import HolyRelicConfigPanel from './panels/HolyRelicConfigPanel/HolyRelicConfigPanel';
 import BuffConfigFrame from './panels/SkillConfigPlane/SkillConfigPlane';
 
@@ -25,9 +26,10 @@ export default function MainLayout() {
           path={`/`}
           element={
             <>
+              <CharacterBasePanel />
               <HolyRelicConfigPanel />
-              {/* <BuffConfigFrame />
-              <BuffGroupLayout /> */}
+              <BuffConfigFrame />
+              <BuffGroupLayout />
             </>
           }
         />
