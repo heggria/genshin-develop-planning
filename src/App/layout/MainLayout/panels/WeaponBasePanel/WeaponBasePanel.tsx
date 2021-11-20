@@ -3,26 +3,26 @@
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
-import { charBaseAttributes } from '../../../../common/form-config';
+import { weaponBaseAttributes } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
 import { AttributesCode } from '../../../../common/type-code';
 import InputNumberBox from '../../../../components/InputNumberBox/InputNumberBox';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { GridContainer } from '../../style/index.style';
 
-export default observer(function CharacterBasePanel() {
-  const [charBaseAttributesList, setCharBaseAttributesList] = useState(
-    new Map([...charBaseAttributes]),
+export default observer(function WeaponBasePanel() {
+  const [weaponBaseAttributesList, setWeaponBaseAttributesList] = useState(
+    new Map([...weaponBaseAttributes]),
   );
   const listItems: Array<any> = [];
-  charBaseAttributesList.forEach((value: Attribute, key: AttributesCode) =>
+  weaponBaseAttributesList.forEach((value: Attribute, key: AttributesCode) =>
     listItems.push(
       <InputNumberBox
         key={key}
         title={value.title}
         size={'middle'}
         onChange={(v: number) => {
-          setCharBaseAttributesList(
+          setWeaponBaseAttributesList(
             (prev) =>
               new Map([
                 ...prev,
@@ -45,8 +45,8 @@ export default observer(function CharacterBasePanel() {
   );
   return (
     <NormalFrame
-      mainTitle="人物属性配置"
-      describe="人物的基础面板，注意是无任何加成的"
+      mainTitle="武器属性配置"
+      describe="武器的基础面板"
       content={
         <GridContainer minWidth="150px" gridGap="20px">
           {listItems}

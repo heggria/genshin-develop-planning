@@ -21,6 +21,7 @@ import {
   ElementTypeCode,
   ValueTypeCode,
 } from '../../../../common/type-code';
+import InputNumberBox from '../../../../components/InputNumberBox/InputNumberBox';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { fontSize3, gray5 } from '../../style/common.style';
 import { InputBox, InputTitle } from '../../style/index.style';
@@ -43,6 +44,7 @@ export default observer(function HolyRelicConfigPanel() {
         <InputNumberBox
           key={key}
           title={value.title}
+          size={'middle'}
           onChange={(v: number) => {
             setHolyRelicAttributes(
               (prev) =>
@@ -112,13 +114,16 @@ export default observer(function HolyRelicConfigPanel() {
             }}
           />
           <FlexArea>
-            <Area style={{ border: 'none', maxWidth: '400px', flex: '2' }}>
+            <Area
+              style={{
+                border: 'none',
+                maxWidth: disabled ? '200px' : undefined,
+              }}>
               <AreaTitle>总加成属性</AreaTitle>
-              <AreaContainer>
+              <AreaContainer style={{ gridGap: disabled ? '5px' : '20px' }}>
                 <InputBox hidden={disabled}>
                   <InputTitle>{'杯子主属性'}</InputTitle>
                   <Select
-                    size="small"
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
@@ -133,7 +138,6 @@ export default observer(function HolyRelicConfigPanel() {
                 <InputBox width="100%" height="55px" hidden={disabled}>
                   <InputTitle>{'沙漏主属性'}</InputTitle>
                   <Select
-                    size="small"
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
@@ -150,7 +154,6 @@ export default observer(function HolyRelicConfigPanel() {
                 <InputBox width="100%" height="55px" hidden={disabled}>
                   <InputTitle>{'帽子主属性'}</InputTitle>
                   <Select
-                    size="small"
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
@@ -165,7 +168,7 @@ export default observer(function HolyRelicConfigPanel() {
                 {holyRelicAttributesInputs}
               </AreaContainer>
             </Area>
-            <Area style={{ minWidth: '50%', display: disabled ? '' : 'none', flex: '3' }}>
+            <Area style={{ minWidth: '50%', display: disabled ? '' : 'none' }}>
               <AreaTitle>圣遗物</AreaTitle>
               <AreaContainer>
                 <HolyRelicBox></HolyRelicBox>
@@ -181,50 +184,11 @@ export default observer(function HolyRelicConfigPanel() {
   );
 });
 
-interface InputNumberBoxProps {
-  disable?: boolean;
-  title: string;
-  type?: ValueTypeCode;
-  value: number;
-  onChange: (value: number) => void;
-}
-
-const InputNumberBox = (props: InputNumberBoxProps) => {
-  return (
-    <InputBox width="100%" height="55px">
-      <InputTitle>{props.title}</InputTitle>
-      <InputNumber
-        defaultValue={0}
-        min={0}
-        max={99999}
-        step={0.01}
-        size={'small'}
-        disabled={props.disable}
-        value={props.value}
-        style={{ width: '100%' }}
-        formatter={
-          props.type === ValueTypeCode.PERCENT
-            ? (value) => `${value}%`
-            : (value) => `${value}`
-        }
-        parser={(value: any) =>
-          parseFloat(
-            parseFloat(
-              props.type === ValueTypeCode.PERCENT ? value.replace('%', '') : value,
-            ).toFixed(2),
-          )
-        }
-        onChange={props.onChange}
-      />
-    </InputBox>
-  );
-};
-
 const AreaContainer = styled.div`
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  grid-gap: 5px 5px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 20px;
   grid-auto-columns: 80px;
 `;
 
@@ -240,7 +204,7 @@ const AreaTitle = styled.div`
 
 const Area = styled.div`
   border-left: 1px ${gray5} dashed;
-  padding: 0 15px;
+  padding: 0 10px;
   flex: 1 1 auto;
 `;
 const FlexArea = styled.div`

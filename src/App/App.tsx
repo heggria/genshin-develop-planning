@@ -35,7 +35,7 @@ function App() {
             <Menu.Item key="2">计划</Menu.Item>
           </Menu>
         </Header>
-        <Content className="site-layout" style={{ padding: '0 50px', marginTop: 100 }}>
+        <Content className="site-layout" style={{ padding: '0 0px', marginTop: 100 }}>
           <MainLayout></MainLayout>
         </Content>
         <Footer style={{ textAlign: 'center' }}>Designed by heggria ©2021</Footer>

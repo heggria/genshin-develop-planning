@@ -60,3 +60,16 @@ export const InputTitle = styled.div`
   font-weight: ${boldFont};
   line-height: ${2};
 `;
+
+export const GridContainer = styled.div.attrs((props: any) => ({
+  minWidth: props.minWidth as string,
+  gridGap: props.gridGap as string,
+}))`
+  width: 100%;
+  display: grid;
+  grid-gap: ${(props) => props.gridGap};
+  grid-auto-rows: auto;
+  grid-template-columns: ${(props) =>
+    'repeat(auto-fit, minmax(' + props.minWidth + ', 1fr))'};
+  padding: 0 10px;
+`;

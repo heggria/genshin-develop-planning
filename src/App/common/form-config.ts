@@ -49,3 +49,17 @@ attributes.forEach((value, key) => {
       charBaseAttributes.set(key, value);
   }
 });
+
+export const weaponBaseAttributes: Map<AttributesCode, Attribute> = new Map();
+attributes.forEach((value, key) => {
+  switch (key) {
+    case AttributesCode.ATK_BASE:
+    case AttributesCode.DEF_PERCENT:
+    case AttributesCode.BLOOD_PERCENT:
+    case AttributesCode.CRIT_DAMAGE:
+    case AttributesCode.CRIT_RATE:
+    case AttributesCode.PROFICIENT_PLUS:
+    case AttributesCode.RECHARGE_PERCENT:
+      weaponBaseAttributes.set(key, value);
+  }
+});
