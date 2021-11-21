@@ -48,50 +48,50 @@ export class BuffGroupStore {
       code: AttributesCode.PROFICIENT_PLUS,
       name: '元素精通加成/+',
     },
-    {
-      code: AttributesCode.OVERLOAD,
-      name: '超载增强/%',
-    },
-    {
-      code: AttributesCode.COMBUSTION,
-      name: '燃烧增强/%',
-    },
-    {
-      code: AttributesCode.INDUCTION,
-      name: '感电增强/%',
-    },
-    {
-      code: AttributesCode.SUPERCONDUCT,
-      name: '超导增强/%',
-    },
-    {
-      code: AttributesCode.DIFFUSION_THUNDER,
-      name: '扩散（雷）增强/%',
-    },
-    {
-      code: AttributesCode.DIFFUSION_FIRE,
-      name: '扩散（火）增强/%',
-    },
-    {
-      code: AttributesCode.DIFFUSION_WATER,
-      name: '扩散（水）增强/%',
-    },
-    {
-      code: AttributesCode.DIFFUSION_ICE,
-      name: '扩散（冰）增强/%',
-    },
-    {
-      code: AttributesCode.DIFFUSION,
-      name: '扩散增强/%',
-    },
-    {
-      code: AttributesCode.EVAPORATION,
-      name: '蒸发增强/%',
-    },
-    {
-      code: AttributesCode.MELT,
-      name: '融化增强/%',
-    },
+    // {
+    //   code: AttributesCode.OVERLOAD,
+    //   name: '超载增强/%',
+    // },
+    // {
+    //   code: AttributesCode.COMBUSTION,
+    //   name: '燃烧增强/%',
+    // },
+    // {
+    //   code: AttributesCode.INDUCTION,
+    //   name: '感电增强/%',
+    // },
+    // {
+    //   code: AttributesCode.SUPERCONDUCT,
+    //   name: '超导增强/%',
+    // },
+    // {
+    //   code: AttributesCode.DIFFUSION_THUNDER,
+    //   name: '扩散（雷）增强/%',
+    // },
+    // {
+    //   code: AttributesCode.DIFFUSION_FIRE,
+    //   name: '扩散（火）增强/%',
+    // },
+    // {
+    //   code: AttributesCode.DIFFUSION_WATER,
+    //   name: '扩散（水）增强/%',
+    // },
+    // {
+    //   code: AttributesCode.DIFFUSION_ICE,
+    //   name: '扩散（冰）增强/%',
+    // },
+    // {
+    //   code: AttributesCode.DIFFUSION,
+    //   name: '扩散增强/%',
+    // },
+    // {
+    //   code: AttributesCode.EVAPORATION,
+    //   name: '蒸发增强/%',
+    // },
+    // {
+    //   code: AttributesCode.MELT,
+    //   name: '融化增强/%',
+    // },
     {
       code: AttributesCode.CRIT_RATE,
       name: '暴击率加成/%',

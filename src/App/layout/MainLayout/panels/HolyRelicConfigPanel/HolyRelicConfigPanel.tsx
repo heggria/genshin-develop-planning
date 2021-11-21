@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import { useStores } from '../../../../../hooks/useStores';
 import {
   holyRelicSimpleAttributes,
   holyRelicTotalAttributes,
@@ -30,37 +31,37 @@ const { Option } = Select;
 
 export default observer(function HolyRelicConfigPanel() {
   const [disabled, setDisabled] = useState(false);
-  const [holyRelicAttributes, setHolyRelicAttributes] = useState(
-    new Map([...holyRelicSimpleAttributes]),
-  );
+  const { attributesStore } = useStores();
+  const { holyRelicSimpleAttributesList, setHolyRelicSimpleAttributesList } =
+    attributesStore;
+
   const [holyRelicAttributes2, setHolyRelicAttributes2] = useState(
     new Map([...holyRelicTotalAttributes]),
   );
 
   const holyRelicAttributesInputs: Array<any> = [];
   if (!disabled) {
-    holyRelicAttributes.forEach((value: Attribute, key: AttributesCode) =>
+    holyRelicSimpleAttributesList.forEach((value: Attribute, key: AttributesCode) =>
       holyRelicAttributesInputs.push(
         <InputNumberBox
           key={key}
           title={value.title}
           size={'middle'}
           onChange={(v: number) => {
-            setHolyRelicAttributes(
-              (prev) =>
-                new Map([
-                  ...prev,
-                  [
-                    key,
-                    {
-                      title: value.title,
-                      extra: {
-                        ...value.extra,
-                        value: v,
-                      },
+            setHolyRelicSimpleAttributesList(
+              new Map([
+                ...holyRelicSimpleAttributesList,
+                [
+                  key,
+                  {
+                    title: value.title,
+                    extra: {
+                      ...value.extra,
+                      value: v,
                     },
-                  ],
-                ]),
+                  },
+                ],
+              ]),
             );
           }}
           type={value.extra.valueType}

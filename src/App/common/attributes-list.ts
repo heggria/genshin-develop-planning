@@ -9,17 +9,21 @@ import {
 
 export const attributesList: Array<StringName> = [
   // 攻击区
+  { code: AttributesCode.ATK, strings: ['攻击力'] },
   { code: AttributesCode.ATK_BASE, strings: ['基础攻击力'] },
   { code: AttributesCode.ATK_PERCENT, strings: ['攻击力/%'] },
   { code: AttributesCode.ATK_PLUS, strings: ['攻击力/+'] },
+  { code: AttributesCode.DEF, strings: ['防御力'] },
   { code: AttributesCode.DEF_BASE, strings: ['基础防御力'] },
   { code: AttributesCode.DEF_PERCENT, strings: ['防御力/%'] },
   { code: AttributesCode.DEF_PLUS, strings: ['防御力/+'] },
+  { code: AttributesCode.BLOOD, strings: ['生命值上限'] },
   { code: AttributesCode.BLOOD_BASE, strings: ['基础生命值上限'] },
   { code: AttributesCode.BLOOD_PERCENT, strings: ['生命值上限/%'] },
   { code: AttributesCode.BLOOD_PLUS, strings: ['生命值上限/+'] },
   // 元素反应区
   { code: AttributesCode.RECHARGE_PERCENT, strings: ['元素充能效率/%'] }, // 元素充能效率
+  { code: AttributesCode.PROFICIENT, strings: ['元素精通'] }, // 元素精通
   { code: AttributesCode.PROFICIENT_PLUS, strings: ['元素精通/+'] }, // 元素精通
   // { code: AttributesCode.OVERLOAD, strings: ['生命值上限/%'] }, // 超载增强
   // { code: AttributesCode.COMBUSTION, strings: ['生命值上限/%'] }, // 燃烧增强

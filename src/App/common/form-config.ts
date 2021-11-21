@@ -63,3 +63,24 @@ attributes.forEach((value, key) => {
       weaponBaseAttributes.set(key, value);
   }
 });
+
+export const actualAttributes: Map<AttributesCode, Attribute> = new Map();
+attributes.forEach((value, key) => {
+  switch (key) {
+    case AttributesCode.ATK:
+    case AttributesCode.DEF:
+    case AttributesCode.BLOOD:
+    case AttributesCode.CRIT_DAMAGE:
+    case AttributesCode.CRIT_RATE:
+    case AttributesCode.PROFICIENT:
+    case AttributesCode.RECHARGE_PERCENT:
+    case AttributesCode.FIRE_DAMAGE:
+    case AttributesCode.ICE_DAMAGE:
+    case AttributesCode.WATER_DAMAGE:
+    case AttributesCode.THUNDER_DAMAGE:
+    case AttributesCode.ROCK_DAMAGE:
+    case AttributesCode.WIND_DAMAGE:
+    case AttributesCode.PHYSICS_DAMAGE:
+      actualAttributes.set(key, value);
+  }
+});

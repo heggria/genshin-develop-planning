@@ -3,6 +3,7 @@
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
+import { useStores } from '../../../../../hooks/useStores';
 import { charBaseAttributes } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
 import { AttributesCode } from '../../../../common/type-code';
@@ -11,9 +12,8 @@ import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { GridContainer } from '../../style/index.style';
 
 export default observer(function CharacterBasePanel() {
-  const [charBaseAttributesList, setCharBaseAttributesList] = useState(
-    new Map([...charBaseAttributes]),
-  );
+  const { attributesStore } = useStores();
+  const { charBaseAttributesList, setCharBaseAttributesList } = attributesStore;
   const listItems: Array<any> = [];
   charBaseAttributesList.forEach((value: Attribute, key: AttributesCode) =>
     listItems.push(
@@ -23,20 +23,19 @@ export default observer(function CharacterBasePanel() {
         size={'middle'}
         onChange={(v: number) => {
           setCharBaseAttributesList(
-            (prev) =>
-              new Map([
-                ...prev,
-                [
-                  key,
-                  {
-                    title: value.title,
-                    extra: {
-                      ...value.extra,
-                      value: v,
-                    },
+            new Map([
+              ...charBaseAttributesList,
+              [
+                key,
+                {
+                  title: value.title,
+                  extra: {
+                    ...value.extra,
+                    value: v,
                   },
-                ],
-              ]),
+                },
+              ],
+            ]),
           );
         }}
         type={value.extra.valueType}

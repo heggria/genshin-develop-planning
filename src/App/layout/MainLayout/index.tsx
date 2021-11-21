@@ -7,6 +7,7 @@ import BuffGroupLayout from './panels/BuffGroupPanel/BuffGroupPanel';
 import CharacterBasePanel from './panels/CharacterBasePanel/CharacterBasePanel';
 import HolyRelicConfigPanel from './panels/HolyRelicConfigPanel/HolyRelicConfigPanel';
 import BuffConfigFrame from './panels/SkillConfigPlane/SkillConfigPlane';
+import StatisticsPanel from './panels/StatisticsPanel/StatisticsPanel';
 import WeaponBasePanel from './panels/WeaponBasePanel/WeaponBasePanel';
 
 // 组件层级
@@ -37,11 +38,12 @@ export default function MainLayout() {
           path={`/`}
           element={
             <Container ref={ref} columnCount={columnCount}>
+              <StatisticsPanel />
               <CharacterBasePanel />
               <WeaponBasePanel />
               <HolyRelicConfigPanel />
-              <BuffConfigFrame />
-              <BuffGroupLayout />
+              {/* <BuffConfigFrame />
+              <BuffGroupLayout /> */}
             </Container>
           }
         />

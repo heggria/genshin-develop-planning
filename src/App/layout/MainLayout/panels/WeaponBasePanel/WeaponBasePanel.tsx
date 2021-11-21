@@ -3,6 +3,7 @@
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
+import { useStores } from '../../../../../hooks/useStores';
 import { weaponBaseAttributes } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
 import { AttributesCode } from '../../../../common/type-code';
@@ -11,9 +12,9 @@ import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { GridContainer } from '../../style/index.style';
 
 export default observer(function WeaponBasePanel() {
-  const [weaponBaseAttributesList, setWeaponBaseAttributesList] = useState(
-    new Map([...weaponBaseAttributes]),
-  );
+  const { attributesStore } = useStores();
+  const { weaponBaseAttributesList, setWeaponBaseAttributesList } = attributesStore;
+
   const listItems: Array<any> = [];
   weaponBaseAttributesList.forEach((value: Attribute, key: AttributesCode) =>
     listItems.push(
@@ -23,20 +24,19 @@ export default observer(function WeaponBasePanel() {
         size={'middle'}
         onChange={(v: number) => {
           setWeaponBaseAttributesList(
-            (prev) =>
-              new Map([
-                ...prev,
-                [
-                  key,
-                  {
-                    title: value.title,
-                    extra: {
-                      ...value.extra,
-                      value: v,
-                    },
+            new Map([
+              ...weaponBaseAttributesList,
+              [
+                key,
+                {
+                  title: value.title,
+                  extra: {
+                    ...value.extra,
+                    value: v,
                   },
-                ],
-              ]),
+                },
+              ],
+            ]),
           );
         }}
         type={value.extra.valueType}
