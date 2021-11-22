@@ -1,11 +1,9 @@
 /* eslint-disable no-unused-vars */
-// todo: need contact with value
 import { observer } from 'mobx-react';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { useStores } from '../../../../../hooks/useStores';
-import { actualAttributes } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
 import { AttributesCode, ValueTypeCode } from '../../../../common/type-code';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
@@ -15,7 +13,7 @@ import { GridContainer } from '../../style/index.style';
 export default observer(function StatisticsPanel() {
   const { attributesStore } = useStores();
   const { actualAttributesList } = attributesStore;
-  console.log(actualAttributes);
+  // console.log(actualAttributes);
   const listItems: Array<any> = [];
   actualAttributesList.forEach((value: Attribute, key: AttributesCode) =>
     listItems.push(

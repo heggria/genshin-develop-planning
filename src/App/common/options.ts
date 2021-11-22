@@ -47,15 +47,24 @@ export interface SelectOption<T> {
 }
 
 export const cupMainEntryOptions: Array<SelectOption<AttributesCode>> = [];
-cupHolyRelicList.forEach((value, key) => {
-  cupMainEntryOptions.push({ label: value.mainAttribute?.title || '', value: key });
+cupHolyRelicList.forEach((value) => {
+  cupMainEntryOptions.push({
+    label: value.mainAttribute?.title || '',
+    value: value.mainAttributeType,
+  });
 });
 export const hourglassMainEntryOptions: Array<SelectOption<AttributesCode>> = [];
-hourglassHolyRelicList.forEach((value, key) => {
-  hourglassMainEntryOptions.push({ label: value.mainAttribute?.title || '', value: key });
+hourglassHolyRelicList.forEach((value) => {
+  hourglassMainEntryOptions.push({
+    label: value.mainAttribute?.title || '',
+    value: value.mainAttributeType,
+  });
 });
 
 export const hatMainEntryOptions: Array<SelectOption<AttributesCode>> = [];
-hatHolyRelicList.forEach((value, key) => {
-  hatMainEntryOptions.push({ label: value.mainAttribute?.title || '', value: key });
+hatHolyRelicList.forEach((value) => {
+  hatMainEntryOptions.push({
+    label: value.mainAttribute?.title || '',
+    value: value.mainAttributeType,
+  });
 });

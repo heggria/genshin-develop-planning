@@ -133,9 +133,7 @@ export default observer(function HolyRelicConfigPanel() {
                       setHolyRelicList(
                         HolyRelicTypeCode.CUP,
                         cupHolyRelicList.filter(
-                          (item) =>
-                            item.mainAttribute?.extra.valueType ===
-                            attributes.get(value)?.extra.valueType,
+                          (item) => item.mainAttributeType === value,
                         )[0],
                       );
                     }}>
@@ -156,9 +154,7 @@ export default observer(function HolyRelicConfigPanel() {
                       setHolyRelicList(
                         HolyRelicTypeCode.HOURGLASS,
                         hourglassHolyRelicList.filter(
-                          (item) =>
-                            item.mainAttribute?.extra.valueType ===
-                            attributes.get(value)?.extra.valueType,
+                          (item) => item.mainAttributeType === value,
                         )[0],
                       );
                     }}>
@@ -181,9 +177,7 @@ export default observer(function HolyRelicConfigPanel() {
                       setHolyRelicList(
                         HolyRelicTypeCode.HAT,
                         hatHolyRelicList.filter(
-                          (item) =>
-                            item.mainAttribute?.extra.valueType ===
-                            attributes.get(value)?.extra.valueType,
+                          (item) => item.mainAttributeType === value,
                         )[0],
                       );
                     }}>

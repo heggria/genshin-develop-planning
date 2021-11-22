@@ -1,6 +1,7 @@
 import {
   AtkTypeCode,
   AttributesCode,
+  AttributesTypeCode,
   ElementTypeCode,
   HolyRelicTypeCode,
   ReactionTypeCode,
@@ -120,9 +121,20 @@ export interface HolyRelic extends HolyRelicType {
   // 等级
   level?: number;
   // 主数值类型
-  mainAttribute?: Attribute;
+  mainAttributeType: AttributesCode;
+  // 主数值类型
+  mainAttribute: Attribute;
   // 副词条
-  subAttribute?: Array<Attribute>;
+  subAttribute?: Map<Attribute, AttributesTypeCode>;
   // 分数
   score?: number;
+}
+
+// 词条统计
+export interface Entry {
+  attributeType: AttributesCode;
+  attribute: Attribute;
+  // 副词条
+  mount: number;
+  efficient: boolean;
 }

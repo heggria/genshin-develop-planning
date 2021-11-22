@@ -108,6 +108,7 @@ export const flowerHolyRelicList: Array<HolyRelic> = [
   {
     type: HolyRelicTypeCode.FLOWER,
     level: 20,
+    mainAttributeType: AttributesCode.BLOOD_PLUS,
     mainAttribute: {
       title: attributes.get(AttributesCode.BLOOD_PLUS)?.title,
       extra: {
@@ -122,6 +123,7 @@ export const featureHolyRelicList: Array<HolyRelic> = [
   {
     type: HolyRelicTypeCode.FEATHER,
     level: 20,
+    mainAttributeType: AttributesCode.ATK_PLUS,
     mainAttribute: {
       title: attributes.get(AttributesCode.ATK_PLUS)?.title,
       extra: {
@@ -143,6 +145,7 @@ attributes.forEach((value, key) => {
       hourglassHolyRelicList.push({
         type: HolyRelicTypeCode.HOURGLASS,
         level: 20,
+        mainAttributeType: key,
         mainAttribute: {
           title: value.title,
           extra: {
@@ -172,6 +175,7 @@ attributes.forEach((value, key) => {
       cupHolyRelicList.push({
         type: HolyRelicTypeCode.CUP,
         level: 20,
+        mainAttributeType: key,
         mainAttribute: {
           title: value.title,
           extra: {
@@ -193,8 +197,9 @@ attributes.forEach((value, key) => {
     case AttributesCode.CRIT_DAMAGE:
     case AttributesCode.CRIT_RATE:
       hatHolyRelicList.push({
-        type: HolyRelicTypeCode.CUP,
+        type: HolyRelicTypeCode.HAT,
         level: 20,
+        mainAttributeType: key,
         mainAttribute: {
           title: value.title,
           extra: {
@@ -205,3 +210,4 @@ attributes.forEach((value, key) => {
       } as HolyRelic);
   }
 });
+// console.log(hatHolyRelicList);

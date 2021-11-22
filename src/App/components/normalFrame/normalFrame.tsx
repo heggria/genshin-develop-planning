@@ -23,6 +23,7 @@ const NormalFrameC = styled.div`
   box-shadow: 0px 4px 12px #ddd;
   min-width: 420px;
   break-inside: avoid;
+  margin: 20px 0;
 `;
 const NormalFrameContent = styled.div`
   display: flex;

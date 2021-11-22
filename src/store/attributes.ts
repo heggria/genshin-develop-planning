@@ -1,6 +1,10 @@
 import { makeAutoObservable } from 'mobx';
 
 import {
+  holyRelicAvgEntryMap,
+  holyRelicEntryStatisticMap,
+} from '../app/common/attributes-list';
+import {
   actualAttributes,
   charBaseAttributes,
   featureHolyRelicList,
@@ -8,7 +12,7 @@ import {
   holyRelicSimpleAttributes,
   weaponBaseAttributes,
 } from '../app/common/form-config';
-import { Attribute, HolyRelic } from '../app/common/interface';
+import { Attribute, Entry, HolyRelic } from '../app/common/interface';
 import {
   AttributesCode,
   HolyRelicTypeCode,
@@ -20,6 +24,7 @@ export class AttributesStore {
     makeAutoObservable(this);
     this.resetHolyRelicList();
     this.countActualAttributes();
+    this.countEntryStatisticsList();
   }
 
   resetHolyRelicList() {
@@ -34,6 +39,10 @@ export class AttributesStore {
 
   holyRelicList: Map<HolyRelicTypeCode, HolyRelic | undefined> = new Map();
 
+  entryStatisticsList: Map<AttributesCode, Entry> = new Map([
+    ...holyRelicEntryStatisticMap,
+  ]);
+
   actualAttributesList = new Map([...actualAttributes]);
 
   charBaseAttributesList = new Map([...charBaseAttributes]);
@@ -43,33 +52,102 @@ export class AttributesStore {
   holyRelicSimpleAttributesList = new Map([...holyRelicSimpleAttributes]);
 
   setHolyRelicList = (code: HolyRelicTypeCode, holyRelic: HolyRelic) => {
-    console.log(holyRelic);
+    // eslint-disable-next-line no-debugger
     this.holyRelicList.set(code, holyRelic);
-    console.log(this.holyRelicList.get(code));
     this.countActualAttributes();
+    this.countEntryStatisticsList();
+  };
+
+  countEntryStatisticsList = () => {
+    this.entryStatisticsList.forEach((value: Entry, key: AttributesCode) => {
+      let c = this.holyRelicSimpleAttributesList;
+      let v = c.get(key)?.extra.value || 0;
+      let offset = 0;
+      this.holyRelicList.forEach((hr: HolyRelic | undefined) => {
+        console.log(hr?.mainAttributeType, value.attributeType);
+        if (hr && hr.mainAttributeType === value.attributeType) {
+          offset += hr.mainAttribute?.extra.value;
+        }
+      });
+      switch (key) {
+        case AttributesCode.ATK_PERCENT:
+          v =
+            (((c.get(AttributesCode.ATK_PLUS)?.extra.value || 0) -
+              (this.holyRelicList.get(HolyRelicTypeCode.FEATHER)?.mainAttribute?.extra
+                .value || 0)) /
+              ((this.charBaseAttributesList.get(AttributesCode.ATK_BASE)?.extra.value ||
+                0) +
+                (this.weaponBaseAttributesList.get(AttributesCode.ATK_BASE)?.extra
+                  .value || 0) || 0)) *
+            100;
+          break;
+        case AttributesCode.DEF_PERCENT:
+          v =
+            ((c.get(AttributesCode.DEF_PLUS)?.extra.value || 0) /
+              ((this.charBaseAttributesList.get(AttributesCode.DEF_BASE)?.extra.value ||
+                0) +
+                (this.weaponBaseAttributesList.get(AttributesCode.DEF_BASE)?.extra
+                  .value || 0) || 0)) *
+            100;
+          break;
+        case AttributesCode.BLOOD_PERCENT:
+          v =
+            (((c.get(AttributesCode.BLOOD_PLUS)?.extra.value || 0) -
+              (this.holyRelicList.get(HolyRelicTypeCode.FLOWER)?.mainAttribute?.extra
+                .value || 0)) /
+              ((this.charBaseAttributesList.get(AttributesCode.BLOOD_BASE)?.extra.value ||
+                0) +
+                (this.weaponBaseAttributesList.get(AttributesCode.BLOOD_BASE)?.extra
+                  .value || 0) || 0)) *
+            100;
+          break;
+      }
+      this.entryStatisticsList.set(key, {
+        attributeType: value.attributeType,
+        attribute: value.attribute,
+        mount: (v - offset) / (holyRelicAvgEntryMap.get(key) || 0),
+      } as Entry);
+    });
   };
 
   setCharBaseAttributesList = (map: Map<AttributesCode, Attribute>) => {
     this.charBaseAttributesList = map;
     this.countActualAttributes();
+    this.countEntryStatisticsList();
   };
 
   setWeaponBaseAttributesList = (map: Map<AttributesCode, Attribute>) => {
     this.weaponBaseAttributesList = map;
     this.countActualAttributes();
+    this.countEntryStatisticsList();
   };
 
   setHolyRelicSimpleAttributesList = (map: Map<AttributesCode, Attribute>) => {
     this.holyRelicSimpleAttributesList = map;
     this.countActualAttributes();
+    this.countEntryStatisticsList();
   };
   // 计算所有属性
   countActualAttributes = () => {
     this.actualAttributesList.forEach((value: Attribute, key: AttributesCode) => {
       let base1 = 0;
       let base2 = 0;
-      let percent = [];
-      let plus = [];
+      let percent: number[] = [];
+      let plus: number[] = [];
+      // holyRelicList 圣遗物属性注入
+      // this.holyRelicList.forEach((v: HolyRelic | undefined, k: HolyRelicTypeCode) => {
+      //   console.log(v?.mainAttributeType, key);
+      //   if (v && v.mainAttributeType === key) {
+      //     switch (k) {
+      //       case HolyRelicTypeCode.HOURGLASS:
+      //       case HolyRelicTypeCode.CUP:
+      //       case HolyRelicTypeCode.HAT:
+      //         v.mainAttribute?.extra.valueType === ValueTypeCode.PERCENT
+      //           ? percent.push(v.mainAttribute?.extra.value)
+      //           : plus.push(v.mainAttribute?.extra.value);
+      //     }
+      //   }
+      // });
       switch (key) {
         case AttributesCode.ATK:
           base1 =
@@ -78,6 +156,8 @@ export class AttributesStore {
             this.weaponBaseAttributesList.get(AttributesCode.ATK_BASE)?.extra.value || 0;
           plus.push(
             this.holyRelicSimpleAttributesList.get(AttributesCode.ATK_PLUS)?.extra
+              .value || 0,
+            this.holyRelicList.get(HolyRelicTypeCode.FEATHER)?.mainAttribute?.extra
               .value || 0,
           );
           break;
@@ -102,6 +182,8 @@ export class AttributesStore {
           );
           plus.push(
             this.holyRelicSimpleAttributesList.get(AttributesCode.BLOOD_PLUS)?.extra
+              .value || 0,
+            this.holyRelicList.get(HolyRelicTypeCode.FLOWER)?.mainAttribute?.extra
               .value || 0,
           );
           break;
@@ -132,9 +214,10 @@ export class AttributesStore {
           break;
       }
       let percentSum = 1;
-      percent.map((num) => (percentSum += num));
+      percent.map((num) => (percentSum += num || 0));
+      // console.log(percentSum);
       let plusSum = 0;
-      plus.map((num) => (plusSum += num));
+      plus.map((num) => (plusSum += num || 0));
       this.actualAttributesList.set(key, {
         title: value.title || '',
         extra: {

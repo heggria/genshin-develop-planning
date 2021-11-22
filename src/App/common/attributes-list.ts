@@ -1,4 +1,4 @@
-import { Attribute, Element, Reaction, StringName } from './interface';
+import { Attribute, Element, Entry, Reaction, StringName } from './interface';
 import {
   AtkTypeCode,
   AttributesCode,
@@ -247,3 +247,47 @@ export const ReactionDetailMap: Map<
   ElementTypeCode,
   Map<ReactionTypeCode, number>
 > = new Map([]);
+
+// 圣遗物副词条属性表
+export const holyRelicEntryMap: Map<AttributesCode, Array<number>> = new Map([
+  [AttributesCode.ATK_PLUS, [14, 16, 18, 19]],
+  [AttributesCode.BLOOD_PLUS, [209, 239, 269, 299]],
+  [AttributesCode.DEF_PLUS, [16, 19, 21, 23]],
+  [AttributesCode.ATK_PERCENT, [4.1, 4.7, 5.3, 5.8]],
+  [AttributesCode.BLOOD_PERCENT, [4.1, 4.7, 5.3, 5.8]],
+  [AttributesCode.DEF_PERCENT, [5.1, 5.8, 6.6, 7.3]],
+  [AttributesCode.PROFICIENT_PLUS, [16, 19, 21, 23]],
+  [AttributesCode.RECHARGE_PERCENT, [4.5, 5.2, 5.8, 6.5]],
+  [AttributesCode.CRIT_RATE, [2.7, 3.1, 3.5, 3.9]],
+  [AttributesCode.CRIT_DAMAGE, [5.4, 6.2, 7.0, 7.8]],
+]);
+// 圣遗物副词条平均总属性表
+export const holyRelicAvgEntryMap: Map<AttributesCode, number> = new Map();
+holyRelicEntryMap.forEach((value: Array<number>, key: AttributesCode) => {
+  let sum = 0;
+  value.map((item) => (sum += item));
+  holyRelicAvgEntryMap.set(key, parseFloat((sum / 4).toFixed(2)));
+});
+// 圣遗物副词条极大总属性表
+export const holyRelicMaxEntryMap: Map<AttributesCode, number> = new Map();
+holyRelicEntryMap.forEach((value: Array<number>, key: AttributesCode) => {
+  holyRelicMaxEntryMap.set(key, parseFloat((value[3] * 4).toFixed(2)));
+});
+// 圣遗物副词条统计表
+export const holyRelicEntryStatisticMap: Map<AttributesCode, Entry> = new Map();
+attributes.forEach((value: Attribute, key: AttributesCode) => {
+  switch (key) {
+    case AttributesCode.ATK_PERCENT:
+    case AttributesCode.DEF_PERCENT:
+    case AttributesCode.BLOOD_PERCENT:
+    case AttributesCode.PROFICIENT_PLUS:
+    case AttributesCode.RECHARGE_PERCENT:
+    case AttributesCode.CRIT_DAMAGE:
+    case AttributesCode.CRIT_RATE:
+      holyRelicEntryStatisticMap.set(key, {
+        attributeType: key,
+        attribute: value,
+        mount: 0,
+      } as Entry);
+  }
+});

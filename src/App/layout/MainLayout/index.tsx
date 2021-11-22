@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import BuffGroupLayout from './panels/BuffGroupPanel/BuffGroupPanel';
 import CharacterBasePanel from './panels/CharacterBasePanel/CharacterBasePanel';
+import EntryStatisticsPanel from './panels/EntryStatisticsPanel/EntryStatisticsPanel';
 import HolyRelicConfigPanel from './panels/HolyRelicConfigPanel/HolyRelicConfigPanel';
 import BuffConfigFrame from './panels/SkillConfigPlane/SkillConfigPlane';
 import StatisticsPanel from './panels/StatisticsPanel/StatisticsPanel';
@@ -42,6 +43,8 @@ export default function MainLayout() {
               <CharacterBasePanel />
               <WeaponBasePanel />
               <HolyRelicConfigPanel />
+              <EntryStatisticsPanel />
+
               {/* <BuffConfigFrame />
               <BuffGroupLayout /> */}
             </Container>
@@ -62,4 +65,5 @@ const Container = styled.div.attrs((props: any) => ({
 }))`
   column-count: ${(props: any) => props.columnCount};
   column-gap: 10px;
+  padding: 20px 0;
 `;
