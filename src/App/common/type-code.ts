@@ -113,3 +113,12 @@ export enum ValueTypeCode {
   // 普通数值
   NUMBER,
 }
+
+// 圣遗物类型描述
+export enum HolyRelicTypeCode {
+  FLOWER,
+  FEATHER,
+  HOURGLASS,
+  CUP,
+  HAT,
+}

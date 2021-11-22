@@ -3,16 +3,37 @@ import { makeAutoObservable } from 'mobx';
 import {
   actualAttributes,
   charBaseAttributes,
+  featureHolyRelicList,
+  flowerHolyRelicList,
   holyRelicSimpleAttributes,
   weaponBaseAttributes,
 } from '../app/common/form-config';
-import { Attribute } from '../app/common/interface';
-import { AttributesCode, ValueTypeCode } from '../app/common/type-code';
+import { Attribute, HolyRelic } from '../app/common/interface';
+import {
+  AttributesCode,
+  HolyRelicTypeCode,
+  ValueTypeCode,
+} from '../app/common/type-code';
 
 export class AttributesStore {
   constructor() {
     makeAutoObservable(this);
+    this.resetHolyRelicList();
+    this.countActualAttributes();
   }
+
+  resetHolyRelicList() {
+    this.holyRelicList = new Map([
+      [HolyRelicTypeCode.FLOWER, flowerHolyRelicList[0]],
+      [HolyRelicTypeCode.FEATHER, featureHolyRelicList[0]],
+      [HolyRelicTypeCode.HOURGLASS, undefined],
+      [HolyRelicTypeCode.CUP, undefined],
+      [HolyRelicTypeCode.HAT, undefined],
+    ]);
+  }
+
+  holyRelicList: Map<HolyRelicTypeCode, HolyRelic | undefined> = new Map();
+
   actualAttributesList = new Map([...actualAttributes]);
 
   charBaseAttributesList = new Map([...charBaseAttributes]);
@@ -20,6 +41,13 @@ export class AttributesStore {
   weaponBaseAttributesList = new Map([...weaponBaseAttributes]);
 
   holyRelicSimpleAttributesList = new Map([...holyRelicSimpleAttributes]);
+
+  setHolyRelicList = (code: HolyRelicTypeCode, holyRelic: HolyRelic) => {
+    console.log(holyRelic);
+    this.holyRelicList.set(code, holyRelic);
+    console.log(this.holyRelicList.get(code));
+    this.countActualAttributes();
+  };
 
   setCharBaseAttributesList = (map: Map<AttributesCode, Attribute>) => {
     this.charBaseAttributesList = map;
@@ -77,13 +105,6 @@ export class AttributesStore {
               .value || 0,
           );
           break;
-        case AttributesCode.RECHARGE_PERCENT:
-          percent.push(
-            this.charBaseAttributesList.get(key)?.extra.value || 0,
-            this.weaponBaseAttributesList.get(key)?.extra.value || 0,
-            this.holyRelicSimpleAttributesList.get(key)?.extra.value || 0,
-          );
-          break;
         case AttributesCode.PROFICIENT:
           plus.push(
             this.weaponBaseAttributesList.get(AttributesCode.PROFICIENT_PLUS)?.extra
@@ -95,6 +116,7 @@ export class AttributesStore {
 
         case AttributesCode.CRIT_DAMAGE:
         case AttributesCode.CRIT_RATE:
+        case AttributesCode.RECHARGE_PERCENT:
           // case AttributesCode.ICE_DAMAGE:
           // case AttributesCode.FIRE_DAMAGE:
           // case AttributesCode.WATER_DAMAGE:

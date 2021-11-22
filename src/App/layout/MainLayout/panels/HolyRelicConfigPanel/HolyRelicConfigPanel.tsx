@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
-import { InputNumber, Select, Switch } from 'antd';
+import { Select, Switch } from 'antd';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { useStores } from '../../../../../hooks/useStores';
+import { attributes } from '../../../../common/attributes-list';
 import {
-  holyRelicSimpleAttributes,
+  cupHolyRelicList,
+  hatHolyRelicList,
   holyRelicTotalAttributes,
+  hourglassHolyRelicList,
 } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
 import {
@@ -16,12 +19,7 @@ import {
   hourglassMainEntryOptions,
   SelectOption,
 } from '../../../../common/options';
-import {
-  AtkTypeCode,
-  AttributesCode,
-  ElementTypeCode,
-  ValueTypeCode,
-} from '../../../../common/type-code';
+import { AttributesCode, HolyRelicTypeCode } from '../../../../common/type-code';
 import InputNumberBox from '../../../../components/InputNumberBox/InputNumberBox';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { fontSize3, gray5 } from '../../style/common.style';
@@ -32,8 +30,11 @@ const { Option } = Select;
 export default observer(function HolyRelicConfigPanel() {
   const [disabled, setDisabled] = useState(false);
   const { attributesStore } = useStores();
-  const { holyRelicSimpleAttributesList, setHolyRelicSimpleAttributesList } =
-    attributesStore;
+  const {
+    holyRelicSimpleAttributesList,
+    setHolyRelicSimpleAttributesList,
+    setHolyRelicList,
+  } = attributesStore;
 
   const [holyRelicAttributes2, setHolyRelicAttributes2] = useState(
     new Map([...holyRelicTotalAttributes]),
@@ -128,7 +129,16 @@ export default observer(function HolyRelicConfigPanel() {
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
-                    onChange={() => {}}>
+                    onChange={(value: AttributesCode) => {
+                      setHolyRelicList(
+                        HolyRelicTypeCode.CUP,
+                        cupHolyRelicList.filter(
+                          (item) =>
+                            item.mainAttribute?.extra.valueType ===
+                            attributes.get(value)?.extra.valueType,
+                        )[0],
+                      );
+                    }}>
                     {cupMainEntryOptions.map((item: SelectOption<AttributesCode>) => (
                       <Option key={item.value} value={item.value}>
                         {item.label}
@@ -142,7 +152,16 @@ export default observer(function HolyRelicConfigPanel() {
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
-                    onChange={() => {}}>
+                    onChange={(value: AttributesCode) => {
+                      setHolyRelicList(
+                        HolyRelicTypeCode.HOURGLASS,
+                        hourglassHolyRelicList.filter(
+                          (item) =>
+                            item.mainAttribute?.extra.valueType ===
+                            attributes.get(value)?.extra.valueType,
+                        )[0],
+                      );
+                    }}>
                     {hourglassMainEntryOptions.map(
                       (item: SelectOption<AttributesCode>) => (
                         <Option key={item.value} value={item.value}>
@@ -158,7 +177,16 @@ export default observer(function HolyRelicConfigPanel() {
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
-                    onChange={() => {}}>
+                    onChange={(value: AttributesCode) => {
+                      setHolyRelicList(
+                        HolyRelicTypeCode.HAT,
+                        hatHolyRelicList.filter(
+                          (item) =>
+                            item.mainAttribute?.extra.valueType ===
+                            attributes.get(value)?.extra.valueType,
+                        )[0],
+                      );
+                    }}>
                     {hatMainEntryOptions.map((item: SelectOption<AttributesCode>) => (
                       <Option key={item.value} value={item.value}>
                         {item.label}

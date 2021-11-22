@@ -2,6 +2,7 @@ import {
   AtkTypeCode,
   AttributesCode,
   ElementTypeCode,
+  HolyRelicTypeCode,
   ReactionTypeCode,
   ValueTypeCode,
 } from './type-code';
@@ -94,4 +95,34 @@ export interface Attribute {
   title: string;
   // 额外信息，三种类型
   extra: Value | Reaction | CaseDamage;
+}
+
+// 圣遗物描述
+export interface HolyRelicType {
+  // 名称
+  name?: string;
+  // type
+  type: HolyRelicTypeCode;
+  // 星级
+  star?: number;
+  // 最大等级
+  maxLevel?: number;
+  // 初始词条数范围
+  initialEntriesRange?: number;
+  // 词条数步进
+  entriesStep?: number;
+  // 套装归属
+  suit?: any;
+}
+
+// 圣遗物描述
+export interface HolyRelic extends HolyRelicType {
+  // 等级
+  level?: number;
+  // 主数值类型
+  mainAttribute?: Attribute;
+  // 副词条
+  subAttribute?: Array<Attribute>;
+  // 分数
+  score?: number;
 }

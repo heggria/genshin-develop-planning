@@ -1,4 +1,8 @@
-import { attributes } from './attributes-list';
+import {
+  cupHolyRelicList,
+  hatHolyRelicList,
+  hourglassHolyRelicList,
+} from './form-config';
 import {
   AtkTypeCode,
   AttributesCode,
@@ -43,44 +47,15 @@ export interface SelectOption<T> {
 }
 
 export const cupMainEntryOptions: Array<SelectOption<AttributesCode>> = [];
-attributes.forEach((value, key) => {
-  switch (key) {
-    case AttributesCode.ATK_PERCENT:
-    case AttributesCode.DEF_PERCENT:
-    case AttributesCode.BLOOD_PERCENT:
-    case AttributesCode.RECHARGE_PERCENT:
-    case AttributesCode.PROFICIENT_PLUS:
-      cupMainEntryOptions.push({ label: value.title, value: key });
-  }
+cupHolyRelicList.forEach((value, key) => {
+  cupMainEntryOptions.push({ label: value.mainAttribute?.title || '', value: key });
 });
 export const hourglassMainEntryOptions: Array<SelectOption<AttributesCode>> = [];
-attributes.forEach((value, key) => {
-  switch (key) {
-    case AttributesCode.ATK_PERCENT:
-    case AttributesCode.DEF_PERCENT:
-    case AttributesCode.BLOOD_PERCENT:
-    case AttributesCode.RECHARGE_PERCENT:
-    case AttributesCode.PROFICIENT_PLUS:
-    case AttributesCode.FIRE_DAMAGE:
-    case AttributesCode.WATER_DAMAGE:
-    case AttributesCode.ICE_DAMAGE:
-    case AttributesCode.ROCK_DAMAGE:
-    case AttributesCode.WIND_DAMAGE:
-    case AttributesCode.THUNDER_DAMAGE:
-    case AttributesCode.PHYSICS_DAMAGE:
-      hourglassMainEntryOptions.push({ label: value.title, value: key });
-  }
+hourglassHolyRelicList.forEach((value, key) => {
+  hourglassMainEntryOptions.push({ label: value.mainAttribute?.title || '', value: key });
 });
 
 export const hatMainEntryOptions: Array<SelectOption<AttributesCode>> = [];
-attributes.forEach((value, key) => {
-  switch (key) {
-    case AttributesCode.ATK_PERCENT:
-    case AttributesCode.DEF_PERCENT:
-    case AttributesCode.BLOOD_PERCENT:
-    case AttributesCode.PROFICIENT_PLUS:
-    case AttributesCode.CRIT_DAMAGE:
-    case AttributesCode.CRIT_RATE:
-      hatMainEntryOptions.push({ label: value.title, value: key });
-  }
+hatHolyRelicList.forEach((value, key) => {
+  hatMainEntryOptions.push({ label: value.mainAttribute?.title || '', value: key });
 });
