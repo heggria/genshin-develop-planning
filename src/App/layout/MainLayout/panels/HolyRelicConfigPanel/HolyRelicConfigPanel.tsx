@@ -33,6 +33,7 @@ export default observer(function HolyRelicConfigPanel() {
   const {
     holyRelicSimpleAttributesList,
     setHolyRelicSimpleAttributesList,
+    holyRelicList,
     setHolyRelicList,
   } = attributesStore;
 
@@ -123,33 +124,15 @@ export default observer(function HolyRelicConfigPanel() {
               }}>
               <AreaTitle>总加成属性</AreaTitle>
               <AreaContainer style={{ gridGap: disabled ? '5px' : '20px' }}>
-                <InputBox hidden={disabled}>
-                  <InputTitle>{'杯子主属性'}</InputTitle>
-                  <Select
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    showArrow={false}
-                    onChange={(value: AttributesCode) => {
-                      setHolyRelicList(
-                        HolyRelicTypeCode.CUP,
-                        cupHolyRelicList.filter(
-                          (item) => item.mainAttributeType === value,
-                        )[0],
-                      );
-                    }}>
-                    {cupMainEntryOptions.map((item: SelectOption<AttributesCode>) => (
-                      <Option key={item.value} value={item.value}>
-                        {item.label}
-                      </Option>
-                    ))}
-                  </Select>
-                </InputBox>
                 <InputBox width="100%" height="55px" hidden={disabled}>
                   <InputTitle>{'沙漏主属性'}</InputTitle>
                   <Select
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
+                    value={
+                      holyRelicList.get(HolyRelicTypeCode.HOURGLASS)?.mainAttributeType
+                    }
                     onChange={(value: AttributesCode) => {
                       setHolyRelicList(
                         HolyRelicTypeCode.HOURGLASS,
@@ -167,12 +150,35 @@ export default observer(function HolyRelicConfigPanel() {
                     )}
                   </Select>
                 </InputBox>
+                <InputBox hidden={disabled}>
+                  <InputTitle>{'杯子主属性'}</InputTitle>
+                  <Select
+                    style={{ width: '100%' }}
+                    placeholder="请选择"
+                    showArrow={false}
+                    value={holyRelicList.get(HolyRelicTypeCode.CUP)?.mainAttributeType}
+                    onChange={(value: AttributesCode) => {
+                      setHolyRelicList(
+                        HolyRelicTypeCode.CUP,
+                        cupHolyRelicList.filter(
+                          (item) => item.mainAttributeType === value,
+                        )[0],
+                      );
+                    }}>
+                    {cupMainEntryOptions.map((item: SelectOption<AttributesCode>) => (
+                      <Option key={item.value} value={item.value}>
+                        {item.label}
+                      </Option>
+                    ))}
+                  </Select>
+                </InputBox>
                 <InputBox width="100%" height="55px" hidden={disabled}>
                   <InputTitle>{'帽子主属性'}</InputTitle>
                   <Select
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
+                    value={holyRelicList.get(HolyRelicTypeCode.HAT)?.mainAttributeType}
                     onChange={(value: AttributesCode) => {
                       setHolyRelicList(
                         HolyRelicTypeCode.HAT,

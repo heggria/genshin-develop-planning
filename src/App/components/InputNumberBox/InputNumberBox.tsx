@@ -40,7 +40,7 @@ const InputNumberBox = (props: InputNumberBoxProps) => {
             ).toFixed(2),
           )
         }
-        onChange={props.onChange}
+        onBlur={(e) => props.onChange(parseFloat(e.target.value))}
       />
     </InputBox>
   );

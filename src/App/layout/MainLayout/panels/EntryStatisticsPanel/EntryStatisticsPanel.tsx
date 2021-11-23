@@ -33,7 +33,10 @@ export default observer(function EntryStatisticsPanel() {
           <ValueBoxValue
             style={{
               color:
-                value.mount < 0 || isNaN(value.mount) || !isFinite(value.mount)
+                value.mount < 0 ||
+                value.mount > 30 ||
+                isNaN(value.mount) ||
+                !isFinite(value.mount)
                   ? 'red'
                   : '',
             }}>
@@ -62,16 +65,24 @@ export default observer(function EntryStatisticsPanel() {
               </ValueBox>
             </Tooltip>
             <ValueBox>
-              <ValueBoxTitle>有效词条数最大值</ValueBoxTitle>
+              <ValueBoxTitle>有效词条数最大期望</ValueBoxTitle>
               <ValueBoxValue>
                 {entryStatisticsData.validEntriesMaximumNumber.toFixed(2)}
               </ValueBoxValue>
             </ValueBox>
-            <Tooltip placement="topLeft" title="视无词条伤害为100">
+            <Tooltip placement="topLeft" title="词条带来的伤害增益">
               <ValueBox>
-                <ValueBoxTitle>当前词条伤害增益</ValueBoxTitle>
+                <ValueBoxTitle>伤害增益</ValueBoxTitle>
                 <ValueBoxValue>
-                  {entryStatisticsData.currentEntryDamageGain.toFixed(2)}
+                  {entryStatisticsData.currentEntryDamageGain.toFixed(2) + '%'}
+                </ValueBoxValue>
+              </ValueBox>
+            </Tooltip>
+            <Tooltip placement="topLeft" title="词条带来的增幅反应伤害增益">
+              <ValueBox>
+                <ValueBoxTitle>增幅反应伤害增益</ValueBoxTitle>
+                <ValueBoxValue>
+                  {entryStatisticsData.currentEntryReactionDamageGain.toFixed(2) + '%'}
                 </ValueBoxValue>
               </ValueBox>
             </Tooltip>
@@ -81,7 +92,7 @@ export default observer(function EntryStatisticsPanel() {
               <ValueBox>
                 <ValueBoxTitle>平均毕业词条总分</ValueBoxTitle>
                 <ValueBoxValue>
-                  {entryStatisticsData.currentEntryDamageGain.toFixed(2)}
+                  {entryStatisticsData.averageGraduationEntryTotalScore.toFixed(2)}
                 </ValueBoxValue>
               </ValueBox>
             </Tooltip>
