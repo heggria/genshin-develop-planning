@@ -37,11 +37,25 @@ export class AttributesStore {
     ]);
   }
 
+  resetEntryStatisticsData = () => {
+    return {
+      validEntriesNumber: 0,
+      validEntriesMaximumNumber: 0,
+      currentEntryDamageGain: 0,
+      averageGraduationEntryTotalScore: 0,
+      theoreticalGraduationEntryTotalScore: 0,
+      validEntriesDistributionAverageScore: 0,
+      validEntriesDistributionTheoryScore: 0,
+    };
+  };
+
   holyRelicList: Map<HolyRelicTypeCode, HolyRelic | undefined> = new Map();
 
   entryStatisticsList: Map<AttributesCode, Entry> = new Map([
     ...holyRelicEntryStatisticMap,
   ]);
+
+  entryStatisticsData = this.resetEntryStatisticsData();
 
   actualAttributesList = new Map([...actualAttributes]);
 
@@ -56,6 +70,32 @@ export class AttributesStore {
     this.holyRelicList.set(code, holyRelic);
     this.countActualAttributes();
     this.countEntryStatisticsList();
+  };
+
+  countEntryStatisticsData = () => {
+    let flag = false;
+    this.entryStatisticsData = this.resetEntryStatisticsData();
+    this.entryStatisticsList.forEach((element) => {
+      if (element.efficient) {
+        if (!isNaN(element.mount) && isFinite(element.mount)) {
+          this.entryStatisticsData.validEntriesNumber += element.mount;
+        }
+        if (this.entryStatisticsData.validEntriesMaximumNumber < 45) {
+          if (!flag) {
+            this.entryStatisticsData.validEntriesMaximumNumber += 6 * 5;
+            flag = true;
+          } else {
+            this.entryStatisticsData.validEntriesMaximumNumber += 5;
+          }
+        }
+      }
+    });
+  };
+
+  setEntryStatisticsList = (code: AttributesCode, holyRelic: Entry) => {
+    // eslint-disable-next-line no-debugger
+    this.entryStatisticsList.set(code, holyRelic);
+    this.countEntryStatisticsData();
   };
 
   countEntryStatisticsList = () => {
@@ -103,11 +143,11 @@ export class AttributesStore {
           break;
       }
       this.entryStatisticsList.set(key, {
-        attributeType: value.attributeType,
-        attribute: value.attribute,
+        ...value,
         mount: (v - offset) / (holyRelicAvgEntryMap.get(key) || 0),
       } as Entry);
     });
+    this.countEntryStatisticsData();
   };
 
   setCharBaseAttributesList = (map: Map<AttributesCode, Attribute>) => {
