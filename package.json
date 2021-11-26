@@ -2,9 +2,11 @@
   "name": "vite-reactts-eslint-prettier",
   "version": "0.0.0",
   "scripts": {
-    "dev": "sudo vite",
+    "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
+    "proxy:set": "./automation/setProxy.sh",
+    "proxy:unset": "./automation/unsetProxy.sh",
     "lint:fix": "eslint ./src --ext .jsx,.js,.ts,.tsx --quiet --fix --ignore-path ./.gitignore",
     "lint:format": "prettier  --loglevel warn --write \"./**/*.{js,jsx,ts,tsx,css,md,json}\" ",
     "lint": "yarn lint:format && yarn lint:fix ",
