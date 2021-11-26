@@ -1,5 +1,11 @@
 import { holyRelicAllList } from './form-config';
-import { AtkTypeCode, AttrCode, ElementTypeCode, ReactionTypeCode } from './type-code';
+import {
+  AtkTypeCode,
+  AttrCode,
+  ElementTypeCode,
+  HolyRelicTypeCode,
+  ReactionTypeCode,
+} from './type-code';
 
 export const atkTypeOptions: Array<SelectOption<AtkTypeCode>> = [
   { label: '普通攻击', value: 'normal_atk' },
@@ -37,26 +43,18 @@ export interface SelectOption<T> {
   value: T;
 }
 
-export const hourglassMainEntryOptions: Array<SelectOption<AttrCode>> = [];
-holyRelicAllList.get('hourglass')?.forEach((value) => {
-  hourglassMainEntryOptions.push({
-    label: value.mainAttr.title,
-    value: value.mainAttrType,
-  });
-});
-
-export const cupMainEntryOptions: Array<SelectOption<AttrCode>> = [];
-holyRelicAllList.get('cup')?.forEach((value) => {
-  cupMainEntryOptions.push({
-    label: value.mainAttr.title,
-    value: value.mainAttrType,
-  });
-});
-
-export const hatMainEntryOptions: Array<SelectOption<AttrCode>> = [];
-holyRelicAllList.get('hat')?.forEach((value) => {
-  hatMainEntryOptions.push({
-    label: value.mainAttr.title,
-    value: value.mainAttrType,
+export const mainEntryOptions = new Map<HolyRelicTypeCode, Array<SelectOption<AttrCode>>>(
+  [
+    ['hourglass', []],
+    ['cup', []],
+    ['hat', []],
+  ],
+);
+mainEntryOptions.forEach((options, key) => {
+  holyRelicAllList.get(key)?.forEach((value) => {
+    options.push({
+      label: value.mainAttr.title,
+      value: value.mainAttrType,
+    });
   });
 });

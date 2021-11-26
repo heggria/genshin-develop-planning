@@ -13,18 +13,18 @@ import { GridContainer } from '../../style/index.style';
 
 export default observer(function CharacterBasePanel() {
   const { attributesStore } = useStores();
-  const { charBaseAttributesList, setCharBaseAttributesList } = attributesStore;
+  const { charBaseAttrList, setCharBaseAttrList } = attributesStore;
   const listItems: Array<any> = [];
-  charBaseAttributesList.forEach((value: Attribute, key: AttrCode) =>
+  charBaseAttrList.forEach((value: Attribute, key: AttrCode) =>
     listItems.push(
       <InputNumberBox
         key={key}
         title={value.title}
         size={'middle'}
         onChange={(v: number) => {
-          setCharBaseAttributesList(
+          setCharBaseAttrList(
             new Map([
-              ...charBaseAttributesList,
+              ...charBaseAttrList,
               [
                 key,
                 {

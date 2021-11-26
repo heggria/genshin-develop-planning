@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 export type AttrTypeCode =
-  | 'atk'
-  | 'def'
-  | 'blood'
+  | 'atk_plus'
+  | 'def_plus'
+  | 'blood_plus'
   | 'recharge'
-  | 'proficient'
+  | 'proficient_plus'
   | 'elemental_reaction'
   | 'crit_rate'
   | 'crit_damage'
@@ -46,21 +46,17 @@ export type AtkTypeCode =
 
 export type AttrCode =
   // 攻击区
-  | 'atk'
+  | 'atk_plus'
   | 'atk_base'
   | 'atk_percent'
-  | 'atk_plus'
-  | 'def'
+  | 'def_plus'
   | 'def_base'
   | 'def_percent'
-  | 'def_plus'
-  | 'blood'
+  | 'blood_plus'
   | 'blood_base'
   | 'blood_percent'
-  | 'blood_plus'
   // 元素反应区
   | 'recharge_percent' // 元素充能效率
-  | 'proficient'
   | 'proficient_plus' // 元素精通
   // overload'| // 超载增强
   // combustion'| // 燃烧增强

@@ -67,12 +67,12 @@ attributes.forEach((value, key) => {
 export const actualAttributes: Map<AttrCode, Attribute> = new Map();
 attributes.forEach((value, key) => {
   switch (key) {
-    case 'atk':
-    case 'def':
-    case 'blood':
+    case 'atk_plus':
+    case 'def_plus':
+    case 'blood_plus':
     case 'crit_damage':
     case 'crit_rate':
-    case 'proficient':
+    case 'proficient_plus':
     case 'recharge_percent':
     case 'fire_damage':
     case 'ice_damage':

@@ -13,19 +13,19 @@ import { GridContainer } from '../../style/index.style';
 
 export default observer(function WeaponBasePanel() {
   const { attributesStore } = useStores();
-  const { weaponBaseAttributesList, setWeaponBaseAttributesList } = attributesStore;
+  const { weaponBaseAttrList, setWeaponBaseAttrList } = attributesStore;
 
   const listItems: Array<any> = [];
-  weaponBaseAttributesList.forEach((value: Attribute, key: AttrCode) =>
+  weaponBaseAttrList.forEach((value: Attribute, key: AttrCode) =>
     listItems.push(
       <InputNumberBox
         key={key}
         title={value.title}
         size={'middle'}
         onChange={(v: number) => {
-          setWeaponBaseAttributesList(
+          setWeaponBaseAttrList(
             new Map([
-              ...weaponBaseAttributesList,
+              ...weaponBaseAttrList,
               [
                 key,
                 {

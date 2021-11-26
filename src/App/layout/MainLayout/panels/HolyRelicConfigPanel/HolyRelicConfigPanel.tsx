@@ -5,18 +5,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { useStores } from '../../../../../hooks/useStores';
-import { attributes } from '../../../../common/attributes-list';
 import {
   holyRelicAllList,
   holyRelicTotalAttributes,
 } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
-import {
-  cupMainEntryOptions,
-  hatMainEntryOptions,
-  hourglassMainEntryOptions,
-  SelectOption,
-} from '../../../../common/options';
+import { mainEntryOptions, SelectOption } from '../../../../common/options';
 import { AttrCode, HolyRelicTypeCode } from '../../../../common/type-code';
 import InputNumberBox from '../../../../components/InputNumberBox/InputNumberBox';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
@@ -25,15 +19,45 @@ import { InputBox, InputTitle } from '../../style/index.style';
 
 const { Option } = Select;
 
+interface HRSelectProps {
+  title: string;
+  holyRelicKey: HolyRelicTypeCode;
+  disabled: boolean;
+}
+
+const HRSelect = (props: HRSelectProps) => {
+  const { attributesStore } = useStores();
+  const { holyRelicList, setHolyRelicList } = attributesStore;
+  return (
+    <InputBox width="100%" height="55px" hidden={props.disabled}>
+      <InputTitle>{props.title}</InputTitle>
+      <Select
+        style={{ width: '100%' }}
+        placeholder="请选择"
+        showArrow={false}
+        value={holyRelicList.get(props.holyRelicKey)?.mainAttrType}
+        onChange={(value: AttrCode) => {
+          setHolyRelicList(
+            props.holyRelicKey,
+            holyRelicAllList
+              .get(props.holyRelicKey)
+              ?.filter((item) => item.mainAttrType === value)[0],
+          );
+        }}>
+        {mainEntryOptions.get(props.holyRelicKey)?.map((item: SelectOption<AttrCode>) => (
+          <Option key={item.value} value={item.value}>
+            {item.label}
+          </Option>
+        ))}
+      </Select>
+    </InputBox>
+  );
+};
+
 export default observer(function HolyRelicConfigPanel() {
   const [disabled, setDisabled] = useState(false);
   const { attributesStore } = useStores();
-  const {
-    holyRelicSimpleAttributesList,
-    setHolyRelicSimpleAttributesList,
-    holyRelicList,
-    setHolyRelicList,
-  } = attributesStore;
+  const { holyRelicAttrList, setHolyRelicAttrList } = attributesStore;
 
   const [holyRelicAttributes2, setHolyRelicAttributes2] = useState(
     new Map([...holyRelicTotalAttributes]),
@@ -41,16 +65,16 @@ export default observer(function HolyRelicConfigPanel() {
 
   const holyRelicAttributesInputs: Array<any> = [];
   if (!disabled) {
-    holyRelicSimpleAttributesList.forEach((value: Attribute, key: AttrCode) =>
+    holyRelicAttrList.forEach((value: Attribute, key: AttrCode) =>
       holyRelicAttributesInputs.push(
         <InputNumberBox
           key={key}
           title={value.title}
           size={'middle'}
           onChange={(v: number) => {
-            setHolyRelicSimpleAttributesList(
+            setHolyRelicAttrList(
               new Map([
-                ...holyRelicSimpleAttributesList,
+                ...holyRelicAttrList,
                 [
                   key,
                   {
@@ -116,72 +140,13 @@ export default observer(function HolyRelicConfigPanel() {
               }}>
               <AreaTitle>总加成属性</AreaTitle>
               <AreaContainer style={{ gridGap: disabled ? '5px' : '20px' }}>
-                <InputBox width="100%" height="55px" hidden={disabled}>
-                  <InputTitle>{'沙漏主属性'}</InputTitle>
-                  <Select
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    showArrow={false}
-                    value={holyRelicList.get('hourglass')?.mainAttrType}
-                    onChange={(value: AttrCode) => {
-                      setHolyRelicList(
-                        'hourglass',
-                        holyRelicAllList
-                          .get('hourglass')
-                          ?.filter((item) => item.mainAttrType === value)[0],
-                      );
-                    }}>
-                    {hourglassMainEntryOptions.map((item: SelectOption<AttrCode>) => (
-                      <Option key={item.value} value={item.value}>
-                        {item.label}
-                      </Option>
-                    ))}
-                  </Select>
-                </InputBox>
-                <InputBox hidden={disabled}>
-                  <InputTitle>{'杯子主属性'}</InputTitle>
-                  <Select
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    showArrow={false}
-                    value={holyRelicList.get('cup')?.mainAttrType}
-                    onChange={(value: AttrCode) => {
-                      setHolyRelicList(
-                        'cup',
-                        holyRelicAllList
-                          .get('cup')
-                          ?.filter((item) => item.mainAttrType === value)[0],
-                      );
-                    }}>
-                    {cupMainEntryOptions.map((item: SelectOption<AttrCode>) => (
-                      <Option key={item.value} value={item.value}>
-                        {item.label}
-                      </Option>
-                    ))}
-                  </Select>
-                </InputBox>
-                <InputBox width="100%" height="55px" hidden={disabled}>
-                  <InputTitle>{'帽子主属性'}</InputTitle>
-                  <Select
-                    style={{ width: '100%' }}
-                    placeholder="请选择"
-                    showArrow={false}
-                    value={holyRelicList.get('hat')?.mainAttrType}
-                    onChange={(value: AttrCode) => {
-                      setHolyRelicList(
-                        'hat',
-                        holyRelicAllList
-                          .get('hat')
-                          ?.filter((item) => item.mainAttrType === value)[0],
-                      );
-                    }}>
-                    {hatMainEntryOptions.map((item: SelectOption<AttrCode>) => (
-                      <Option key={item.value} value={item.value}>
-                        {item.label}
-                      </Option>
-                    ))}
-                  </Select>
-                </InputBox>
+                <HRSelect
+                  disabled={disabled}
+                  holyRelicKey={'hourglass'}
+                  title={'沙漏主属性'}
+                />
+                <HRSelect disabled={disabled} holyRelicKey={'cup'} title={'杯子主属性'} />
+                <HRSelect disabled={disabled} holyRelicKey={'hat'} title={'帽子主属性'} />
                 {holyRelicAttributesInputs}
               </AreaContainer>
             </Area>

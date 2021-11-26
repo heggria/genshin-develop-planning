@@ -12,10 +12,10 @@ import { GridContainer } from '../../style/index.style';
 
 export default observer(function StatisticsPanel() {
   const { attributesStore } = useStores();
-  const { actualAttributesList } = attributesStore;
+  const { actualAttrList } = attributesStore;
   // console.log(actualAttributes);
   const listItems: Array<any> = [];
-  actualAttributesList.forEach((value: Attribute, key: AttrCode) =>
+  actualAttrList.forEach((value: Attribute, key: AttrCode) =>
     listItems.push(
       <ValueBox key={key}>
         <ValueBoxTitle>{value.title.split('/')[0]}</ValueBoxTitle>

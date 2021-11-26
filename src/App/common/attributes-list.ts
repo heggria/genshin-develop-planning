@@ -1,23 +1,23 @@
 import { Attribute, Entry, StringName } from './interface';
 import { AtkTypeCode, AttrCode, ElementTypeCode, ReactionTypeCode } from './type-code';
 
-export const attributesList: Array<StringName> = [
+export const AttrList: Array<StringName> = [
   // 攻击区
-  { code: 'atk', strings: ['攻击力'] },
+  { code: 'atk_plus', strings: ['攻击力'] },
   { code: 'atk_base', strings: ['基础攻击力'] },
   { code: 'atk_percent', strings: ['攻击力/%'] },
   { code: 'atk_plus', strings: ['攻击力/+'] },
-  { code: 'def', strings: ['防御力'] },
+  { code: 'def_plus', strings: ['防御力'] },
   { code: 'def_base', strings: ['基础防御力'] },
   { code: 'def_percent', strings: ['防御力/%'] },
   { code: 'def_plus', strings: ['防御力/+'] },
-  { code: 'blood', strings: ['生命值上限'] },
+  { code: 'blood_plus', strings: ['生命值上限'] },
   { code: 'blood_base', strings: ['基础生命值上限'] },
   { code: 'blood_percent', strings: ['生命值上限/%'] },
   { code: 'blood_plus', strings: ['生命值上限/+'] },
   // 元素反应区
   { code: 'recharge_percent', strings: ['元素充能效率/%'] }, // 元素充能效率
-  { code: 'proficient', strings: ['元素精通'] }, // 元素精通
+  { code: 'proficient_plus', strings: ['元素精通'] }, // 元素精通
   { code: 'proficient_plus', strings: ['元素精通/+'] }, // 元素精通
   // { code: AttrCode.OVERLOAD, strings: ['生命值上限/%'] }, // 超载增强
   // { code: AttrCode.COMBUSTION, strings: ['生命值上限/%'] }, // 燃烧增强
@@ -60,7 +60,7 @@ export const attributesList: Array<StringName> = [
 ];
 
 export const attributeMap: Map<AttrCode, string> = new Map(
-  attributesList.map((item) => [item.code as AttrCode, item.strings[0] as string]),
+  AttrList.map((item) => [item.code as AttrCode, item.strings[0] as string]),
 );
 export const attributes: Map<AttrCode, Attribute> = new Map();
 
