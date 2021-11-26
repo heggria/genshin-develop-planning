@@ -7,10 +7,8 @@ import styled from 'styled-components';
 import { useStores } from '../../../../../hooks/useStores';
 import { attributes } from '../../../../common/attributes-list';
 import {
-  cupHolyRelicList,
-  hatHolyRelicList,
+  holyRelicAllList,
   holyRelicTotalAttributes,
-  hourglassHolyRelicList,
 } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
 import {
@@ -56,19 +54,16 @@ export default observer(function HolyRelicConfigPanel() {
                 [
                   key,
                   {
-                    title: value.title,
-                    extra: {
-                      ...value.extra,
-                      value: v,
-                    },
+                    ...value,
+                    value: v,
                   },
                 ],
               ]),
             );
           }}
-          type={value.extra.valueType}
+          type={value.valueType}
           disable={disabled}
-          value={value.extra.value}></InputNumberBox>,
+          value={value.value}></InputNumberBox>,
       ),
     );
   } else {
@@ -85,19 +80,16 @@ export default observer(function HolyRelicConfigPanel() {
                   [
                     key,
                     {
-                      title: value.title,
-                      extra: {
-                        ...value.extra,
-                        value: v,
-                      },
+                      ...value,
+                      value: v,
                     },
                   ],
                 ]),
             );
           }}
-          type={value.extra.valueType}
+          type={value.valueType}
           disable={disabled}
-          value={value.extra.value}></InputNumberBox>,
+          value={value.value}></InputNumberBox>,
       ),
     );
   }
@@ -130,13 +122,13 @@ export default observer(function HolyRelicConfigPanel() {
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
-                    value={holyRelicList.get('hourglass')?.mainAttributeType}
+                    value={holyRelicList.get('hourglass')?.mainAttrType}
                     onChange={(value: AttrCode) => {
                       setHolyRelicList(
                         'hourglass',
-                        hourglassHolyRelicList.filter(
-                          (item) => item.mainAttributeType === value,
-                        )[0],
+                        holyRelicAllList
+                          .get('hourglass')
+                          ?.filter((item) => item.mainAttrType === value)[0],
                       );
                     }}>
                     {hourglassMainEntryOptions.map((item: SelectOption<AttrCode>) => (
@@ -152,13 +144,13 @@ export default observer(function HolyRelicConfigPanel() {
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
-                    value={holyRelicList.get('cup')?.mainAttributeType}
+                    value={holyRelicList.get('cup')?.mainAttrType}
                     onChange={(value: AttrCode) => {
                       setHolyRelicList(
                         'cup',
-                        cupHolyRelicList.filter(
-                          (item) => item.mainAttributeType === value,
-                        )[0],
+                        holyRelicAllList
+                          .get('cup')
+                          ?.filter((item) => item.mainAttrType === value)[0],
                       );
                     }}>
                     {cupMainEntryOptions.map((item: SelectOption<AttrCode>) => (
@@ -174,13 +166,13 @@ export default observer(function HolyRelicConfigPanel() {
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
-                    value={holyRelicList.get('hat')?.mainAttributeType}
+                    value={holyRelicList.get('hat')?.mainAttrType}
                     onChange={(value: AttrCode) => {
                       setHolyRelicList(
                         'hat',
-                        hatHolyRelicList.filter(
-                          (item) => item.mainAttributeType === value,
-                        )[0],
+                        holyRelicAllList
+                          .get('hat')
+                          ?.filter((item) => item.mainAttrType === value)[0],
                       );
                     }}>
                     {hatMainEntryOptions.map((item: SelectOption<AttrCode>) => (

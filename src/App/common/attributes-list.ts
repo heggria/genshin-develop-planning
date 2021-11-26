@@ -120,10 +120,10 @@ attributeMap.forEach((value: string, key: AttrCode) => {
 
   attributes.set(key, {
     title: value,
+    valueType: value.includes('%') ? 'percent' : 'number',
+    value: 0,
     extra: {
       effectiveElementType: flag === 1 ? elementTypeCode : undefined,
-      valueType: value.includes('%') ? 'percent' : 'number',
-      value: 0,
     },
   });
 });
@@ -170,24 +170,24 @@ reactionTypeMap.forEach((value: string, key: ReactionTypeCode) => {
         reactionAtkAttributes.push(
           {
             title: value + '伤害',
+            valueType: 'percent',
+            value: 0,
             extra: {
               attachedElement: { type: 'fire' },
               triggerElement: { type: 'water' },
               reactionRate: 2,
               reactionType: key,
-              valueType: 'percent',
-              value: 0,
             },
           },
           {
             title: value + '伤害',
+            valueType: 'percent',
+            value: 0,
             extra: {
               triggerElement: { type: 'fire' },
               attachedElement: { type: 'water' },
               reactionRate: 1.5,
               reactionType: key,
-              valueType: 'percent',
-              value: 0,
             },
           },
         );
@@ -198,24 +198,24 @@ reactionTypeMap.forEach((value: string, key: ReactionTypeCode) => {
         reactionAtkAttributes.push(
           {
             title: value + '伤害',
+            valueType: 'percent',
+            value: 0,
             extra: {
               triggerElement: { type: 'ice' },
               attachedElement: { type: 'fire' },
               reactionRate: 1.5,
               reactionType: key,
-              valueType: 'percent',
-              value: 0,
             },
           },
           {
             title: value + '伤害',
+            valueType: 'percent',
+            value: 0,
             extra: {
               triggerElement: { type: 'fire' },
               attachedElement: { type: 'ice' },
               reactionRate: 2,
               reactionType: key,
-              valueType: 'percent',
-              value: 0,
             },
           },
         );
@@ -225,12 +225,12 @@ reactionTypeMap.forEach((value: string, key: ReactionTypeCode) => {
     case 'none':
       reactionAtkAttributes.push({
         title: value,
+        valueType: 'percent',
+        value: 0,
         extra: {
           triggerElement: { type: 'none' },
           reactionType: key,
-          valueType: 'percent',
           reactionRate: 1,
-          value: 0,
         },
       });
   }

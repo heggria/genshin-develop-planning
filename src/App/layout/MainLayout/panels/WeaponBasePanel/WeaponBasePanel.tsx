@@ -39,8 +39,8 @@ export default observer(function WeaponBasePanel() {
             ]),
           );
         }}
-        type={value.extra.valueType}
-        value={value.extra.value}></InputNumberBox>,
+        type={value.valueType}
+        value={value.value}></InputNumberBox>,
     ),
   );
   return (

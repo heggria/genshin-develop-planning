@@ -1,6 +1,6 @@
 import { attributes } from './attributes-list';
 import { Attribute, HolyRelic } from './interface';
-import { AttrCode } from './type-code';
+import { AttrCode, HolyRelicTypeCode } from './type-code';
 
 export const holyRelicTotalAttributes: Map<AttrCode, Attribute> = new Map();
 attributes.forEach((value, key) => {
@@ -103,111 +103,78 @@ export const holyRelicValueMap: Map<AttrCode, number> = new Map([
   ['crit_rate', 31.1],
   ['crit_damage', 62.2],
 ]);
+const holyRelicAttrList = new Map<HolyRelicTypeCode, Array<AttrCode>>([
+  ['flower', ['blood_plus']],
+  ['feather', ['atk_plus']],
+  [
+    'hourglass',
+    [
+      'atk_percent',
+      'def_percent',
+      'blood_percent',
+      'recharge_percent',
+      'proficient_plus',
+    ],
+  ],
+  [
+    'cup',
+    [
+      'atk_percent',
+      'def_percent',
+      'blood_percent',
+      'recharge_percent',
+      'proficient_plus',
+      'fire_damage',
+      'water_damage',
+      'ice_damage',
+      'rock_damage',
+      'wind_damage',
+      'thunder_damage',
+      'physics_damage',
+    ],
+  ],
+  [
+    'hat',
+    [
+      'atk_percent',
+      'def_percent',
+      'blood_percent',
+      'proficient_plus',
+      'crit_damage',
+      'crit_rate',
+    ],
+  ],
+]);
 
-export const flowerHolyRelicList: Array<HolyRelic> = [
-  {
-    type: 'flower',
-    level: 20,
-    mainAttributeType: 'blood_plus',
-    mainAttribute: {
-      title: attributes.get('blood_plus')?.title,
-      extra: {
-        valueType: attributes.get('blood_plus')?.extra.valueType,
-        value: holyRelicValueMap.get('blood_plus') || 0,
+export const holyRelicAllList = new Map<HolyRelicTypeCode, Array<HolyRelic>>([
+  ['flower', []],
+  ['feather', []],
+  ['hourglass', []],
+  ['cup', []],
+  ['hat', []],
+]);
+
+const initHolyRelicList = (
+  type: HolyRelicTypeCode,
+  keyList: Array<AttrCode>,
+  value: Attribute,
+  key: AttrCode,
+) => {
+  if (keyList.includes(key)) {
+    holyRelicAllList.get(type)?.push({
+      type: type,
+      level: 20,
+      mainAttrType: key,
+      mainAttr: {
+        title: value.title,
+        valueType: value.valueType,
+        value: holyRelicValueMap.get(key) || 0,
       },
-    },
-  } as HolyRelic,
-];
-
-export const featureHolyRelicList: Array<HolyRelic> = [
-  {
-    type: 'feather',
-    level: 20,
-    mainAttributeType: 'atk_plus',
-    mainAttribute: {
-      title: attributes.get('atk_plus')?.title,
-      extra: {
-        valueType: attributes.get('atk_plus')?.extra.valueType,
-        value: holyRelicValueMap.get('atk_plus') || 0,
-      },
-    },
-  } as HolyRelic,
-];
-
-export const hourglassHolyRelicList: Array<HolyRelic> = [];
-attributes.forEach((value, key) => {
-  switch (key) {
-    case 'atk_percent':
-    case 'def_percent':
-    case 'blood_percent':
-    case 'recharge_percent':
-    case 'proficient_plus':
-      hourglassHolyRelicList.push({
-        type: 'hourglass',
-        level: 20,
-        mainAttributeType: key,
-        mainAttribute: {
-          title: value.title,
-          extra: {
-            valueType: value.extra.valueType,
-            value: holyRelicValueMap.get(key) || 0,
-          },
-        },
-      } as HolyRelic);
+    } as HolyRelic);
   }
+};
+attributes.forEach((attribute, attributeKey) => {
+  holyRelicAttrList.forEach((keyList, holyRelicKey) => {
+    initHolyRelicList(holyRelicKey, keyList, attribute, attributeKey);
+  });
 });
-
-export const cupHolyRelicList: Array<HolyRelic> = [];
-attributes.forEach((value, key) => {
-  switch (key) {
-    case 'atk_percent':
-    case 'def_percent':
-    case 'blood_percent':
-    case 'recharge_percent':
-    case 'proficient_plus':
-    case 'fire_damage':
-    case 'water_damage':
-    case 'ice_damage':
-    case 'rock_damage':
-    case 'wind_damage':
-    case 'thunder_damage':
-    case 'physics_damage':
-      cupHolyRelicList.push({
-        type: 'cup',
-        level: 20,
-        mainAttributeType: key,
-        mainAttribute: {
-          title: value.title,
-          extra: {
-            valueType: value.extra.valueType,
-            value: holyRelicValueMap.get(key) || 0,
-          },
-        },
-      } as HolyRelic);
-  }
-});
-
-export const hatHolyRelicList: Array<HolyRelic> = [];
-attributes.forEach((value, key) => {
-  switch (key) {
-    case 'atk_percent':
-    case 'def_percent':
-    case 'blood_percent':
-    case 'proficient_plus':
-    case 'crit_damage':
-    case 'crit_rate':
-      hatHolyRelicList.push({
-        type: 'hat',
-        level: 20,
-        mainAttributeType: key,
-        mainAttribute: {
-          title: value.title,
-          extra: {
-            valueType: value.extra.valueType,
-            value: holyRelicValueMap.get(key) || 0,
-          },
-        },
-      } as HolyRelic);
-  }
-});
-// console.log(hatHolyRelicList);

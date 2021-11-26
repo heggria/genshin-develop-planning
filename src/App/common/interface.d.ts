@@ -71,7 +71,7 @@ export interface Element {
 }
 
 // 元素反应描述
-export interface Reaction extends Value {
+export interface Reaction {
   // 触发反应的元素
   triggerElement: Element;
   // 原始附着的元素
@@ -83,7 +83,7 @@ export interface Reaction extends Value {
 }
 
 // 增伤描述
-export interface CaseDamage extends Value {
+export interface CaseDamage {
   // 触发元素类型
   effectiveElementType?: ElementTypeCode;
   // 触发攻击类型
@@ -91,11 +91,11 @@ export interface CaseDamage extends Value {
 }
 
 // 属性描述
-export interface Attribute {
+export interface Attribute extends Value {
   // 名称数组
   title: string;
   // 额外信息，三种类型
-  extra: Value | Reaction | CaseDamage;
+  extra?: Reaction | CaseDamage;
 }
 
 // 圣遗物描述
@@ -121,9 +121,9 @@ export interface HolyRelic extends HolyRelicType {
   // 等级
   level?: number;
   // 主数值类型
-  mainAttributeType: AttrCode;
+  mainAttrType: AttrCode;
   // 主数值类型
-  mainAttribute: Attribute;
+  mainAttr: Attribute;
   // 副词条
   subAttribute?: Map<Attribute, AttrTypeCode>;
   // 分数

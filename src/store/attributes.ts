@@ -7,12 +7,8 @@ import {
 import {
   actualAttributes,
   charBaseAttributes,
-  cupHolyRelicList,
-  featureHolyRelicList,
-  flowerHolyRelicList,
-  hatHolyRelicList,
+  holyRelicAllList,
   holyRelicSimpleAttributes,
-  hourglassHolyRelicList,
   weaponBaseAttributes,
 } from '../app/common/form-config';
 import { Attribute, Entry, HolyRelic } from '../app/common/interface';
@@ -50,7 +46,7 @@ export class AttributesStore {
           c = 50;
           break;
       }
-      value.extra.value = c;
+      value.value = c;
     });
     this.weaponBaseAttributesList.forEach((value: Attribute, key: AttrCode) => {
       let c = 0;
@@ -62,7 +58,7 @@ export class AttributesStore {
           c = 66.4;
           break;
       }
-      value.extra.value = c;
+      value.value = c;
     });
 
     this.holyRelicSimpleAttributesList.forEach((value: Attribute, key: AttrCode) => {
@@ -90,18 +86,18 @@ export class AttributesStore {
           c = 80;
           break;
       }
-      value.extra.value = c;
+      value.value = c;
     });
   }
 
   resetHolyRelicList() {
-    this.holyRelicList = new Map([
-      ['flower', flowerHolyRelicList[0]],
-      ['feather', featureHolyRelicList[0]],
-      ['hourglass', hourglassHolyRelicList[4]],
-      ['cup', cupHolyRelicList[5]],
-      ['hat', hatHolyRelicList[4]],
-    ]);
+    this.holyRelicList = new Map();
+    holyRelicAllList.forEach((value, key) => {
+      if (key === 'hourglass') this.holyRelicList.set(key, value[4]);
+      else if (key === 'cup') this.holyRelicList.set(key, value[5]);
+      else if (key === 'hat') this.holyRelicList.set(key, value[4]);
+      else this.holyRelicList.set(key, value[0]);
+    });
   }
 
   resetEntryStatisticsData = () => {
@@ -138,7 +134,7 @@ export class AttributesStore {
   // 圣遗物属性
   holyRelicSimpleAttributesList = new Map([...holyRelicSimpleAttributes]);
 
-  setHolyRelicList = (code: HolyRelicTypeCode, holyRelic: HolyRelic) => {
+  setHolyRelicList = (code: HolyRelicTypeCode, holyRelic: HolyRelic | undefined) => {
     // eslint-disable-next-line no-debugger
     this.holyRelicList.set(code, holyRelic);
     this.countActualAttributes();
@@ -170,21 +166,21 @@ export class AttributesStore {
     let proficientOffset = 0;
     let critDamageOffset = 0;
     this.holyRelicList.forEach((item) => {
-      switch (item?.mainAttributeType) {
+      switch (item?.mainAttrType) {
         case 'atk_percent':
           atkOffset +=
-            (item.mainAttribute.extra.value / 100) *
-            ((this.charBaseAttributesList.get('atk_base')?.extra.value || 0) +
-              (this.weaponBaseAttributesList.get('atk_base')?.extra.value || 0));
+            (item.mainAttr.value / 100) *
+            ((this.charBaseAttributesList.get('atk_base')?.value || 0) +
+              (this.weaponBaseAttributesList.get('atk_base')?.value || 0));
           break;
         case 'crit_rate':
-          critRateOffset += item.mainAttribute.extra.value;
+          critRateOffset += item.mainAttr.value;
           break;
         case 'proficient_plus':
-          proficientOffset += item.mainAttribute.extra.value;
+          proficientOffset += item.mainAttr.value;
           break;
         case 'crit_damage':
-          critDamageOffset += item.mainAttribute.extra.value;
+          critDamageOffset += item.mainAttr.value;
           break;
       }
     });
@@ -217,7 +213,7 @@ export class AttributesStore {
   };
 
   getValue(attributesList: Map<AttrCode, Attribute>, code: AttrCode) {
-    return attributesList.get(code)?.extra.value || 0;
+    return attributesList.get(code)?.value || 0;
   }
 
   countDamage(atk: number, critRate: number, critDamage: number, proficient: number) {
@@ -238,36 +234,35 @@ export class AttributesStore {
   countEntryStatisticsList = () => {
     this.entryStatisticsList.forEach((value: Entry, key: AttrCode) => {
       let c = this.holyRelicSimpleAttributesList;
-      let v = c.get(key)?.extra.value || 0;
+      let v = c.get(key)?.value || 0;
       let offset = 0;
       this.holyRelicList.forEach((hr: HolyRelic | undefined) => {
-        if (hr && hr.mainAttributeType === value.attributeType) {
-          offset += hr.mainAttribute?.extra.value;
+        if (hr && hr.mainAttrType === value.attributeType) {
+          offset += hr.mainAttr?.value;
         }
       });
       switch (key) {
         case 'atk_percent':
           v =
-            (((c.get('atk_plus')?.extra.value || 0) -
-              (this.holyRelicList.get('feather')?.mainAttribute?.extra.value || 0)) /
-              ((this.charBaseAttributesList.get('atk_base')?.extra.value || 0) +
-                (this.weaponBaseAttributesList.get('atk_base')?.extra.value || 0) || 0)) *
+            (((c.get('atk_plus')?.value || 0) -
+              (this.holyRelicList.get('feather')?.mainAttr?.value || 0)) /
+              ((this.charBaseAttributesList.get('atk_base')?.value || 0) +
+                (this.weaponBaseAttributesList.get('atk_base')?.value || 0) || 0)) *
             100;
           break;
         case 'def_percent':
           v =
-            ((c.get('def_plus')?.extra.value || 0) /
-              ((this.charBaseAttributesList.get('def_base')?.extra.value || 0) +
-                (this.weaponBaseAttributesList.get('def_base')?.extra.value || 0) || 0)) *
+            ((c.get('def_plus')?.value || 0) /
+              ((this.charBaseAttributesList.get('def_base')?.value || 0) +
+                (this.weaponBaseAttributesList.get('def_base')?.value || 0) || 0)) *
             100;
           break;
         case 'blood_percent':
           v =
-            (((c.get('blood_plus')?.extra.value || 0) -
-              (this.holyRelicList.get('flower')?.mainAttribute?.extra.value || 0)) /
-              ((this.charBaseAttributesList.get('blood_base')?.extra.value || 0) +
-                (this.weaponBaseAttributesList.get('blood_base')?.extra.value || 0) ||
-                0)) *
+            (((c.get('blood_plus')?.value || 0) -
+              (this.holyRelicList.get('flower')?.mainAttr?.value || 0)) /
+              ((this.charBaseAttributesList.get('blood_base')?.value || 0) +
+                (this.weaponBaseAttributesList.get('blood_base')?.value || 0) || 0)) *
             100;
           break;
       }
@@ -305,48 +300,44 @@ export class AttributesStore {
       let plus: number[] = [];
       // holyRelicList 圣遗物属性注入
       // this.holyRelicList.forEach((v: HolyRelic | undefined, k: HolyRelicTypeCode) => {
-      //   console.log(v?.mainAttributeType, key);
-      //   if (v && v.mainAttributeType === key) {
+      //   console.log(v?.mainAttrType, key);
+      //   if (v && v.mainAttrType === key) {
       //     switch (k) {
       //       case 'hourglass':
       //       case 'cup':
       //       case 'hat':
-      //         v.mainAttribute?.extra.valueType === 'percent'
-      //           ? percent.push(v.mainAttribute?.extra.value)
-      //           : plus.push(v.mainAttribute?.extra.value);
+      //         v.mainAttr?.valueType === 'percent'
+      //           ? percent.push(v.mainAttr?.value)
+      //           : plus.push(v.mainAttr?.value);
       //     }
       //   }
       // });
       switch (key) {
         case 'atk':
-          base1 = this.charBaseAttributesList.get('atk_base')?.extra.value || 0;
-          base2 = this.weaponBaseAttributesList.get('atk_base')?.extra.value || 0;
+          base1 = this.charBaseAttributesList.get('atk_base')?.value || 0;
+          base2 = this.weaponBaseAttributesList.get('atk_base')?.value || 0;
           plus.push(
-            this.holyRelicSimpleAttributesList.get('atk_plus')?.extra.value || 0,
-            this.holyRelicList.get('feather')?.mainAttribute?.extra.value || 0,
+            this.holyRelicSimpleAttributesList.get('atk_plus')?.value || 0,
+            this.holyRelicList.get('feather')?.mainAttr?.value || 0,
           );
           break;
         case 'def':
-          base1 = this.charBaseAttributesList.get('def_base')?.extra.value || 0;
-          percent.push(
-            this.weaponBaseAttributesList.get('def_percent')?.extra.value || 0,
-          );
-          plus.push(this.holyRelicSimpleAttributesList.get('def_plus')?.extra.value || 0);
+          base1 = this.charBaseAttributesList.get('def_base')?.value || 0;
+          percent.push(this.weaponBaseAttributesList.get('def_percent')?.value || 0);
+          plus.push(this.holyRelicSimpleAttributesList.get('def_plus')?.value || 0);
           break;
         case 'blood':
-          base1 = this.charBaseAttributesList.get('blood_base')?.extra.value || 0;
-          percent.push(
-            this.weaponBaseAttributesList.get('blood_percent')?.extra.value || 0,
-          );
+          base1 = this.charBaseAttributesList.get('blood_base')?.value || 0;
+          percent.push(this.weaponBaseAttributesList.get('blood_percent')?.value || 0);
           plus.push(
-            this.holyRelicSimpleAttributesList.get('blood_plus')?.extra.value || 0,
-            this.holyRelicList.get('flower')?.mainAttribute?.extra.value || 0,
+            this.holyRelicSimpleAttributesList.get('blood_plus')?.value || 0,
+            this.holyRelicList.get('flower')?.mainAttr?.value || 0,
           );
           break;
         case 'proficient':
           plus.push(
-            this.weaponBaseAttributesList.get('proficient_plus')?.extra.value || 0,
-            this.holyRelicSimpleAttributesList.get('proficient_plus')?.extra.value || 0,
+            this.weaponBaseAttributesList.get('proficient_plus')?.value || 0,
+            this.holyRelicSimpleAttributesList.get('proficient_plus')?.value || 0,
           );
           break;
 
@@ -361,9 +352,9 @@ export class AttributesStore {
           // case 'thunder_damage':
           // case 'physics_damage':
           plus.push(
-            this.charBaseAttributesList.get(key)?.extra.value || 0,
-            this.weaponBaseAttributesList.get(key)?.extra.value || 0,
-            this.holyRelicSimpleAttributesList.get(key)?.extra.value || 0,
+            this.charBaseAttributesList.get(key)?.value || 0,
+            this.weaponBaseAttributesList.get(key)?.value || 0,
+            this.holyRelicSimpleAttributesList.get(key)?.value || 0,
           );
           break;
       }
@@ -374,10 +365,8 @@ export class AttributesStore {
       plus.map((num) => (plusSum += num || 0));
       this.actualAttributesList.set(key, {
         title: value.title || '',
-        extra: {
-          value: (base1 + base2) * percentSum + plusSum,
-          valueType: value.extra.valueType || 'number',
-        },
+        value: (base1 + base2) * percentSum + plusSum,
+        valueType: value.valueType || 'number',
       });
     });
   };
