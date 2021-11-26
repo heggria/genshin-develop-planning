@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import { useStores } from '../../../../../hooks/useStores';
 import { Entry } from '../../../../common/interface';
-import { AttributesCode } from '../../../../common/type-code';
+import { AttrCode } from '../../../../common/type-code';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { fontSize1, fontSize2 } from '../../style/common.style';
 
@@ -16,7 +16,7 @@ export default observer(function EntryStatisticsPanel() {
     attributesStore;
 
   const listItems: Array<any> = [];
-  entryStatisticsList.forEach((value: Entry, key: AttributesCode) =>
+  entryStatisticsList.forEach((value: Entry, key: AttrCode) =>
     listItems.push(
       <Checkbox
         key={key}

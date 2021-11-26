@@ -19,7 +19,7 @@ import {
   hourglassMainEntryOptions,
   SelectOption,
 } from '../../../../common/options';
-import { AttributesCode, HolyRelicTypeCode } from '../../../../common/type-code';
+import { AttrCode, HolyRelicTypeCode } from '../../../../common/type-code';
 import InputNumberBox from '../../../../components/InputNumberBox/InputNumberBox';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { fontSize3, gray5 } from '../../style/common.style';
@@ -43,7 +43,7 @@ export default observer(function HolyRelicConfigPanel() {
 
   const holyRelicAttributesInputs: Array<any> = [];
   if (!disabled) {
-    holyRelicSimpleAttributesList.forEach((value: Attribute, key: AttributesCode) =>
+    holyRelicSimpleAttributesList.forEach((value: Attribute, key: AttrCode) =>
       holyRelicAttributesInputs.push(
         <InputNumberBox
           key={key}
@@ -72,7 +72,7 @@ export default observer(function HolyRelicConfigPanel() {
       ),
     );
   } else {
-    holyRelicAttributes2.forEach((value: Attribute, key: AttributesCode) =>
+    holyRelicAttributes2.forEach((value: Attribute, key: AttrCode) =>
       holyRelicAttributesInputs.push(
         <InputNumberBox
           key={key}
@@ -130,24 +130,20 @@ export default observer(function HolyRelicConfigPanel() {
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
-                    value={
-                      holyRelicList.get(HolyRelicTypeCode.HOURGLASS)?.mainAttributeType
-                    }
-                    onChange={(value: AttributesCode) => {
+                    value={holyRelicList.get('hourglass')?.mainAttributeType}
+                    onChange={(value: AttrCode) => {
                       setHolyRelicList(
-                        HolyRelicTypeCode.HOURGLASS,
+                        'hourglass',
                         hourglassHolyRelicList.filter(
                           (item) => item.mainAttributeType === value,
                         )[0],
                       );
                     }}>
-                    {hourglassMainEntryOptions.map(
-                      (item: SelectOption<AttributesCode>) => (
-                        <Option key={item.value} value={item.value}>
-                          {item.label}
-                        </Option>
-                      ),
-                    )}
+                    {hourglassMainEntryOptions.map((item: SelectOption<AttrCode>) => (
+                      <Option key={item.value} value={item.value}>
+                        {item.label}
+                      </Option>
+                    ))}
                   </Select>
                 </InputBox>
                 <InputBox hidden={disabled}>
@@ -156,16 +152,16 @@ export default observer(function HolyRelicConfigPanel() {
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
-                    value={holyRelicList.get(HolyRelicTypeCode.CUP)?.mainAttributeType}
-                    onChange={(value: AttributesCode) => {
+                    value={holyRelicList.get('cup')?.mainAttributeType}
+                    onChange={(value: AttrCode) => {
                       setHolyRelicList(
-                        HolyRelicTypeCode.CUP,
+                        'cup',
                         cupHolyRelicList.filter(
                           (item) => item.mainAttributeType === value,
                         )[0],
                       );
                     }}>
-                    {cupMainEntryOptions.map((item: SelectOption<AttributesCode>) => (
+                    {cupMainEntryOptions.map((item: SelectOption<AttrCode>) => (
                       <Option key={item.value} value={item.value}>
                         {item.label}
                       </Option>
@@ -178,16 +174,16 @@ export default observer(function HolyRelicConfigPanel() {
                     style={{ width: '100%' }}
                     placeholder="请选择"
                     showArrow={false}
-                    value={holyRelicList.get(HolyRelicTypeCode.HAT)?.mainAttributeType}
-                    onChange={(value: AttributesCode) => {
+                    value={holyRelicList.get('hat')?.mainAttributeType}
+                    onChange={(value: AttrCode) => {
                       setHolyRelicList(
-                        HolyRelicTypeCode.HAT,
+                        'hat',
                         hatHolyRelicList.filter(
                           (item) => item.mainAttributeType === value,
                         )[0],
                       );
                     }}>
-                    {hatMainEntryOptions.map((item: SelectOption<AttributesCode>) => (
+                    {hatMainEntryOptions.map((item: SelectOption<AttrCode>) => (
                       <Option key={item.value} value={item.value}>
                         {item.label}
                       </Option>

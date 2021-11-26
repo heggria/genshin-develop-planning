@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 import { useStores } from '../../../../../hooks/useStores';
 import { Attribute } from '../../../../common/interface';
-import { AttributesCode, ValueTypeCode } from '../../../../common/type-code';
+import { AttrCode, ValueTypeCode } from '../../../../common/type-code';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { fontSize1 } from '../../style/common.style';
 import { GridContainer } from '../../style/index.style';
@@ -15,13 +15,12 @@ export default observer(function StatisticsPanel() {
   const { actualAttributesList } = attributesStore;
   // console.log(actualAttributes);
   const listItems: Array<any> = [];
-  actualAttributesList.forEach((value: Attribute, key: AttributesCode) =>
+  actualAttributesList.forEach((value: Attribute, key: AttrCode) =>
     listItems.push(
       <ValueBox key={key}>
         <ValueBoxTitle>{value.title.split('/')[0]}</ValueBoxTitle>
         <ValueBoxValue>
-          {value.extra.value +
-            (value.extra.valueType === ValueTypeCode.PERCENT ? '%' : '')}
+          {value.extra.value + (value.extra.valueType === 'percent' ? '%' : '')}
         </ValueBoxValue>
       </ValueBox>,
     ),

@@ -29,15 +29,13 @@ const InputNumberBox = (props: InputNumberBoxProps) => {
         value={props.value}
         style={{ width: '100%' }}
         formatter={
-          props.type === ValueTypeCode.PERCENT
-            ? (value) => `${value}%`
-            : (value) => `${value}`
+          props.type === 'percent' ? (value) => `${value}%` : (value) => `${value}`
         }
         parser={(value: any) =>
           parseFloat(
-            parseFloat(
-              props.type === ValueTypeCode.PERCENT ? value.replace('%', '') : value,
-            ).toFixed(2),
+            parseFloat(props.type === 'percent' ? value.replace('%', '') : value).toFixed(
+              2,
+            ),
           )
         }
         onBlur={(e) => props.onChange(parseFloat(e.target.value))}

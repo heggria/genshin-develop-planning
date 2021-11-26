@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useStores } from '../../../../../hooks/useStores';
 import { weaponBaseAttributes } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
-import { AttributesCode } from '../../../../common/type-code';
+import { AttrCode } from '../../../../common/type-code';
 import InputNumberBox from '../../../../components/InputNumberBox/InputNumberBox';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { GridContainer } from '../../style/index.style';
@@ -16,7 +16,7 @@ export default observer(function WeaponBasePanel() {
   const { weaponBaseAttributesList, setWeaponBaseAttributesList } = attributesStore;
 
   const listItems: Array<any> = [];
-  weaponBaseAttributesList.forEach((value: Attribute, key: AttributesCode) =>
+  weaponBaseAttributesList.forEach((value: Attribute, key: AttrCode) =>
     listItems.push(
       <InputNumberBox
         key={key}

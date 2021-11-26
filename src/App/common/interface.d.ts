@@ -1,7 +1,7 @@
 import {
   AtkTypeCode,
-  AttributesCode,
-  AttributesTypeCode,
+  AttrCode,
+  AttrTypeCode,
   ElementTypeCode,
   HolyRelicTypeCode,
   ReactionTypeCode,
@@ -9,12 +9,12 @@ import {
 } from './type-code';
 
 export interface StringName {
-  code: AttributesCode;
+  code: AttrCode;
   strings: Array<string>;
 }
 
 export interface BuffType {
-  code: AttributesCode;
+  code: AttrCode;
   name: string;
 }
 
@@ -121,18 +121,18 @@ export interface HolyRelic extends HolyRelicType {
   // 等级
   level?: number;
   // 主数值类型
-  mainAttributeType: AttributesCode;
+  mainAttributeType: AttrCode;
   // 主数值类型
   mainAttribute: Attribute;
   // 副词条
-  subAttribute?: Map<Attribute, AttributesTypeCode>;
+  subAttribute?: Map<Attribute, AttrTypeCode>;
   // 分数
   score?: number;
 }
 
 // 词条统计
 export interface Entry {
-  attributeType: AttributesCode;
+  attributeType: AttrCode;
   attribute: Attribute;
   // 副词条
   mount: number;

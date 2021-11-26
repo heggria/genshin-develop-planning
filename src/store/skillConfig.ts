@@ -1,8 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
 import { AttackSubModule, SingleAttack } from '../app/common/interface';
-import { AtkTypeCode, ElementTypeCode, ReactionTypeCode } from '../app/common/type-code';
-
 export class SkillConfigStore {
   constructor() {
     makeAutoObservable(this);
@@ -13,7 +11,7 @@ export class SkillConfigStore {
     //   id: '1',
     //   title: 'Q-一段伤害',
     //   damageMultiplier: 100,
-    //   atkType: { name: '元素爆发', code: AtkTypeCode.ELEMENTAL_EXPLOSION },
+    //   atkType: { name: '元素爆发', code: 'elemental_explosion' },
     //   hitRate: 1,
     //   elementClass: {
     //     name: '雷',
@@ -39,10 +37,10 @@ export class SkillConfigStore {
       id: timestamp,
       title: '未命名',
       damageMultiplier: 100,
-      atkType: AtkTypeCode.NORMAL_ATK,
+      atkType: 'normal_atk',
       hitRate: 100,
-      elementType: ElementTypeCode.NONE,
-      reactionType: ReactionTypeCode.NONE,
+      elementType: 'none',
+      reactionType: 'none',
       costTime: 1,
       effectiveBuff: [],
       collected: false,

@@ -1,124 +1,111 @@
 /* eslint-disable no-unused-vars */
-export enum AttributesTypeCode {
-  ATK,
-  DEF,
-  BLOOD,
-  RECHARGE,
-  PROFICIENT,
-  ELEMENTAL_REACTION,
-  CRIT_RATE,
-  CRIT_DAMAGE,
-  CASE_DAMAGE,
-  SKILL_MULTIPLIER, // 技能倍率
-}
+export type AttrTypeCode =
+  | 'atk'
+  | 'def'
+  | 'blood'
+  | 'recharge'
+  | 'proficient'
+  | 'elemental_reaction'
+  | 'crit_rate'
+  | 'crit_damage'
+  | 'case_damage'
+  | 'skill_multiplier';
 
-export enum ReactionTypeCode {
-  NONE,
-  OVERLOAD, // 超载
-  COMBUSTION, // 燃烧
-  INDUCTION, // 感电
-  SUPERCONDUCT, // 超导
-  DIFFUSION_THUNDER, // 扩散（雷）
-  DIFFUSION_FIRE, // 扩散（火）
-  DIFFUSION_WATER, // 扩散（水）
-  DIFFUSION_ICE, // 扩散（冰）
-  DIFFUSION, // 扩散
-  EVAPORATION, // 蒸发
-  MELT, // 融化
-}
+export type ReactionTypeCode =
+  | 'none'
+  | 'overload' // 超载
+  | 'combustion' // 燃烧
+  | 'induction' // 感电
+  | 'superconduct' // 超导
+  | 'diffusion_thunder' // 扩散（雷）
+  | 'diffusion_fire' // 扩散（火）
+  | 'diffusion_water' // 扩散（水）
+  | 'diffusion_ice' // 扩散（冰）
+  | 'diffusion' // 扩散
+  | 'evaporation' // 蒸发
+  | 'melt'; // 融化
 
-export enum ElementTypeCode {
-  NONE,
-  THUNDER,
-  FIRE,
-  WATER,
-  ICE,
-  WIND,
-  GRASS,
-  ROCK,
-  PHYSICS,
-}
+export type ElementTypeCode =
+  | 'none'
+  | 'thunder'
+  | 'fire'
+  | 'water'
+  | 'ice'
+  | 'wind'
+  | 'grass'
+  | 'rock'
+  | 'physics';
 
-export enum AtkTypeCode {
-  ALL,
-  NORMAL_ATK,
-  THUMP,
-  FALL_ATK,
-  ELEMENTAL_WARFARE,
-  ELEMENTAL_EXPLOSION,
-}
+export type AtkTypeCode =
+  | 'all'
+  | 'normal_atk'
+  | 'thump'
+  | 'fall_atk'
+  | 'elemental_warfare'
+  | 'elemental_explosion';
 
-export enum AttributesCode {
+export type AttrCode =
   // 攻击区
-  ATK,
-  ATK_BASE,
-  ATK_PERCENT,
-  ATK_PLUS,
-  DEF,
-  DEF_BASE,
-  DEF_PERCENT,
-  DEF_PLUS,
-  BLOOD,
-  BLOOD_BASE,
-  BLOOD_PERCENT,
-  BLOOD_PLUS,
+  | 'atk'
+  | 'atk_base'
+  | 'atk_percent'
+  | 'atk_plus'
+  | 'def'
+  | 'def_base'
+  | 'def_percent'
+  | 'def_plus'
+  | 'blood'
+  | 'blood_base'
+  | 'blood_percent'
+  | 'blood_plus'
   // 元素反应区
-  RECHARGE_PERCENT, // 元素充能效率
-  PROFICIENT,
-  PROFICIENT_PLUS, // 元素精通
-  // OVERLOAD, // 超载增强
-  // COMBUSTION, // 燃烧增强
-  // INDUCTION, // 感电增强
-  // SUPERCONDUCT, // 超导增强
-  // DIFFUSION_THUNDER, // 扩散（雷）增强
-  // DIFFUSION_FIRE, // 扩散（火）增强
-  // DIFFUSION_WATER, // 扩散（水）增强
-  // DIFFUSION_ICE, // 扩散（冰）增强
-  // DIFFUSION, // 扩散增强
-  // EVAPORATION, // 蒸发增强
-  // MELT, // 融化增强
+  | 'recharge_percent' // 元素充能效率
+  | 'proficient'
+  | 'proficient_plus' // 元素精通
+  // overload'| // 超载增强
+  // combustion'| // 燃烧增强
+  // induction'| // 感电增强
+  // superconduct'| // 超导增强
+  // diffusion_thunder'| // 扩散（雷）增强
+  // diffusion_fire'| // 扩散（火）增强
+  // diffusion_water'| // 扩散（水）增强
+  // diffusion_ice'| // 扩散（冰）增强
+  // diffusion'| // 扩散增强
+  // evaporation'| // 蒸发增强
+  // melt'| // 融化增强
   // 双暴区
-  CRIT_RATE,
-  CRIT_DAMAGE,
-  NORMAL_ATK_CRIT_DAMAGE, // 普通攻击
-  THUMP_CRIT_DAMAGE, // 下落攻击
-  FALL_ATK_CRIT_DAMAGE, // 重击
-  ELEMENTAL_WARFARE_CRIT_DAMAGE, // 元素战技
-  ELEMENTAL_EXPLOSION_CRIT_DAMAGE, // 元素爆发
+  | 'crit_rate'
+  | 'crit_damage'
+  | 'normal_atk_crit_damage' // 普通攻击
+  | 'thump_crit_damage' // 下落攻击
+  | 'fall_atk_crit_damage' // 重击
+  | 'elemental_warfare_crit_damage' // 元素战技
+  | 'elemental_explosion_crit_damage' // 元素爆发
   // 倍率区
-  FIRE_DAMAGE,
-  WATER_DAMAGE,
-  ROCK_DAMAGE,
-  WIND_DAMAGE,
-  ICE_DAMAGE,
-  THUNDER_DAMAGE,
-  GRASS_DAMAGE,
-  PHYSICS_DAMAGE,
-  NORMAL_ATK_DAMAGE, // 普通攻击
-  THUMP_DAMAGE, // 下落攻击
-  FALL_ATK_DAMAGE, // 重击
-  ELEMENTAL_WARFARE_DAMAGE, // 元素战技
-  ELEMENTAL_EXPLOSION_DAMAGE, // 元素爆发
-  CASE_DAMAGE, // 直接加成
-
-  SKILL_MULTIPLIER,
-}
+  | 'fire_damage'
+  | 'water_damage'
+  | 'rock_damage'
+  | 'wind_damage'
+  | 'ice_damage'
+  | 'thunder_damage'
+  | 'grass_damage'
+  | 'physics_damage'
+  | 'normal_atk_damage' // 普通攻击
+  | 'thump_damage' // 下落攻击
+  | 'fall_atk_damage' // 重击
+  | 'elemental_warfare_damage' // 元素战技
+  | 'elemental_explosion_damage' // 元素爆发
+  | 'case_damage' // 直接加成
+  | 'skill_multiplier';
 
 // 计算值类型描述
-export enum ValueTypeCode {
+export type ValueTypeCode =
   // 默认
-  DEFAULT,
+  | 'default'
   // 百分比
-  PERCENT,
+  | 'percent'
   // 普通数值
-  NUMBER,
-}
+  | 'number';
 
 // 圣遗物类型描述
-export enum HolyRelicTypeCode {
-  FLOWER,
-  FEATHER,
-  HOURGLASS,
-  CUP,
-  HAT,
-}
+export type HolyRelicTypeCode = 'flower' | 'feather' | 'hourglass' | 'cup' | 'hat';

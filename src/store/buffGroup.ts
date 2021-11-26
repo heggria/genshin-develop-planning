@@ -1,7 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
 import { BuffGroup, BuffType } from '../app/common/interface';
-import { AttributesCode } from '../app/common/type-code';
 
 export class BuffGroupStore {
   constructor() {
@@ -17,163 +16,163 @@ export class BuffGroupStore {
 
   buffListBased: Array<BuffType> = [
     {
-      code: AttributesCode.ATK_PERCENT,
+      code: 'atk_percent',
       name: '攻击力加成/%',
     },
     {
-      code: AttributesCode.ATK_PLUS,
+      code: 'atk_plus',
       name: '攻击力加成/+',
     },
     {
-      code: AttributesCode.DEF_PERCENT,
+      code: 'def_percent',
       name: '防御力加成/%',
     },
     {
-      code: AttributesCode.DEF_PLUS,
+      code: 'def_plus',
       name: '防御力加成/+',
     },
     {
-      code: AttributesCode.BLOOD_PERCENT,
+      code: 'blood_percent',
       name: '生命值加成/%',
     },
     {
-      code: AttributesCode.BLOOD_PLUS,
+      code: 'blood_plus',
       name: '生命值加成/+',
     },
     {
-      code: AttributesCode.RECHARGE_PERCENT,
+      code: 'recharge_percent',
       name: '元素充能效率加成/%',
     },
     {
-      code: AttributesCode.PROFICIENT_PLUS,
+      code: 'proficient_plus',
       name: '元素精通加成/+',
     },
     // {
-    //   code: AttributesCode.OVERLOAD,
+    //   code: AttrCode.OVERLOAD,
     //   name: '超载增强/%',
     // },
     // {
-    //   code: AttributesCode.COMBUSTION,
+    //   code: AttrCode.COMBUSTION,
     //   name: '燃烧增强/%',
     // },
     // {
-    //   code: AttributesCode.INDUCTION,
+    //   code: AttrCode.INDUCTION,
     //   name: '感电增强/%',
     // },
     // {
-    //   code: AttributesCode.SUPERCONDUCT,
+    //   code: AttrCode.SUPERCONDUCT,
     //   name: '超导增强/%',
     // },
     // {
-    //   code: AttributesCode.DIFFUSION_THUNDER,
+    //   code: AttrCode.DIFFUSION_THUNDER,
     //   name: '扩散（雷）增强/%',
     // },
     // {
-    //   code: AttributesCode.DIFFUSION_FIRE,
+    //   code: AttrCode.DIFFUSION_FIRE,
     //   name: '扩散（火）增强/%',
     // },
     // {
-    //   code: AttributesCode.DIFFUSION_WATER,
+    //   code: AttrCode.DIFFUSION_WATER,
     //   name: '扩散（水）增强/%',
     // },
     // {
-    //   code: AttributesCode.DIFFUSION_ICE,
+    //   code: AttrCode.DIFFUSION_ICE,
     //   name: '扩散（冰）增强/%',
     // },
     // {
-    //   code: AttributesCode.DIFFUSION,
+    //   code: AttrCode.DIFFUSION,
     //   name: '扩散增强/%',
     // },
     // {
-    //   code: AttributesCode.EVAPORATION,
+    //   code: AttrCode.EVAPORATION,
     //   name: '蒸发增强/%',
     // },
     // {
-    //   code: AttributesCode.MELT,
+    //   code: AttrCode.MELT,
     //   name: '融化增强/%',
     // },
     {
-      code: AttributesCode.CRIT_RATE,
+      code: 'crit_rate',
       name: '暴击率加成/%',
     },
     {
-      code: AttributesCode.CRIT_DAMAGE,
+      code: 'crit_damage',
       name: '暴击伤害加成/%',
     },
+    // {
+    //   code: AttrCode.NORMAL_ATK_CRIT_DAMAGE,
+    //   name: '普通攻击暴击率加成/%',
+    // },
+    // {
+    //   code: AttrCode.THUMP_CRIT_DAMAGE,
+    //   name: '重击暴击率加成/%',
+    // },
+    // {
+    //   code: AttrCode.FALL_ATK_CRIT_DAMAGE,
+    //   name: '下落攻击暴击率加成/%',
+    // },
+    // {
+    //   code: AttrCode.ELEMENTAL_WARFARE_CRIT_DAMAGE,
+    //   name: '元素战技暴击率加成/%',
+    // },
+    // {
+    //   code: AttrCode.ELEMENTAL_EXPLOSION_CRIT_DAMAGE,
+    //   name: '元素爆发暴击率加成/%',
+    // },
     {
-      code: AttributesCode.NORMAL_ATK_CRIT_DAMAGE,
-      name: '普通攻击暴击率加成/%',
-    },
-    {
-      code: AttributesCode.THUMP_CRIT_DAMAGE,
-      name: '重击暴击率加成/%',
-    },
-    {
-      code: AttributesCode.FALL_ATK_CRIT_DAMAGE,
-      name: '下落攻击暴击率加成/%',
-    },
-    {
-      code: AttributesCode.ELEMENTAL_WARFARE_CRIT_DAMAGE,
-      name: '元素战技暴击率加成/%',
-    },
-    {
-      code: AttributesCode.ELEMENTAL_EXPLOSION_CRIT_DAMAGE,
-      name: '元素爆发暴击率加成/%',
-    },
-    {
-      code: AttributesCode.FIRE_DAMAGE,
+      code: 'fire_damage',
       name: '火元素增伤/%',
     },
     {
-      code: AttributesCode.WATER_DAMAGE,
+      code: 'water_damage',
       name: '水元素增伤/%',
     },
     {
-      code: AttributesCode.ROCK_DAMAGE,
+      code: 'rock_damage',
       name: '岩元素增伤/%',
     },
     {
-      code: AttributesCode.WIND_DAMAGE,
+      code: 'wind_damage',
       name: '风元素增伤/%',
     },
     {
-      code: AttributesCode.ICE_DAMAGE,
+      code: 'ice_damage',
       name: '冰元素增伤/%',
     },
     {
-      code: AttributesCode.THUNDER_DAMAGE,
+      code: 'thunder_damage',
       name: '雷元素增伤/%',
     },
+    // {
+    //   code: AttrCode.GRASS_DAMAGE,
+    //   name: '草元素增伤/%',
+    // },
     {
-      code: AttributesCode.GRASS_DAMAGE,
-      name: '草元素增伤/%',
-    },
-    {
-      code: AttributesCode.PHYSICS_DAMAGE,
+      code: 'physics_damage',
       name: '物理增伤/%',
     },
     {
-      code: AttributesCode.NORMAL_ATK_DAMAGE,
+      code: 'normal_atk_damage',
       name: '普通攻击增伤/%',
     },
     {
-      code: AttributesCode.THUMP_DAMAGE,
+      code: 'thump_damage',
       name: '重击增伤/%',
     },
     {
-      code: AttributesCode.FALL_ATK_DAMAGE,
+      code: 'fall_atk_damage',
       name: '下落攻击增伤/%',
     },
     {
-      code: AttributesCode.ELEMENTAL_WARFARE_DAMAGE,
+      code: 'elemental_warfare_damage',
       name: '元素战技增伤/%',
     },
     {
-      code: AttributesCode.ELEMENTAL_EXPLOSION_DAMAGE,
+      code: 'elemental_explosion_damage',
       name: '元素爆发增伤/%',
     },
     {
-      code: AttributesCode.CASE_DAMAGE,
+      code: 'case_damage',
       name: '直接增伤/%',
     },
   ];

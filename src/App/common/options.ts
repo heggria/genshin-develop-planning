@@ -3,37 +3,32 @@ import {
   hatHolyRelicList,
   hourglassHolyRelicList,
 } from './form-config';
-import {
-  AtkTypeCode,
-  AttributesCode,
-  ElementTypeCode,
-  ReactionTypeCode,
-} from './type-code';
+import { AtkTypeCode, AttrCode, ElementTypeCode, ReactionTypeCode } from './type-code';
 
-export const atkTypeOptions = [
-  { label: '普通攻击', value: AtkTypeCode.NORMAL_ATK },
-  { label: '下落攻击', value: AtkTypeCode.FALL_ATK },
-  { label: '重击', value: AtkTypeCode.THUMP },
-  { label: '元素战技', value: AtkTypeCode.ELEMENTAL_WARFARE },
-  { label: '元素爆发', value: AtkTypeCode.ELEMENTAL_EXPLOSION },
+export const atkTypeOptions: Array<SelectOption<AtkTypeCode>> = [
+  { label: '普通攻击', value: 'normal_atk' },
+  { label: '下落攻击', value: 'fall_atk' },
+  { label: '重击', value: 'thump' },
+  { label: '元素战技', value: 'elemental_warfare' },
+  { label: '元素爆发', value: 'elemental_explosion' },
 ];
 
-export const elementTypeOptions = [
-  { label: '物理', value: ElementTypeCode.PHYSICS },
-  { label: '无属性', value: ElementTypeCode.NONE },
-  { label: '雷', value: ElementTypeCode.THUNDER },
-  { label: '水', value: ElementTypeCode.WATER },
-  { label: '冰', value: ElementTypeCode.ICE },
-  { label: '火', value: ElementTypeCode.FIRE },
-  { label: '草', value: ElementTypeCode.GRASS },
-  { label: '岩', value: ElementTypeCode.ROCK },
-  { label: '风', value: ElementTypeCode.WIND },
+export const elementTypeOptions: Array<SelectOption<ElementTypeCode>> = [
+  { label: '物理', value: 'physics' },
+  { label: '无属性', value: 'none' },
+  { label: '雷', value: 'thunder' },
+  { label: '水', value: 'water' },
+  { label: '冰', value: 'ice' },
+  { label: '火', value: 'fire' },
+  { label: '草', value: 'grass' },
+  { label: '岩', value: 'rock' },
+  { label: '风', value: 'wind' },
 ];
 
-export const reactionTypeCodeOptions = [
-  { label: '蒸发', value: ReactionTypeCode.EVAPORATION },
-  { label: '融化', value: ReactionTypeCode.MELT },
-  { label: '无反应', value: ReactionTypeCode.NONE },
+export const reactionTypeCodeOptions: Array<SelectOption<ReactionTypeCode>> = [
+  { label: '蒸发', value: 'evaporation' },
+  { label: '融化', value: 'melt' },
+  { label: '无反应', value: 'none' },
   // { label: '超载', value: ReactionTypeCode.OVERLOAD },
   // { label: '燃烧', value: ReactionTypeCode.COMBUSTION },
   // { label: '感电', value: ReactionTypeCode.INDUCTION },
@@ -46,14 +41,14 @@ export interface SelectOption<T> {
   value: T;
 }
 
-export const cupMainEntryOptions: Array<SelectOption<AttributesCode>> = [];
+export const cupMainEntryOptions: Array<SelectOption<AttrCode>> = [];
 cupHolyRelicList.forEach((value) => {
   cupMainEntryOptions.push({
     label: value.mainAttribute?.title || '',
     value: value.mainAttributeType,
   });
 });
-export const hourglassMainEntryOptions: Array<SelectOption<AttributesCode>> = [];
+export const hourglassMainEntryOptions: Array<SelectOption<AttrCode>> = [];
 hourglassHolyRelicList.forEach((value) => {
   hourglassMainEntryOptions.push({
     label: value.mainAttribute?.title || '',
@@ -61,7 +56,7 @@ hourglassHolyRelicList.forEach((value) => {
   });
 });
 
-export const hatMainEntryOptions: Array<SelectOption<AttributesCode>> = [];
+export const hatMainEntryOptions: Array<SelectOption<AttrCode>> = [];
 hatHolyRelicList.forEach((value) => {
   hatMainEntryOptions.push({
     label: value.mainAttribute?.title || '',

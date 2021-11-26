@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useStores } from '../../../../../hooks/useStores';
 import { charBaseAttributes } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
-import { AttributesCode } from '../../../../common/type-code';
+import { AttrCode } from '../../../../common/type-code';
 import InputNumberBox from '../../../../components/InputNumberBox/InputNumberBox';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
 import { GridContainer } from '../../style/index.style';
@@ -15,7 +15,7 @@ export default observer(function CharacterBasePanel() {
   const { attributesStore } = useStores();
   const { charBaseAttributesList, setCharBaseAttributesList } = attributesStore;
   const listItems: Array<any> = [];
-  charBaseAttributesList.forEach((value: Attribute, key: AttributesCode) =>
+  charBaseAttributesList.forEach((value: Attribute, key: AttrCode) =>
     listItems.push(
       <InputNumberBox
         key={key}
