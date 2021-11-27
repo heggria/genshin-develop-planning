@@ -5,7 +5,6 @@ import React, { useCallback } from 'react';
 import { useDrop } from 'react-dnd';
 
 import { useStores } from '../../../../../hooks/useStores';
-import { AttackSubModule } from '../../../../common/interface';
 import SkillLiteBox from '../../../../components/SkillLiteBox/SkillLiteBox';
 import { SkillDropArea, SkillEditableButton } from '../../style/index.style';
 
@@ -26,7 +25,7 @@ export default observer(function SkillGroupPanel() {
           addSkillGroup({
             skill,
             arrangementId: new Date().getTime().toString(),
-          } as AttackSubModule);
+          });
           break;
         }
       }

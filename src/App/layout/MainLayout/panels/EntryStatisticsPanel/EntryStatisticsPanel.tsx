@@ -5,6 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useStores } from '../../../../../hooks/useStores';
+import { attributeMap } from '../../../../common/attributes-list';
 import { Entry } from '../../../../common/interface';
 import { AttrCode } from '../../../../common/type-code';
 import NormalFrame from '../../../../components/NormalFrame/NormalFrame';
@@ -15,12 +16,37 @@ export default observer(function EntryStatisticsPanel() {
   const { entryStatisticsList, setEntryStatisticsList, entryStatisticsData } =
     attributesStore;
 
+  const listToString = (array: AttrCode[]) => {
+    const list = new Map<AttrCode, number>();
+    array.map((item) => {
+      let c = list.get(item) || 0;
+      list.set(item, (c += 1));
+    });
+    let strings: any[] = [];
+    list.forEach((value, key) => {
+      strings.push(
+        <span key={key}>
+          {attributeMap.get(key) + ':' + value}
+          <br />
+        </span>,
+      );
+    });
+    return strings;
+  };
+
+  const min = listToString(entryStatisticsData.minGE[0]);
+  const minP = listToString(entryStatisticsData.minGE[2]);
+  const avg = listToString(entryStatisticsData.averageGE[0]);
+  const avgP = listToString(entryStatisticsData.averageGE[2]);
+  const max = listToString(entryStatisticsData.theoreticalGE[0]);
+  const maxP = listToString(entryStatisticsData.theoreticalGE[2]);
+
   const listItems: Array<any> = [];
   entryStatisticsList.forEach((value: Entry, key: AttrCode) =>
     listItems.push(
       <Checkbox
         key={key}
-        style={{ margin: '0 auto' }}
+        style={{ margin: '0' }}
         checked={value.efficient}
         onChange={(e: any) => {
           setEntryStatisticsList(key, {
@@ -28,7 +54,10 @@ export default observer(function EntryStatisticsPanel() {
             efficient: e.target.checked,
           } as Entry);
         }}>
-        <ValueBox>
+        <ValueBox
+          style={{
+            width: '180px',
+          }}>
           <ValueBoxTitle>{value.attribute.title.split('/')[0]}</ValueBoxTitle>
           <ValueBoxValue
             style={{
@@ -70,53 +99,80 @@ export default observer(function EntryStatisticsPanel() {
                 {entryStatisticsData.validEntriesMaximumNumber.toFixed(2)}
               </ValueBoxValue>
             </ValueBox>
-            <Tooltip placement="topLeft" title="词条带来的伤害增益">
-              <ValueBox>
-                <ValueBoxTitle>伤害增益</ValueBoxTitle>
-                <ValueBoxValue>
-                  {entryStatisticsData.currentEntryDamageGain.toFixed(2) + '%'}
-                </ValueBoxValue>
-              </ValueBox>
-            </Tooltip>
-            <Tooltip placement="topLeft" title="词条带来的增幅反应伤害增益">
-              <ValueBox>
-                <ValueBoxTitle>增幅反应伤害增益</ValueBoxTitle>
-                <ValueBoxValue>
-                  {entryStatisticsData.currentEntryReactionDamageGain.toFixed(2) + '%'}
-                </ValueBoxValue>
-              </ValueBox>
-            </Tooltip>
             <Tooltip
               placement="topLeft"
-              title="词条平均毕业伤害增益，初始三词条，视无词条伤害为100">
+              title="当前有效词条带来的伤害增益（简化为独立乘区）">
               <ValueBox>
-                <ValueBoxTitle>平均毕业词条总分</ValueBoxTitle>
+                <ValueBoxTitle>当前伤害增益</ValueBoxTitle>
                 <ValueBoxValue>
-                  {entryStatisticsData.averageGraduationEntryTotalScore.toFixed(2)}
+                  {entryStatisticsData.currentEntryDamageGain.toFixed(2) +
+                    '% / ' +
+                    entryStatisticsData.currentEntryReactionDamageGain.toFixed(2) +
+                    '%'}
                 </ValueBoxValue>
               </ValueBox>
             </Tooltip>
-            <Tooltip
-              placement="topLeft"
-              title="词条极限毕业伤害增益，初始四词条，视无词条伤害为100">
+            <ValueBox>
+              <Tooltip
+                placement="topLeft"
+                title="特定条件下最优词条分布的伤害增益(最多30词条，单类词条最多15条，每词条均为平均值)">
+                <ValueBoxTitle>小毕业伤害增益</ValueBoxTitle>
+              </Tooltip>
+              <ValueBoxValue>
+                <Tooltip title={min}>
+                  {entryStatisticsData.minGE[1].toFixed(2) + '%'}
+                </Tooltip>
+                {' / '}
+                <Tooltip title={minP}>
+                  {entryStatisticsData.minGE[3].toFixed(2) + '%'}
+                </Tooltip>
+              </ValueBoxValue>
+            </ValueBox>
+
+            <ValueBox>
+              <Tooltip
+                placement="topLeft"
+                title="特定条件下最优词条分布的伤害增益(最多35词条，单类词条最多20条，每词条均为平均值)">
+                <ValueBoxTitle>大毕业伤害增益</ValueBoxTitle>
+              </Tooltip>
+              <ValueBoxValue>
+                <Tooltip title={avg}>
+                  {entryStatisticsData.averageGE[1].toFixed(2) + '%'}
+                </Tooltip>
+                {' / '}
+                <Tooltip title={avgP}>
+                  {entryStatisticsData.averageGE[3].toFixed(2) + '%'}
+                </Tooltip>
+              </ValueBoxValue>
+            </ValueBox>
+
+            <ValueBox>
+              <Tooltip
+                placement="topLeft"
+                title="特定条件下最优词条分布的伤害增益(最多45词条，单类词条最多30条，每词条均为最大值)">
+                <ValueBoxTitle>理论最大伤害增益</ValueBoxTitle>
+              </Tooltip>
+              <ValueBoxValue>
+                <Tooltip title={() => <span>{max}</span>}>
+                  {entryStatisticsData.theoreticalGE[1].toFixed(2) + '%'}
+                </Tooltip>
+                {' / '}
+                <Tooltip title={maxP}>
+                  {entryStatisticsData.theoreticalGE[3].toFixed(2) + '%'}
+                </Tooltip>
+              </ValueBoxValue>
+            </ValueBox>
+            <Tooltip placement="topLeft" title="大毕业分布分 = 100">
               <ValueBox>
-                <ValueBoxTitle>理论毕业词条总分</ValueBoxTitle>
+                <ValueBoxTitle>有效词条分布分</ValueBoxTitle>
                 <ValueBoxValue>
-                  {entryStatisticsData.theoreticalGraduationEntryTotalScore.toFixed(2)}
+                  {entryStatisticsData.validScore[0].toFixed(2) +
+                    ' / ' +
+                    entryStatisticsData.validScore[1].toFixed(2)}
                 </ValueBoxValue>
               </ValueBox>
             </Tooltip>
-            <Tooltip
-              placement="topLeft"
-              title="当前词条伤害增益/词条平均伤害增益*有效词条最大值">
-              <ValueBox>
-                <ValueBoxTitle>有效词条分布分（平均）</ValueBoxTitle>
-                <ValueBoxValue>
-                  {entryStatisticsData.validEntriesDistributionAverageScore.toFixed(2)}
-                </ValueBoxValue>
-              </ValueBox>
-            </Tooltip>
-            <Tooltip
+            {/* <Tooltip
               placement="topLeft"
               title="当前词条伤害增益/词条极限伤害增益*有效词条最大值">
               <ValueBox>
@@ -125,31 +181,29 @@ export default observer(function EntryStatisticsPanel() {
                   {entryStatisticsData.validEntriesDistributionTheoryScore.toFixed(2)}
                 </ValueBoxValue>
               </ValueBox>
-            </Tooltip>
+            </Tooltip> */}
           </ItemContainer>
         </div>
       }></NormalFrame>
   );
 });
 
-const ValueBox = styled.div`
+const ValueBox = styled.span`
   display: flex;
-  width: 310px;
 `;
-const ValueBoxTitle = styled.div`
+const ValueBoxTitle = styled.span`
   flex: 1;
   font-size: ${fontSize2};
   font-weight: bold;
-  width: 80%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
-const ValueBoxValue = styled.div`
+const ValueBoxValue = styled.span`
   flex: 1;
   font-size: ${fontSize2};
   font-weight: bold;
-  width: 20%;
+  /* width: 20%; */
   text-align: center;
 `;
 const ItemContainer = styled.div`
@@ -157,4 +211,5 @@ const ItemContainer = styled.div`
   grid-gap: 10px;
   grid-auto-columns: auto;
   width: 50%;
+  text-align: left;
 `;

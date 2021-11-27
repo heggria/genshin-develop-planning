@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx';
 import {
   holyRelicAvgEntryMap,
   holyRelicEntryStatisticMap,
+  holyRelicMaxEntryMap,
 } from '../app/common/attributes-list';
 import {
   actualAttributes,
@@ -106,10 +107,25 @@ export class AttributesStore {
       validEntriesMaximumNumber: 0,
       currentEntryDamageGain: 0, // 普通伤害增益
       currentEntryReactionDamageGain: 0, // 增幅反应伤害增益
-      averageGraduationEntryTotalScore: 0,
-      theoreticalGraduationEntryTotalScore: 0,
-      validEntriesDistributionAverageScore: 0,
-      validEntriesDistributionTheoryScore: 0,
+      minGE: [new Array<AttrCode>(), 0, new Array<AttrCode>(), 0] as [
+        Array<AttrCode>,
+        number,
+        Array<AttrCode>,
+        number,
+      ],
+      averageGE: [new Array<AttrCode>(), 0, new Array<AttrCode>(), 0] as [
+        Array<AttrCode>,
+        number,
+        Array<AttrCode>,
+        number,
+      ],
+      theoreticalGE: [new Array<AttrCode>(), 0, new Array<AttrCode>(), 0] as [
+        Array<AttrCode>,
+        number,
+        Array<AttrCode>,
+        number,
+      ],
+      validScore: [0, 0],
     };
   };
 
@@ -159,51 +175,49 @@ export class AttributesStore {
         }
       }
     });
-
-    // 攻击区
-    let atkOffset = 0;
-    let critRateOffset = 0;
-    let proficientOffset = 0;
-    let critDamageOffset = 0;
+    let offset = {
+      atk: 0,
+      critRate: 0,
+      proficient: 0,
+      critDamage: 0,
+    };
     this.holyRelicList.forEach((item) => {
-      let type = item?.mainAttrType;
-      switch (type) {
+      let offsetSingle = this.countOffset(
+        item?.mainAttrType || 'atk_plus',
+        item?.mainAttr.value || 0,
+      );
+      switch (item?.mainAttrType) {
         case 'atk_plus':
-          atkOffset += item?.mainAttr.value || 0;
-          break;
         case 'atk_percent':
-          atkOffset +=
-            ((item?.mainAttr.value || 0) / 100) *
-            ((this.charBaseAttrList.get('atk_base')?.value || 0) +
-              (this.weaponBaseAttrList.get('atk_base')?.value || 0));
+          offset.atk += offsetSingle;
           break;
         case 'crit_rate':
-          critRateOffset += item?.mainAttr.value || 0;
+          offset.critRate += offsetSingle;
           break;
         case 'proficient_plus':
-          proficientOffset += item?.mainAttr.value || 0;
+          offset.proficient += offsetSingle;
           break;
         case 'crit_damage':
-          critDamageOffset += item?.mainAttr.value || 0;
+          offset.critDamage += offsetSingle;
           break;
       }
     });
 
     let x = this.getValue(this.actualAttrList, 'atk_plus');
     let y = this.getValue(this.holyRelicAttrList, 'atk_plus');
-    let atk = [x, x - y + atkOffset];
+    let atk = [x, x - y + offset.atk];
 
     x = this.getValue(this.actualAttrList, 'crit_rate');
     y = this.getValue(this.holyRelicAttrList, 'crit_rate');
-    let critRate = [x, x - y + critRateOffset];
+    let critRate = [x, x - y + offset.critRate];
 
     x = this.getValue(this.actualAttrList, 'proficient_plus');
     y = this.getValue(this.holyRelicAttrList, 'proficient_plus');
-    let proficient = [x, x - y + proficientOffset];
+    let proficient = [x, x - y + offset.proficient];
 
     x = this.getValue(this.actualAttrList, 'crit_damage');
     y = this.getValue(this.holyRelicAttrList, 'crit_damage');
-    let critDamage = [x, x - y + critDamageOffset];
+    let critDamage = [x, x - y + offset.critDamage];
 
     this.entryStatisticsData.currentEntryReactionDamageGain =
       (this.countDamage(atk[0], critRate[0], critDamage[0], proficient[0]) /
@@ -213,6 +227,220 @@ export class AttributesStore {
       (this.countDamage(atk[0], critRate[0], critDamage[0], 0) /
         this.countDamage(atk[1], critRate[1], critDamage[1], 0)) *
       100;
+
+    let keys = new Array<AttrCode>('atk_plus', 'atk_percent', 'crit_rate', 'crit_damage');
+
+    let keysP = new Array<AttrCode>(
+      'atk_plus',
+      'atk_percent',
+      'crit_rate',
+      'crit_damage',
+      'proficient_plus',
+    );
+
+    let min = this.countMaxDamage(
+      30,
+      15,
+      holyRelicAvgEntryMap,
+      atk[1],
+      critRate[1],
+      critDamage[1],
+      proficient[1],
+      keys,
+    );
+    let minP = this.countMaxDamage(
+      30,
+      15,
+      holyRelicAvgEntryMap,
+      atk[1],
+      critRate[1],
+      critDamage[1],
+      proficient[1],
+      keysP,
+    );
+    let av = this.countMaxDamage(
+      35,
+      20,
+      holyRelicAvgEntryMap,
+      atk[1],
+      critRate[1],
+      critDamage[1],
+      proficient[1],
+      keys,
+    );
+    let avP = this.countMaxDamage(
+      35,
+      20,
+      holyRelicAvgEntryMap,
+      atk[1],
+      critRate[1],
+      critDamage[1],
+      proficient[1],
+      keysP,
+    );
+    let th = this.countMaxDamage(
+      45,
+      30,
+      holyRelicMaxEntryMap,
+      atk[1],
+      critRate[1],
+      critDamage[1],
+      proficient[1],
+      keys,
+    );
+
+    let thP = this.countMaxDamage(
+      45,
+      30,
+      holyRelicMaxEntryMap,
+      atk[1],
+      critRate[1],
+      critDamage[1],
+      proficient[1],
+      keysP,
+    );
+
+    let lastDamage = this.countDamage(atk[1], critRate[1], critDamage[1], proficient[1]);
+
+    this.entryStatisticsData.minGE[0] = min.entryArray;
+    this.entryStatisticsData.minGE[1] = (min.damage / lastDamage) * 100;
+    this.entryStatisticsData.minGE[2] = minP.entryArray;
+    this.entryStatisticsData.minGE[3] = (minP.damage / lastDamage) * 100;
+
+    this.entryStatisticsData.averageGE[0] = av.entryArray;
+    this.entryStatisticsData.averageGE[1] = (av.damage / lastDamage) * 100;
+    this.entryStatisticsData.averageGE[2] = avP.entryArray;
+    this.entryStatisticsData.averageGE[3] = (avP.damage / lastDamage) * 100;
+
+    this.entryStatisticsData.theoreticalGE[0] = th.entryArray;
+    this.entryStatisticsData.theoreticalGE[1] = (th.damage / lastDamage) * 100;
+    this.entryStatisticsData.theoreticalGE[2] = thP.entryArray;
+    this.entryStatisticsData.theoreticalGE[3] = (thP.damage / lastDamage) * 100;
+    this.entryStatisticsData.validScore[0] =
+      (this.entryStatisticsData.currentEntryDamageGain /
+        this.entryStatisticsData.averageGE[1]) *
+      100;
+    this.entryStatisticsData.validScore[1] =
+      (this.entryStatisticsData.currentEntryReactionDamageGain /
+        this.entryStatisticsData.averageGE[3]) *
+      100;
+  };
+
+  countMaxDamage = (
+    entryNum: number,
+    singleMaxNum: number,
+    holyRelicEntryAttr: Map<AttrCode, number>,
+    initAtk: number,
+    initCritRate: number,
+    initCritDamage: number,
+    initProficient: number,
+    activatedKey: Array<AttrCode>,
+  ) => {
+    let damage = 0;
+    let atkC = 0;
+    let critRateC = 0;
+    let proficientC = 0;
+    let critDamageC = 0;
+    let entryArray = new Array<AttrCode>();
+    for (let i = 0; i < entryNum; i++) {
+      // 前词条伤害计算
+      let offset3 = {
+        atk: 0,
+        critRate: 0,
+        proficient: 0,
+        critDamage: 0,
+      };
+      entryArray.forEach((attrCode) => {
+        let offsetSingle = this.countOffset(
+          attrCode,
+          holyRelicEntryAttr.get(attrCode) || 0,
+        );
+        switch (attrCode) {
+          case 'atk_plus':
+          case 'atk_percent':
+            offset3.atk += offsetSingle;
+            break;
+          case 'crit_rate':
+            offset3.critRate += offsetSingle;
+            break;
+          case 'proficient_plus':
+            offset3.proficient += offsetSingle;
+            break;
+          case 'crit_damage':
+            offset3.critDamage += offsetSingle;
+            break;
+        }
+      });
+      atkC = initAtk + offset3.atk;
+      critRateC = initCritRate + offset3.critRate;
+      critDamageC = initCritDamage + offset3.critDamage;
+      proficientC = initProficient + offset3.proficient;
+      // let acDamage = this.countDamage(atkC, critRateC, critDamageC, proficientC);
+      holyRelicEntryAttr.forEach((value, key) => {
+        if (
+          activatedKey.includes(key) &&
+          this.countSingleEntryNum(entryArray, key) < singleMaxNum
+        ) {
+          // 单词条收益计算
+          let offset2 = {
+            atk: 0,
+            critRate: 0,
+            proficient: 0,
+            critDamage: 0,
+          };
+          let offsetSingle = this.countOffset(key, value);
+          switch (key) {
+            case 'atk_plus':
+            case 'atk_percent':
+              offset2.atk += offsetSingle;
+              break;
+            case 'crit_rate':
+              offset2.critRate += offsetSingle;
+              break;
+            case 'proficient_plus':
+              offset2.proficient += offsetSingle;
+              break;
+            case 'crit_damage':
+              offset2.critDamage += offsetSingle;
+              break;
+          }
+          let cacheDamage = this.countDamage(
+            atkC + offset2.atk,
+            critRateC + offset2.critRate,
+            critDamageC + offset2.critDamage,
+            proficientC + offset2.proficient,
+          );
+          if (cacheDamage > damage) {
+            entryArray[i] = key;
+            damage = cacheDamage;
+          }
+        }
+      });
+    }
+    return { damage, entryArray };
+  };
+  countSingleEntryNum = (entryArray: AttrCode[], key: AttrCode) => {
+    let num = 0;
+    for (let code of entryArray) {
+      if (code === key) num++;
+    }
+    return num;
+  };
+  countOffset = (type: AttrCode, value: number) => {
+    switch (type) {
+      case 'atk_percent':
+        return (
+          ((value || 0) / 100) *
+          ((this.charBaseAttrList.get('atk_base')?.value || 0) +
+            (this.weaponBaseAttrList.get('atk_base')?.value || 0))
+        );
+      case 'atk_plus':
+      case 'crit_rate':
+      case 'proficient_plus':
+      case 'crit_damage':
+        return value || 0;
+    }
+    return 0;
   };
 
   getValue(AttrList: Map<AttrCode, Attribute>, code: AttrCode) {
@@ -244,6 +472,7 @@ export class AttributesStore {
           offset += hr.mainAttr?.value;
         }
       });
+
       switch (key) {
         case 'atk_percent':
           v =
@@ -338,12 +567,6 @@ export class AttributesStore {
           );
           break;
         case 'proficient_plus':
-          plus.push(
-            this.weaponBaseAttrList.get('proficient_plus')?.value || 0,
-            this.holyRelicAttrList.get('proficient_plus')?.value || 0,
-          );
-          break;
-
         case 'crit_damage':
         case 'crit_rate':
         case 'recharge_percent':

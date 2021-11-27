@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import React, { useState } from 'react';
 
 import { useStores } from '../../../../../hooks/useStores';
-import { weaponBaseAttributes } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
 import { AttrCode } from '../../../../common/type-code';
 import InputNumberBox from '../../../../components/InputNumberBox/InputNumberBox';
@@ -29,11 +28,8 @@ export default observer(function WeaponBasePanel() {
               [
                 key,
                 {
-                  title: value.title,
-                  extra: {
-                    ...value.extra,
-                    value: v,
-                  },
+                  ...value,
+                  value: v,
                 },
               ],
             ]),

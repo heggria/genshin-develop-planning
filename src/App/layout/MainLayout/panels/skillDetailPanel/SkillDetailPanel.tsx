@@ -50,14 +50,13 @@ export default observer(function SkillDetailPanel(props: SkillDetailPanelProps) 
 
   useEffect(() => {
     if (props.dataIndex !== -1) setAtkData(skillConfigStore.skillList[props.dataIndex]);
-    else setAtkData({} as SingleAttack);
   }, [skillConfigStore.skillList, props.dataIndex]);
   const onClose = () => {
     props.closeDrawer();
   };
   const onSave = () => {
     onClose();
-    if (atkData.title !== '') {
+    if (atkData?.title !== '') {
       message.success('保存成功！', 1);
     } else {
       setAtkData({ ...atkData, title: '未命名' });

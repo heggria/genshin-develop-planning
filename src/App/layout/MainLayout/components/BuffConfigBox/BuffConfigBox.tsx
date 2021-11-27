@@ -55,7 +55,7 @@ const BuffListItem = inject((stores) => stores)(
             placeholder="请选择词条类型"
             optionFilterProp="children"
             value={buffCache.type.code}
-            onChange={(value: number) => {
+            onChange={(value) => {
               setBuffCache({
                 type: ((): BuffType => {
                   for (let x of props.buffGroupStore.buffListBased)

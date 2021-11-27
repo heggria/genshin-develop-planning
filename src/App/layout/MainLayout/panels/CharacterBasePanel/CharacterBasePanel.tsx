@@ -28,11 +28,8 @@ export default observer(function CharacterBasePanel() {
               [
                 key,
                 {
-                  title: value.title,
-                  extra: {
-                    ...value.extra,
-                    value: v,
-                  },
+                  ...value,
+                  value: v,
                 },
               ],
             ]),

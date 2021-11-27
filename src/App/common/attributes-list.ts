@@ -264,7 +264,7 @@ holyRelicEntryMap.forEach((value: Array<number>, key: AttrCode) => {
 // 圣遗物副词条极大总属性表
 export const holyRelicMaxEntryMap: Map<AttrCode, number> = new Map();
 holyRelicEntryMap.forEach((value: Array<number>, key: AttrCode) => {
-  holyRelicMaxEntryMap.set(key, parseFloat((value[3] * 4).toFixed(2)));
+  holyRelicMaxEntryMap.set(key, parseFloat(value[3].toFixed(2)));
 });
 // 圣遗物副词条统计表
 export const holyRelicEntryStatisticMap: Map<AttrCode, Entry> = new Map();
