@@ -45,6 +45,8 @@ export interface SelectOption<T> {
 
 export const mainEntryOptions = new Map<HolyRelicTypeCode, Array<SelectOption<AttrCode>>>(
   [
+    ['flower', []],
+    ['feather', []],
     ['hourglass', []],
     ['cup', []],
     ['hat', []],

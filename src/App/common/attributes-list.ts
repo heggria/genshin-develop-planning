@@ -1,5 +1,11 @@
 import { Attribute, Entry, StringName } from './interface';
-import { AtkTypeCode, AttrCode, ElementTypeCode, ReactionTypeCode } from './type-code';
+import {
+  AtkTypeCode,
+  AttrCode,
+  ElementTypeCode,
+  HolyRelicTypeCode,
+  ReactionTypeCode,
+} from './type-code';
 
 export const AttrList: Array<StringName> = [
   // 攻击区
@@ -240,6 +246,15 @@ reactionTypeMap.forEach((value: string, key: ReactionTypeCode) => {
 export const ReactionDetailMap = new Map<ElementTypeCode, Map<ReactionTypeCode, number>>(
   [],
 );
+
+// 圣遗物名称表
+export const holyRelicTypeMap = new Map<HolyRelicTypeCode, string>([
+  ['flower', '花'],
+  ['feather', '羽毛'],
+  ['hourglass', '沙漏'],
+  ['cup', '杯子'],
+  ['hat', '帽子'],
+]);
 
 // 圣遗物副词条属性表
 export const holyRelicEntryMap = new Map<AttrCode, Array<number>>([

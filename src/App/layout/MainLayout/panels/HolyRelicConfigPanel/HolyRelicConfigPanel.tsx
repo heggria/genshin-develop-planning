@@ -5,9 +5,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { useStores } from '../../../../../hooks/useStores';
+import { holyRelicTypeMap } from '../../../../common/attributes-list';
 import {
   holyRelicAllList,
   holyRelicTotalAttributes,
+  holyRelicValueMap,
 } from '../../../../common/form-config';
 import { Attribute } from '../../../../common/interface';
 import { mainEntryOptions, SelectOption } from '../../../../common/options';
@@ -23,11 +25,13 @@ interface HRSelectProps {
   title: string;
   holyRelicKey: HolyRelicTypeCode;
   disabled: boolean;
+  mainAttrType?: AttrCode;
+  option: SelectOption<AttrCode>[];
 }
 
 const HRSelect = (props: HRSelectProps) => {
   const { attributesStore } = useStores();
-  const { holyRelicList, setHolyRelicList } = attributesStore;
+  const { setHolyRelicList } = attributesStore;
   return (
     <InputBox width="100%" height="55px" hidden={props.disabled}>
       <InputTitle>{props.title}</InputTitle>
@@ -35,8 +39,8 @@ const HRSelect = (props: HRSelectProps) => {
         style={{ width: '100%' }}
         placeholder="请选择"
         showArrow={false}
-        value={holyRelicList.get(props.holyRelicKey)?.mainAttrType}
-        onChange={(value: AttrCode) => {
+        value={props.mainAttrType}
+        onChange={(value: AttrCode, e: any) => {
           setHolyRelicList(
             props.holyRelicKey,
             holyRelicAllList
@@ -44,7 +48,7 @@ const HRSelect = (props: HRSelectProps) => {
               ?.filter((item) => item.mainAttrType === value)[0],
           );
         }}>
-        {mainEntryOptions.get(props.holyRelicKey)?.map((item: SelectOption<AttrCode>) => (
+        {props.option.map((item: SelectOption<AttrCode>) => (
           <Option key={item.value} value={item.value}>
             {item.label}
           </Option>
@@ -57,11 +61,25 @@ const HRSelect = (props: HRSelectProps) => {
 export default observer(function HolyRelicConfigPanel() {
   const [disabled, setDisabled] = useState(false);
   const { attributesStore } = useStores();
-  const { holyRelicAttrList, setHolyRelicAttrList } = attributesStore;
+  const { holyRelicList, holyRelicAttrList, setHolyRelicAttrList } = attributesStore;
 
   const [holyRelicAttributes2, setHolyRelicAttributes2] = useState(
     new Map([...holyRelicTotalAttributes]),
   );
+
+  const HRMainAttrSelectors: any[] = [];
+  holyRelicList.forEach((value, key) => {
+    HRMainAttrSelectors.push(
+      <HRSelect
+        key={key}
+        disabled={disabled}
+        mainAttrType={value?.mainAttrType}
+        holyRelicKey={key}
+        title={holyRelicTypeMap.get(key) + '主属性'}
+        option={mainEntryOptions.get(key) || []}
+      />,
+    );
+  });
 
   const holyRelicAttributesInputs: Array<any> = [];
   if (!disabled) {
@@ -140,13 +158,7 @@ export default observer(function HolyRelicConfigPanel() {
               }}>
               <AreaTitle>总加成属性</AreaTitle>
               <AreaContainer style={{ gridGap: disabled ? '5px' : '20px' }}>
-                <HRSelect
-                  disabled={disabled}
-                  holyRelicKey={'hourglass'}
-                  title={'沙漏主属性'}
-                />
-                <HRSelect disabled={disabled} holyRelicKey={'cup'} title={'杯子主属性'} />
-                <HRSelect disabled={disabled} holyRelicKey={'hat'} title={'帽子主属性'} />
+                {HRMainAttrSelectors}
                 {holyRelicAttributesInputs}
               </AreaContainer>
             </Area>

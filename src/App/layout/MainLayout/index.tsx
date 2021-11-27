@@ -39,11 +39,11 @@ export default function MainLayout() {
           path={`/`}
           element={
             <Container ref={ref} columnCount={columnCount}>
-              <StatisticsPanel />
               <CharacterBasePanel />
               <WeaponBasePanel />
               <HolyRelicConfigPanel />
               <EntryStatisticsPanel />
+              <StatisticsPanel />
 
               {/* <BuffConfigFrame />
               <BuffGroupLayout /> */}
