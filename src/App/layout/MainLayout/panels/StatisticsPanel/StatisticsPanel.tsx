@@ -20,7 +20,7 @@ export default observer(function StatisticsPanel() {
       <ValueBox key={key}>
         <ValueBoxTitle>{value.title.split('/')[0]}</ValueBoxTitle>
         <ValueBoxValue>
-          {value.value + (value.valueType === 'percent' ? '%' : '')}
+          {value.value.toFixed(2) + (value.valueType === 'percent' ? '%' : '')}
         </ValueBoxValue>
       </ValueBox>,
     ),

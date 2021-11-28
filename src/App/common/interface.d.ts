@@ -6,6 +6,7 @@ import {
   HolyRelicTypeCode,
   ReactionTypeCode,
   ValueTypeCode,
+  WeaponTypeCode,
 } from './type-code';
 
 export interface StringName {
@@ -137,4 +138,34 @@ export interface Entry {
   // 副词条
   mount: number;
   efficient: boolean;
+}
+
+// 角色描述
+export interface Character {
+  // 名称
+  name: string;
+  // 神之眼
+  elementType: ElementTypeCode;
+  // 使用武器
+  weaponType: WeaponTypeCode;
+  // 基础属性
+  baseAttr: Map<AttrCode, number>;
+  // 等级
+  level?: number;
+
+  star: number;
+}
+
+// 角色描述
+export interface Weapon {
+  // 名称
+  name: string;
+  // 类型
+  type: WeaponTypeCode;
+  // 基础属性
+  baseAttr: Map<AttrCode, number>;
+  // 等级
+  level?: number;
+
+  star: number;
 }

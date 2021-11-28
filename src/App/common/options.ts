@@ -1,3 +1,5 @@
+import { elementTypeMap } from './attributes-list';
+import { characterList } from './character-list';
 import { holyRelicAllList } from './form-config';
 import {
   AtkTypeCode,
@@ -59,4 +61,24 @@ mainEntryOptions.forEach((options, key) => {
       value: value.mainAttrType,
     });
   });
+});
+
+export const characterOptions: any[] = [];
+elementTypeMap.forEach((element, key) => {
+  if (!['physics', 'none'].includes(key)) {
+    let subCharacterList: any[] = [];
+    characterList.forEach((value, nameKey) => {
+      if (value.elementType === key)
+        subCharacterList.push({
+          value: nameKey,
+          label: value.name,
+        });
+    });
+    characterOptions.push({
+      value: key,
+      label: element.replace('元素', ''),
+      disabled: subCharacterList.length === 0,
+      children: subCharacterList,
+    });
+  }
 });

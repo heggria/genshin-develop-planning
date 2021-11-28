@@ -5,6 +5,7 @@ import {
   ElementTypeCode,
   HolyRelicTypeCode,
   ReactionTypeCode,
+  WeaponTypeCode,
 } from './type-code';
 
 export const AttrList: Array<StringName> = [
@@ -154,6 +155,15 @@ export const elementTypeMap = new Map<ElementTypeCode, string>([
   ['rock', '岩元素'],
   ['wind', '风元素'],
   ['none', '无属性'],
+]);
+
+// 武器类型
+export const weaponTypeMap = new Map<WeaponTypeCode, string>([
+  ['bow', '弓'],
+  ['sword', '单手剑'],
+  ['claymore', '双手剑'],
+  ['polearm', '长柄武器'],
+  ['catalyst', '法器'],
 ]);
 
 // 元素反应类型

@@ -54,6 +54,7 @@ export const weaponBaseAttributes: Map<AttrCode, Attribute> = new Map();
 attributes.forEach((value, key) => {
   switch (key) {
     case 'atk_base':
+    case 'atk_percent':
     case 'def_percent':
     case 'blood_percent':
     case 'crit_damage':

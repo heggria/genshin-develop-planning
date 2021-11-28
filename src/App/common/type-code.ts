@@ -105,3 +105,5 @@ export type ValueTypeCode =
 
 // 圣遗物类型描述
 export type HolyRelicTypeCode = 'flower' | 'feather' | 'hourglass' | 'cup' | 'hat';
+
+export type WeaponTypeCode = 'bow' | 'sword' | 'claymore' | 'catalyst' | 'polearm';
