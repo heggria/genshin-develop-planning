@@ -81,9 +81,9 @@ export default observer(function SkillLiteBox(skillLiteBoxProps: SkillLiteBoxPro
       if (dragIndex > hoverIndex && hoverClientX > hoverMiddleX) {
         return;
       }
-      console.log(11111);
+      // console.log(11111);
 
-      console.log(dragIndex, hoverIndex);
+      // console.log(dragIndex, hoverIndex);
       // Time to actually perform the action
       moveCard(dragIndex, hoverIndex);
 

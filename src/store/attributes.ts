@@ -112,6 +112,7 @@ export class AttributesStore {
   holyRelicList: Map<HolyRelicTypeCode, HolyRelic | undefined> = new Map();
 
   // 圣遗物词条统计
+  selectEntry: any[] = [];
   entryStatisticsList: Map<AttrCode, Entry> = new Map([...holyRelicEntryStatisticMap]);
 
   // 圣遗物统计数据
@@ -198,6 +199,14 @@ export class AttributesStore {
         }
       }
     });
+
+    let keys = new Array<AttrCode>();
+    let keysP = new Array<AttrCode>();
+    this.entryStatisticsList.forEach((value, key) => {
+      if (value.efficient && key !== 'proficient_plus') keys.push(key);
+      if (value.efficient) keysP.push(key);
+    });
+
     let offset = {
       atk: 0,
       critRate: 0,
@@ -228,19 +237,31 @@ export class AttributesStore {
 
     let x = this.getValue(this.actualAttrList, 'atk_plus');
     let y = this.getValue(this.holyRelicAttrList, 'atk_plus');
-    let atk = [x, x - y + offset.atk];
+    let atk = [
+      x - (!keysP.includes('atk_percent') ? y - offset.atk : 0),
+      x - y + offset.atk,
+    ];
 
     x = this.getValue(this.actualAttrList, 'crit_rate');
     y = this.getValue(this.holyRelicAttrList, 'crit_rate');
-    let critRate = [x, x - y + offset.critRate];
+    let critRate = [
+      x - (!keysP.includes('crit_rate') ? y - offset.critRate : 0),
+      x - y + offset.critRate,
+    ];
 
     x = this.getValue(this.actualAttrList, 'proficient_plus');
     y = this.getValue(this.holyRelicAttrList, 'proficient_plus');
-    let proficient = [x, x - y + offset.proficient];
+    let proficient = [
+      x - (!keysP.includes('proficient_plus') ? y - offset.proficient : 0),
+      x - y + offset.proficient,
+    ];
 
     x = this.getValue(this.actualAttrList, 'crit_damage');
     y = this.getValue(this.holyRelicAttrList, 'crit_damage');
-    let critDamage = [x, x - y + offset.critDamage];
+    let critDamage = [
+      x - (!keysP.includes('crit_damage') ? y - offset.critDamage : 0),
+      x - y + offset.critDamage,
+    ];
 
     this.entryStatisticsData.currentEntryReactionDamageGain =
       (this.countDamage(atk[0], critRate[0], critDamage[0], proficient[0]) /
@@ -250,16 +271,6 @@ export class AttributesStore {
       (this.countDamage(atk[0], critRate[0], critDamage[0], 0) /
         this.countDamage(atk[1], critRate[1], critDamage[1], 0)) *
       100;
-
-    let keys = new Array<AttrCode>('atk_plus', 'atk_percent', 'crit_rate', 'crit_damage');
-
-    let keysP = new Array<AttrCode>(
-      'atk_plus',
-      'atk_percent',
-      'crit_rate',
-      'crit_damage',
-      'proficient_plus',
-    );
 
     let min = this.countMaxDamage(
       30,
@@ -359,7 +370,9 @@ export class AttributesStore {
     initProficient: number,
     activatedKey: Array<AttrCode>,
   ) => {
-    let damage = 0;
+    let damage = activatedKey.includes('proficient_plus')
+      ? this.countDamage(initAtk, initCritRate, initCritDamage, initProficient)
+      : this.countDamage(initAtk, initCritRate, initCritDamage, 0);
     let atkC = 0;
     let critRateC = 0;
     let proficientC = 0;
@@ -479,9 +492,9 @@ export class AttributesStore {
     );
   }
 
-  setEntryStatisticsList = (code: AttrCode, holyRelic: Entry) => {
+  setEntryStatisticsList = (code: AttrCode, entry: Entry) => {
     // eslint-disable-next-line no-debugger
-    this.entryStatisticsList.set(code, holyRelic);
+    this.entryStatisticsList.set(code, entry);
     this.countEntryStatisticsData();
   };
 
@@ -590,7 +603,7 @@ export class AttributesStore {
       }
       let percentSum = 1;
       percent.map((num) => (percentSum += num || 0));
-      console.log(percentSum);
+      // console.log(percentSum);
       let plusSum = 0;
       plus.map((num) => (plusSum += num || 0));
       this.actualAttrList.set(key, {

@@ -60,7 +60,7 @@ export default observer(function WeaponBasePanel() {
               style={{ width: '100%' }}
               value={weaponSelectedKey}
               onChange={(v: string) => {
-                console.log(v);
+                // console.log(v);
                 setWeapon(v);
               }}
               placeholder={'请选择'}

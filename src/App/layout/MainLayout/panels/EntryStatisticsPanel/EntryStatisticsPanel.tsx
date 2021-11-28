@@ -80,7 +80,7 @@ export default observer(function EntryStatisticsPanel() {
   return (
     <NormalFrame
       mainTitle="圣遗物状况分析"
-      describe=""
+      describe="请勾选有效词条，右边会自动分析词条带来的收益，注意勾选元素精通后会无视伤害类型，默认显示增幅伤害"
       content={
         <div style={{ display: 'flex', width: '100%' }}>
           <ItemContainer>{listItems}</ItemContainer>
@@ -106,9 +106,12 @@ export default observer(function EntryStatisticsPanel() {
                 <ValueBoxTitle>当前伤害增益</ValueBoxTitle>
                 <ValueBoxValue>
                   {entryStatisticsData.currentEntryDamageGain.toFixed(2) +
-                    '% / ' +
-                    entryStatisticsData.currentEntryReactionDamageGain.toFixed(2) +
-                    '%'}
+                    '%' +
+                    (entryStatisticsList.get('proficient_plus')?.efficient
+                      ? ' / ' +
+                        entryStatisticsData.currentEntryReactionDamageGain.toFixed(2) +
+                        '%'
+                      : '')}
                 </ValueBoxValue>
               </ValueBox>
             </Tooltip>
@@ -122,10 +125,14 @@ export default observer(function EntryStatisticsPanel() {
                 <Tooltip title={min}>
                   {entryStatisticsData.minGE[1].toFixed(2) + '%'}
                 </Tooltip>
-                {' / '}
-                <Tooltip title={minP}>
-                  {entryStatisticsData.minGE[3].toFixed(2) + '%'}
-                </Tooltip>
+                {entryStatisticsList.get('proficient_plus')?.efficient ? (
+                  <>
+                    {' / '}
+                    <Tooltip title={minP}>
+                      {entryStatisticsData.minGE[3].toFixed(2) + '%'}
+                    </Tooltip>
+                  </>
+                ) : null}
               </ValueBoxValue>
             </ValueBox>
 
@@ -139,10 +146,14 @@ export default observer(function EntryStatisticsPanel() {
                 <Tooltip title={avg}>
                   {entryStatisticsData.averageGE[1].toFixed(2) + '%'}
                 </Tooltip>
-                {' / '}
-                <Tooltip title={avgP}>
-                  {entryStatisticsData.averageGE[3].toFixed(2) + '%'}
-                </Tooltip>
+                {entryStatisticsList.get('proficient_plus')?.efficient ? (
+                  <>
+                    {' / '}
+                    <Tooltip title={avgP}>
+                      {entryStatisticsData.averageGE[3].toFixed(2) + '%'}
+                    </Tooltip>
+                  </>
+                ) : null}
               </ValueBoxValue>
             </ValueBox>
 
@@ -156,19 +167,26 @@ export default observer(function EntryStatisticsPanel() {
                 <Tooltip title={() => <span>{max}</span>}>
                   {entryStatisticsData.theoreticalGE[1].toFixed(2) + '%'}
                 </Tooltip>
-                {' / '}
-                <Tooltip title={maxP}>
-                  {entryStatisticsData.theoreticalGE[3].toFixed(2) + '%'}
-                </Tooltip>
+                {entryStatisticsList.get('proficient_plus')?.efficient ? (
+                  <>
+                    {' / '}
+                    <Tooltip title={maxP}>
+                      {entryStatisticsData.theoreticalGE[3].toFixed(2) + '%'}
+                    </Tooltip>
+                  </>
+                ) : null}
               </ValueBoxValue>
             </ValueBox>
-            <Tooltip placement="topLeft" title="大毕业分布分 = 100">
+            <Tooltip
+              placement="topLeft"
+              title="当前伤害/大毕业伤害*100，个人分级：及格60/能用70/优秀80/准毕业90/大毕业100">
               <ValueBox>
                 <ValueBoxTitle>有效词条分布分</ValueBoxTitle>
                 <ValueBoxValue>
                   {entryStatisticsData.validScore[0].toFixed(2) +
-                    ' / ' +
-                    entryStatisticsData.validScore[1].toFixed(2)}
+                    (entryStatisticsList.get('proficient_plus')?.efficient
+                      ? ' / ' + entryStatisticsData.validScore[1].toFixed(2)
+                      : '')}
                 </ValueBoxValue>
               </ValueBox>
             </Tooltip>

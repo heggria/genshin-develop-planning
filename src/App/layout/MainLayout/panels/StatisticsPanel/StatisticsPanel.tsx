@@ -13,7 +13,7 @@ import { GridContainer } from '../../style/index.style';
 export default observer(function StatisticsPanel() {
   const { attributesStore } = useStores();
   const { actualAttrList } = attributesStore;
-  // console.log(actualAttributes);
+  // // console.log(actualAttributes);
   const listItems: Array<any> = [];
   actualAttrList.forEach((value: Attribute, key: AttrCode) =>
     listItems.push(

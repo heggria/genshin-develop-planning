@@ -52,7 +52,7 @@ export class SkillConfigStore {
     let c = new Array<AttackSubModule>();
     this.skillGroup.map((item) => {
       let index = this.findIndex(this.skillList, item.skill.id) as number;
-      console.log(index);
+      // console.log(index);
       if (index >= 0) {
         c.push({ skill: this.skillList[index], arrangementId: item.arrangementId });
       }
@@ -92,7 +92,7 @@ export class SkillConfigStore {
   };
 
   addSkillGroup = (attackSubModule: AttackSubModule) => {
-    // console.log(attackSubModule);
+    // // console.log(attackSubModule);
     this.skillGroup.push(attackSubModule);
     // this.skillList.push(attack);
   };

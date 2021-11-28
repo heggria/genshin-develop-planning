@@ -33,7 +33,7 @@ export default observer(function SkillGroupPanel() {
     [addSkillGroup, skillList],
   );
 
-  console.log(skillGroup);
+  // console.log(skillGroup);
   // 第一个参数是 collect 方法返回的对象，第二个参数是一个 ref 值，赋值给 drop 元素
   const [collectProps, drop] = useDrop({
     // accept 是一个标识，需要和对应的 drag 元素中 item 的 type 值一致，否则不能感应
@@ -46,7 +46,7 @@ export default observer(function SkillGroupPanel() {
   });
   const moveCard = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      console.log('moveCard');
+      // console.log('moveCard');
       moveSkill(hoverIndex, dragIndex);
     },
     [moveSkill],
@@ -54,7 +54,7 @@ export default observer(function SkillGroupPanel() {
   const renderCard =
     skillGroup.length > 0 &&
     skillGroup.map((item, index) => {
-      console.log(item.skill);
+      // console.log(item.skill);
       return (
         <SkillLiteBox
           key={item.arrangementId}
@@ -68,7 +68,7 @@ export default observer(function SkillGroupPanel() {
     setSkillGroupEditable(!skillGroupEditable);
   }, [setSkillGroupEditable, skillGroupEditable]);
 
-  console.log(1111);
+  // console.log(1111);
   return (
     <>
       <SkillEditableButton>

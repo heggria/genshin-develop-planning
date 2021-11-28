@@ -22,10 +22,10 @@ export default function MainLayout() {
   const [columnCount, setColumnCount] = useState(0);
   useEffect(() => {
     const handleResize = (e: any) => {
-      console.log(e);
+      // console.log(e);
       setColumnCount(Math.floor(e.currentTarget.innerWidth / 430));
     };
-    console.log(ref);
+    // console.log(ref);
     if (ref && ref.current) {
       let r = ref.current;
       window.addEventListener('resize', handleResize);
