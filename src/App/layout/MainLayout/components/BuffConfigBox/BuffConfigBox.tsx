@@ -9,6 +9,7 @@ import React, { CSSProperties, useState } from 'react';
 import { useStores } from '../../../../../hooks/useStores';
 import { BuffGroupStore } from '../../../../../store/buffGroup';
 import { Buff, BuffGroup, BuffType } from '../../../../common/interface';
+import { dependAttrMap, dependAttrOptions } from '../../../../common/options';
 
 interface BuffListItemProps {
   item: Buff;
@@ -32,15 +33,20 @@ const BuffListItem = inject((stores) => stores)(
           <div
             style={{ fontWeight: 700, zIndex: 1, display: 'flex', flexFlow: 'row wrap' }}>
             <div>
-              {props.item.type.name.slice(0, props.item.type.name.lastIndexOf('/')) +
-                '：'}
+              {props.item.type.name.replace('加成', '') +
+                '：' +
+                (props.item.depend !== 'none' ? '等于当前' : '')}
             </div>
             <div>
-              {props.item.value +
-                props.item.type.name.slice(
-                  props.item.type.name.lastIndexOf('/') + 1,
-                  props.item.type.name.length,
-                )}
+              {props.item.depend !== 'none'
+                ? dependAttrMap.get(props.item.depend) + '的 ' + props.item.value + '%'
+                : props.item.value +
+                  props.item.type.name
+                    .slice(
+                      props.item.type.name.lastIndexOf('/') + 1,
+                      props.item.type.name.length,
+                    )
+                    .replace('+', '')}
             </div>
           </div>
         </>
@@ -55,15 +61,15 @@ const BuffListItem = inject((stores) => stores)(
             placeholder="请选择词条类型"
             optionFilterProp="children"
             value={buffCache.type.code}
+            showArrow={false}
             onChange={(value) => {
               setBuffCache({
+                ...buffCache,
                 type: ((): BuffType => {
                   for (let x of props.buffGroupStore.buffListBased)
                     if (x.code === value) return x;
                   return props.buffGroupStore.buffListBased[0];
                 })(),
-                value: buffCache.value,
-                productivity: buffCache.productivity,
               });
             }}
             filterOption={(input: string, option: any) =>
@@ -75,8 +81,32 @@ const BuffListItem = inject((stores) => stores)(
               </Select.Option>
             ))}
           </Select>
+          <div style={{ width: 136, marginBottom: 5, textAlign: 'center' }}>
+            {'依赖于'}
+          </div>
+          <Select
+            showSearch
+            style={{ width: 136, marginBottom: 5 }}
+            size={'small'}
+            optionFilterProp="children"
+            options={dependAttrOptions}
+            value={buffCache.depend}
+            showArrow={false}
+            onChange={(value) => {
+              setBuffCache({
+                ...buffCache,
+                value: 0,
+                depend: value,
+              });
+            }}
+            filterOption={(input: string, option: any) =>
+              option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+            }></Select>
+
           <div style={{ display: 'flex', marginBottom: 5 }}>
-            <div style={{ width: 68, textAlign: 'center' }}>{'数值'}</div>
+            <div style={{ width: 68, textAlign: 'center' }}>
+              {buffCache.depend === 'none' ? '数值' : '倍率/%'}
+            </div>
             <InputNumber
               style={{ width: 68 }}
               size="small"
@@ -84,17 +114,17 @@ const BuffListItem = inject((stores) => stores)(
               max={100000}
               step={0.01}
               defaultValue={0}
+              controls={false}
               value={buffCache.value}
               onChange={(value: number) => {
                 setBuffCache({
-                  type: buffCache.type,
+                  ...buffCache,
                   value: value,
-                  productivity: buffCache.productivity,
                 });
               }}
             />
           </div>
-          <div style={{ display: 'flex', marginBottom: 5 }}>
+          {/* <div style={{ display: 'flex', marginBottom: 5 }}>
             <div style={{ width: 68, textAlign: 'center' }}>{'生效率'}</div>
             <InputNumber
               style={{ width: 68 }}
@@ -112,7 +142,7 @@ const BuffListItem = inject((stores) => stores)(
                 });
               }}
             />
-          </div>
+          </div> */}
           <Button
             type="primary"
             style={{ width: 60, marginRight: 16 }}
@@ -145,7 +175,7 @@ export default observer(function BuffConfigPanel(props: BuffConfigPanelProps) {
   const { buffGroupStore } = useStores();
   const [active, setActive] = useState(-1);
   const [itemCss, setItemCss] = useState({
-    height: 135,
+    height: 167,
     cursor: 'default',
   } as CSSProperties);
   const titleChange = (title: string) => {
@@ -156,6 +186,7 @@ export default observer(function BuffConfigPanel(props: BuffConfigPanelProps) {
       type: buffGroupStore.buffListBased[0],
       value: 0,
       productivity: 1,
+      depend: 'none',
     });
     setActive(props.buffGroup.buffs.length);
   };

@@ -41,12 +41,13 @@ export default function MainLayout() {
             <Container ref={ref} columnCount={columnCount}>
               <CharacterBasePanel />
               <WeaponBasePanel />
+
+              <BuffConfigFrame />
+              <BuffGroupLayout />
+
               <HolyRelicConfigPanel />
               <EntryStatisticsPanel />
               <StatisticsPanel />
-
-              {/* <BuffConfigFrame />
-              <BuffGroupLayout /> */}
             </Container>
           }
         />

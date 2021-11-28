@@ -20,7 +20,7 @@ export default observer(function BuffGroupFrame() {
   return (
     <NormalFrame
       mainTitle="Buff 配置"
-      describe="配置你想要生效的各种 Buff , 将会影响到最终收益"
+      describe="配置你想要生效的各种 Buff "
       content={
         <>
           {buffGroupStore.buffGroupsData.map((item: any, index: any) => (

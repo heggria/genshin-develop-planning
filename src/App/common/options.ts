@@ -82,3 +82,20 @@ elementTypeMap.forEach((element, key) => {
     });
   }
 });
+
+export const dependAttrMap = new Map<AttrCode, string>([
+  ['none', '纯数值'],
+  ['atk_plus', '攻击力'],
+  ['blood_plus', '生命值'],
+  ['def_plus', '防御力'],
+  ['proficient_plus', '元素精通'],
+  ['recharge_percent', '元素充能效率'],
+]);
+
+export const dependAttrOptions: Array<SelectOption<AttrCode>> = [];
+dependAttrMap.forEach((value, key) => {
+  dependAttrOptions.push({
+    label: value,
+    value: key,
+  });
+});

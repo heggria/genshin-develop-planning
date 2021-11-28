@@ -54,7 +54,7 @@ export default observer(function WeaponBasePanel() {
       content={
         <GridContainer minWidth="150px" gridGap="20px">
           <InputBox width="100%" height="55px">
-            <InputTitle>{'人物选择'}</InputTitle>
+            <InputTitle>{'武器选择'}</InputTitle>
             <Select
               options={weaponOptions}
               style={{ width: '100%' }}

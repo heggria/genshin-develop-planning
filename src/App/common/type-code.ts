@@ -45,6 +45,7 @@ export type AtkTypeCode =
   | 'elemental_explosion';
 
 export type AttrCode =
+  | 'none'
   // 攻击区
   | 'atk_plus'
   | 'atk_base'

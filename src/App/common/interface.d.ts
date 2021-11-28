@@ -23,6 +23,7 @@ export interface Buff {
   type: BuffType;
   value: number;
   productivity: number;
+  depend: AttrCode;
 }
 
 export interface BuffGroup {
