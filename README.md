@@ -1,3 +1,5 @@
+![Alt](https://repobeats.axiom.co/api/embed/878c4ca3e857f1fa8a5221dea9e1656d8e88a173.svg "Repobeats analytics image")
+
 # 原神圣遗物词条计算器
 
 - 一个用来自学 React 的技术 Demo
