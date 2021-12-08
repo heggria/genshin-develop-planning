@@ -39,6 +39,7 @@ styled-components + react-router-dom + react-helmet-async
 ## 随笔
 
 - 211118 做数据结构太痛苦了……
+- 211208 停工至面试期结束
 
 ## 目前学习情况
 
@@ -50,10 +51,10 @@ styled-components + react-router-dom + react-helmet-async
 
 - Yarn/Vite 爽
 - Antd 好看又好用
-- Typescript 熟悉中
-- Mobx 还没搞懂
-- React Hooks 还没搞懂
-- Eslint/Prettier 应该没有考点吧
+- Typescript 熟悉ing
+- Mobx 一知半解
+- React Hooks 一知半解
+- Eslint/Prettier 不会还有人没用吧
 
 ## 部署
 
